@@ -1,3 +1,4 @@
+
 #ifndef LICENCIA_H
 #define LICENCIA_H
 #include<QDate>
@@ -30,5 +31,4 @@ private:
     QDate m_fechaInicio;
     QDate m_fechaFin;
 };
-
-#endif // LICENCIA_H
+#endif
