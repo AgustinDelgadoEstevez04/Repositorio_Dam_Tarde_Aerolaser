@@ -15,7 +15,7 @@ public:
 
     QString getnombre() const;
     bool setnombre(const QString &nuevonombre);
-
+    QString getcontraseña() const;
     bool verificarcontraseña(const QString &contraseña) const;
     bool setcontraseña(const QString &nuevacontraseña);
     bool verificarcredenciales(const QString &nombreIngresado, const QString &contraseñaIngresada) const;

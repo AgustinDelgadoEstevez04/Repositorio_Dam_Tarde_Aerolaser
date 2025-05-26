@@ -1,5 +1,5 @@
-#ifndef usuario_dao_h
-#define usuario_dao_h
+#ifndef USUARIO_DAO_H
+#define USUARIO_DAO_H
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
