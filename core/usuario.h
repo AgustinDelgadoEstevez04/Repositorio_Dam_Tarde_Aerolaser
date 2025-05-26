@@ -1,0 +1,26 @@
+#ifndef usuario_h
+#define usuario_h
+
+#include <QString>
+#include <QDebug>
+
+class usuario {
+private:
+    QString nombre;
+    QString contraseña;
+    int id;
+
+public:
+    usuario(const QString &nombre, const QString &contraseña, int id);
+
+    QString getnombre() const;
+    bool setnombre(const QString &nuevonombre);
+
+    bool verificarcontraseña(const QString &contraseña) const;
+    bool setcontraseña(const QString &nuevacontraseña);
+    bool verificarcredenciales(const QString &nombreIngresado, const QString &contraseñaIngresada) const;
+
+    int getid() const;
+};
+
+#endif
