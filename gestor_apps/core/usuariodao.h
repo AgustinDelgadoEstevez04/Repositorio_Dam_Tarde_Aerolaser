@@ -1,26 +1,27 @@
+#ifndef USUARIODAO_H
+#define USUARIODAO_H
 
-#ifndef USUARIO_DAO_H
-#define USUARIO_DAO_H
-
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
 #include "usuario.h"
-#include "databasemanager.h"
+#include <QList>
+class QSqlDatabase;
 
-class usuario_dao {
-private:
-    QSqlDatabase db;
-
+class usuariodao
+{
 public:
-    usuario_dao();
+    usuariodao(QSqlDatabase& database);
 
-    bool agregarusuario(const usuario &u);
-    usuario obtenerusuario(int id);
-    bool actualizarusuario(const usuario &u);
-    bool eliminarusuario(int id);
-    bool verificarcredenciales(const QString &nombre, const QString &contraseña);
+    bool guardarUsuario(const usuario& usr);
+    usuario obtenerUsuarioPorId(int id);
+    usuario obtenerUsuarioPorNombre(const QString& nombre);
+    QList<usuario> obtenerTodosLosUsuarios();
+    bool actualizarUsuario(const usuario& usr);
+    bool eliminarUsuario(int id);
+
+    bool verificarCredenciales(const QString& nombre, const QString& contraseña);
+
+private:
+    QSqlDatabase& mdatabase;
 };
 
-#endif
+#endif // USUARIODAO_H
+

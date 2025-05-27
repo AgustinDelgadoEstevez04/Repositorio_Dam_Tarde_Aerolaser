@@ -1,17 +1,23 @@
 #ifndef APLICACIONDAO_H
 #define APLICACIONDAO_H
+
 #include "aplicacion.h"
 #include <QList>
-
+class QSqlDatabase;
 class aplicaciondao
 {
 public:
-    aplicaciondao();
-    void guardaraplicacion(const aplicacion& app);
-    aplicacion obteneraplicacionporid(int id);
-    QList<aplicacion> obtenertodaslasaplicaciones();
-    void actualizaraplicacion(const aplicacion& app);
-    void eliminaraplicacion(int id);
+    aplicaciondao(QSqlDatabase& database);
+
+    bool guardarAplicacion(const aplicacion& app);
+    aplicacion obtenerAplicacionPorId(int id);
+    QList<aplicacion> obtenerTodasLasAplicaciones();
+    QList<aplicacion> obtenerAplicacionesPorEstado(aplicacion::Estado estado);
+    bool actualizarAplicacion(const aplicacion& app);
+    bool eliminarAplicacion(int id);
+
+private:
+    QSqlDatabase& mdatabase;
 };
 
 #endif // APLICACIONDAO_H

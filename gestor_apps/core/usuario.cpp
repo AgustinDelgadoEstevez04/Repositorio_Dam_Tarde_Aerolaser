@@ -1,18 +1,18 @@
 #include "usuario.h"
 
-usuario::usuario(const QString &nombre, const QString &contraseña, int id)
-    : id(id) {
+usuario::usuario(const QString &nombre, const QString &contraseña, int id):
+    m_id(id) {
     setnombre(nombre);
     setcontraseña(contraseña);
 }
 
 QString usuario::getnombre() const {
-    return nombre;
+    return m_nombre;
 }
 
 bool usuario::setnombre(const QString &nuevonombre) {
     if (nuevonombre.length() >= 6 && nuevonombre.length() <= 30) {
-        nombre = nuevonombre;
+        m_nombre = nuevonombre;
         return true;
     } else {
         qDebug() << "Error: el nombre debe tener entre 6 y 30 caracteres.";
@@ -21,12 +21,12 @@ bool usuario::setnombre(const QString &nuevonombre) {
 }
 
 bool usuario::verificarcredenciales(const QString &nombreIngresado, const QString &contraseñaIngresada) const {
-    return (nombreIngresado == nombre && contraseñaIngresada == contraseña);
+    return (nombreIngresado == m_nombre && contraseñaIngresada == m_contraseña);
 }
 
 bool usuario::setcontraseña(const QString &nuevacontraseña) {
     if (nuevacontraseña.length() >= 6 && nuevacontraseña.length() <= 30) {
-        contraseña = nuevacontraseña;
+        m_contraseña = nuevacontraseña;
         return true;
     } else {
         qDebug() << "Error: la contraseña debe tener entre 6 y 30 caracteres.";
@@ -35,5 +35,5 @@ bool usuario::setcontraseña(const QString &nuevacontraseña) {
 }
 
 int usuario::getid() const {
-    return id;
+    return m_id;
 }

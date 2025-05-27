@@ -5,9 +5,9 @@
 
 class usuario {
 private:
-    QString nombre;
-    QString contraseña;
-    int id;
+    QString m_nombre;
+    QString m_contraseña;
+    int m_id;
 
 public:
     usuario(const QString &nombre, const QString &contraseña, int id);
