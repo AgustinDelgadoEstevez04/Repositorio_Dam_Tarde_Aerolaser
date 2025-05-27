@@ -12,21 +12,27 @@ CONFIG += c++17
 SOURCES += \
     aplicacion.cpp \
     aplicaciondao.cpp \
+    aplicacionmodel.cpp \
     databasemanager.cpp \
     licencia.cpp \
     licenciadao.cpp \
+    licenciamodel.cpp \
     usuario.cpp \
-    usuariodao.cpp
+    usuariodao.cpp \
+    usuariomodel.cpp
 
 HEADERS += \
     aplicacion.h \
     aplicaciondao.h \
+    aplicacionmodel.h \
     core_global.h \
     databasemanager.h \
     licencia.h \
     licenciadao.h \
+    licenciamodel.h \
     usuario.h \
-    usuariodao.h
+    usuariodao.h \
+    usuariomodel.h
 
 # Default rules for deployment.
 unix {
