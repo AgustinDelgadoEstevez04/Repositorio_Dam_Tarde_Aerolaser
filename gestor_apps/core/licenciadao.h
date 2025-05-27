@@ -11,7 +11,7 @@ public:
     licenciadao(QSqlDatabase& database);
 
     bool guardarLicencia(const licencia& lic);
-    licencia obtenerLicenciaPorId(int id);
+    licencia obtenerLicenciaPorId(int id) const;
     QList<licencia> obtenerTodasLasLicencias();
     QList<licencia> obtenerLicenciasPorEstado(licencia::Estado estado);
     bool actualizarLicencia(const licencia& lic);

@@ -24,7 +24,7 @@ bool aplicaciondao::guardarAplicacion(const aplicacion& app) {
     return true;
 }
 
-aplicacion aplicaciondao::obtenerAplicacionPorId(int id) {
+aplicacion aplicaciondao::obtenerAplicacionPorId(int id) const {
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id, nombre, descripcion, icono, estado FROM aplicaciones WHERE id = ?");
     query.addBindValue(id);

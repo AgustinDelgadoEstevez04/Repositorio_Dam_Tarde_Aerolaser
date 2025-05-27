@@ -1,5 +1,5 @@
 #include "usuariomodel.h"
-
+#include "databasemanager.h"
 UsuarioModel::UsuarioModel(const usuario& usr, QObject* parent) : QObject(parent), mUsuario(usr) {}
 
 int UsuarioModel::id() const {
@@ -10,13 +10,15 @@ QString UsuarioModel::nombre() const {
     return mUsuario.getnombre();
 }
 
-QString UsuarioModel::contraseña() const {
-    return mUsuario.getcontraseña();
+QString UsuarioModel::contrasena() const {
+    return mUsuario.getcontrasena();
 }
 
-void UsuarioModel::actualizarUsuario(const usuario& usr) {
-    mUsuario = usr;
+void UsuarioModel::actualizarDesdeDAO() {
+    usuario nuevoUsuario = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorId(mUsuario.getid());
+    mUsuario = nuevoUsuario;
     emit usuarioActualizado();
 }
+
 
 

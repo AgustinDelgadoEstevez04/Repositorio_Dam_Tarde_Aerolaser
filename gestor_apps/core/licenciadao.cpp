@@ -21,7 +21,7 @@ bool licenciadao::guardarLicencia(const licencia& lic) {
     return true;
 }
 
-licencia licenciadao::obtenerLicenciaPorId(int id) {
+licencia licenciadao::obtenerLicenciaPorId(int id) const {
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id, appId, userId, estado, fechaInicio, fechaFin FROM licencias WHERE id = ?");
     query.addBindValue(id);

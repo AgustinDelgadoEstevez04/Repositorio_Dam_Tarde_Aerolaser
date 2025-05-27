@@ -15,7 +15,7 @@ class DatabaseManager
 {
 public:
     static void debugQuery(const QSqlQuery& query);
-
+    QSqlDatabase& obtenerBaseDeDatos();
     static DatabaseManager& instance();
     ~DatabaseManager();
 

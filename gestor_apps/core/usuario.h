@@ -6,7 +6,7 @@
 class usuario {
 private:
     QString m_nombre;
-    QString m_contraseña;
+    QString m_contrasena;
     int m_id;
 
 public:
@@ -14,9 +14,9 @@ public:
 
     QString getnombre() const;
     bool setnombre(const QString &nuevonombre);
-    QString getcontraseña() const;
-    bool verificarcontraseña(const QString &contraseña) const;
-    bool setcontraseña(const QString &nuevacontraseña);
+    QString getcontrasena() const;
+    bool verificarcontrasena(const QString &contraseña) const;
+    bool setcontrasena(const QString &nuevacontraseña);
     bool verificarcredenciales(const QString &nombreIngresado, const QString &contraseñaIngresada) const;
 
     int getid() const;

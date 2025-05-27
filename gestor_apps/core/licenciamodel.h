@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "licencia.h"
-
 class LicenciaModel : public QObject
 {
     Q_OBJECT
@@ -28,7 +27,8 @@ signals:
     void licenciaActualizada();
 
 public slots:
-    void actualizarLicencia(const licencia& lic);
+    void actualizarDesdeDAO();
+;
 
 private:
     licencia mLicencia;

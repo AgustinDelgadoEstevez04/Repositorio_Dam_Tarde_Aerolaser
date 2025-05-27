@@ -1,5 +1,5 @@
 #include "licenciamodel.h"
-
+#include "databasemanager.h"
 LicenciaModel::LicenciaModel(const licencia& lic, QObject* parent) : QObject(parent), mLicencia(lic) {}
 
 int LicenciaModel::id() const {
@@ -26,8 +26,11 @@ QDate LicenciaModel::fechaFin() const {
     return mLicencia.fechaFin();
 }
 
-void LicenciaModel::actualizarLicencia(const licencia& lic) {
-    mLicencia = lic;
+void LicenciaModel::actualizarDesdeDAO() {
+    licencia nuevaLic = DatabaseManager::instance().licenciaDao.obtenerLicenciaPorId(mLicencia.id());
+    mLicencia = nuevaLic;
     emit licenciaActualizada();
 }
+
+
 

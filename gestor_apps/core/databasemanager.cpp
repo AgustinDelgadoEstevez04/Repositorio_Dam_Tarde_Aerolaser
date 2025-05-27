@@ -35,5 +35,9 @@ void DatabaseManager::debugQuery(const QSqlQuery& query) {
         qDebug() << "Error en consulta SQL:" << query.lastError().text();
     }
 }
+QSqlDatabase& DatabaseManager::obtenerBaseDeDatos() {
+    return *mDatabase;
+}
+
 
 

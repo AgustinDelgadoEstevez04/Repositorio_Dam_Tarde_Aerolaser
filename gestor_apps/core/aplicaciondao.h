@@ -10,7 +10,7 @@ public:
     aplicaciondao(QSqlDatabase& database);
 
     bool guardarAplicacion(const aplicacion& app);
-    aplicacion obtenerAplicacionPorId(int id);
+    aplicacion obtenerAplicacionPorId(int id) const;
     QList<aplicacion> obtenerTodasLasAplicaciones();
     QList<aplicacion> obtenerAplicacionesPorEstado(aplicacion::Estado estado);
     bool actualizarAplicacion(const aplicacion& app);

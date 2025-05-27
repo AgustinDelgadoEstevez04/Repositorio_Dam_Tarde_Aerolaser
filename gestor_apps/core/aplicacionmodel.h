@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "aplicacion.h"
-
 class AplicacionModel : public QObject
 {
     Q_OBJECT
@@ -26,7 +25,9 @@ signals:
     void aplicacionActualizada();
 
 public slots:
-    void actualizarAplicacion(const aplicacion& app);
+    void actualizarDesdeDAO();
+
+
 
 private:
     aplicacion mAplicacion;

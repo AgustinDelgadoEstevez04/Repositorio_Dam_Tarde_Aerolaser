@@ -1,5 +1,5 @@
 #include "aplicacionmodel.h"
-
+#include "databasemanager.h"
 AplicacionModel::AplicacionModel(const aplicacion& app, QObject* parent) : QObject(parent), mAplicacion(app) {}
 
 int AplicacionModel::id() const {
@@ -22,8 +22,11 @@ int AplicacionModel::estado() const {
     return static_cast<int>(mAplicacion.estado());
 }
 
-void AplicacionModel::actualizarAplicacion(const aplicacion& app) {
-    mAplicacion = app;
+void AplicacionModel::actualizarDesdeDAO() {
+    aplicacion nuevaApp = DatabaseManager::instance().aplicacionDao.obtenerAplicacionPorId(mAplicacion.id());
+    mAplicacion = nuevaApp;
     emit aplicacionActualizada();
 }
+
+
 
