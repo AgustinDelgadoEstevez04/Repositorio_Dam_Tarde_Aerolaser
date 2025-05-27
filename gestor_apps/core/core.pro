@@ -1,5 +1,5 @@
 QT -= gui
-
+QT += sql
 TEMPLATE = lib
 DEFINES += CORE_LIBRARY
 

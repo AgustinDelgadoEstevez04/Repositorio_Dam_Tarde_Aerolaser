@@ -1,12 +1,26 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include "core_global.h"
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
 
-class CORE_EXPORT databasemanager
-{
-public:
+class databasemanager {
+private:
+    static databasemanager *instancia;
+    QSqlDatabase db;
+
     databasemanager();
+
+public:
+    static databasemanager *obtenerinstancia();
+    bool abrirconexion(const QString &nombrebd);
+    void cerrarconexion();
+    bool ejecutaconsulta(const QString &consulta);
+    QSqlDatabase obtenerbase();
+
+    ~databasemanager();
 };
 
-#endif // DATABASEMANAGER_H
+#endif
