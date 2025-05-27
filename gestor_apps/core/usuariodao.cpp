@@ -1,48 +1,70 @@
 #include "usuariodao.h"
-#include "usuario.h"
-#include "databasemanager.h"
-#include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
+usuariodao::usuariodao(QSqlDatabase& database) : mdatabase(database) {}
 
-usuario_dao::usuario_dao() {
-    databasemanager *dbmanager = databasemanager::obtenerinstancia();
-    db = dbmanager->obtenerbase();
-}
-
-bool usuario_dao::agregarusuario(const usuario &u) {
-    QSqlQuery query(db);
-    query.prepare("INSERT INTO usuarios (nombre, contraseña) VALUES (:nombre, :contraseña)");
-    query.bindValue(":nombre", u.getnombre());
-    query.bindValue(":contraseña", u.getcontraseña());
+bool usuariodao::guardarUsuario(const usuario& usr) {
+    QSqlQuery query(mdatabase);
+    query.prepare("INSERT INTO usuarios (id, nombre, contrasena) VALUES (?, ?, ?)");
+    query.addBindValue(usr.getid());
+    query.addBindValue(usr.getnombre());
+    query.addBindValue(usr.getcontrasena());
 
     if (!query.exec()) {
-        qDebug() << "Error al agregar usuario:" << query.lastError().text();
+        qDebug() << "Error al insertar usuario:" << query.lastError().text();
         return false;
     }
     return true;
 }
 
-usuario usuario_dao::obtenerusuario(int id) {
-    QSqlQuery query(db);
-    query.prepare("SELECT nombre, contraseña FROM usuarios WHERE id = :id");
-    query.bindValue(":id", id);
+usuario usuariodao::obtenerUsuarioPorId(int id) const {
+    QSqlQuery query(mdatabase);
+    query.prepare("SELECT id, nombre, contrasena FROM usuarios WHERE id = ?");
+    query.addBindValue(id);
 
     if (query.exec() && query.next()) {
-        return usuario(query.value(0).toString(), query.value(1).toString(), id);
-    } else {
-        qDebug() << "Usuario no encontrado:" << query.lastError().text();
-        return usuario("", "", -1);
+        return usuario(query.value(1).toString(),
+                       query.value(2).toString(),
+                       query.value(0).toInt());
     }
+    return usuario("", "", -1);
 }
 
-bool usuario_dao::actualizarusuario(const usuario &u) {
-    QSqlQuery query(db);
-    query.prepare("UPDATE usuarios SET nombre = :nombre, contraseña = :contraseña WHERE id = :id");
-    query.bindValue(":nombre", u.getnombre());
-    query.bindValue(":contraseña", u.getcontraseña());
-    query.bindValue(":id", u.getid());
+usuario usuariodao::obtenerUsuarioPorNombre(const QString& nombre) {
+    QSqlQuery query(mdatabase);
+    query.prepare("SELECT id, nombre, contrasena FROM usuarios WHERE nombre = ?");
+    query.addBindValue(nombre);
+
+    if (query.exec() && query.next()) {
+        return usuario(query.value(1).toString(),
+                       query.value(2).toString(),
+                       query.value(0).toInt());
+    }
+    return usuario("", "", -1);
+}
+
+QList<usuario> usuariodao::obtenerTodosLosUsuarios() {
+    QSqlQuery query(mdatabase);
+    query.prepare("SELECT id, nombre, contrasena FROM usuarios");
+
+    QList<usuario> lista;
+    if (query.exec()) {
+        while (query.next()) {
+            lista.append(usuario(query.value(1).toString(),
+                                 query.value(2).toString(),
+                                 query.value(0).toInt()));
+        }
+    }
+    return lista;
+}
+
+bool usuariodao::actualizarUsuario(const usuario& usr) {
+    QSqlQuery query(mdatabase);
+    query.prepare("UPDATE usuarios SET nombre = ?, contrasena = ? WHERE id = ?");
+    query.addBindValue(usr.getnombre());
+    query.addBindValue(usr.getcontrasena());
+    query.addBindValue(usr.getid());
 
     if (!query.exec()) {
         qDebug() << "Error al actualizar usuario:" << query.lastError().text();
@@ -51,10 +73,10 @@ bool usuario_dao::actualizarusuario(const usuario &u) {
     return true;
 }
 
-bool usuario_dao::eliminarusuario(int id) {
-    QSqlQuery query(db);
-    query.prepare("DELETE FROM usuarios WHERE id = :id");
-    query.bindValue(":id", id);
+bool usuariodao::eliminarUsuario(int id) {
+    QSqlQuery query(mdatabase);
+    query.prepare("DELETE FROM usuarios WHERE id = ?");
+    query.addBindValue(id);
 
     if (!query.exec()) {
         qDebug() << "Error al eliminar usuario:" << query.lastError().text();
@@ -63,16 +85,13 @@ bool usuario_dao::eliminarusuario(int id) {
     return true;
 }
 
-bool usuario_dao::verificarcredenciales(const QString &nombre, const QString &contraseña) {
-    QSqlQuery query(db);
-    query.prepare("SELECT COUNT(*) FROM usuarios WHERE nombre = :nombre AND contraseña = :contraseña");
-    query.bindValue(":nombre", nombre);
-    query.bindValue(":contraseña", contraseña);
+bool usuariodao::verificarCredenciales(const QString& nombre, const QString& contrasena) {
+    QSqlQuery query(mdatabase);
+    query.prepare("SELECT id FROM usuarios WHERE nombre = ? AND contrasena = ?");
+    query.addBindValue(nombre);
+    query.addBindValue(contrasena);
 
-    if (query.exec() && query.next()) {
-        return query.value(0).toInt() > 0;
-    } else {
-        qDebug() << "Error al verificar credenciales:" << query.lastError().text();
-        return false;
-    }
+    return query.exec() && query.next();
 }
+
+

@@ -1,26 +1,37 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
+#include <memory>
+#include <QString>
 
-class databasemanager {
+#include "aplicaciondao.h"
+#include "licenciadao.h"
+#include "usuariodao.h"
+
+const QString DATABASE_FILENAME = "aplicaciones.db";
+class QSqlQuery;
+class QSqlDatabase;
+class DatabaseManager
+{
+public:
+    static void debugQuery(const QSqlQuery& query);
+    QSqlDatabase& obtenerBaseDeDatos();
+    static DatabaseManager& instance();
+    ~DatabaseManager();
+void inicializarBaseDeDatos();
+protected:
+    DatabaseManager(const QString& path = DATABASE_FILENAME);
+    DatabaseManager& operator=(const DatabaseManager& rhs) = delete;
+    DatabaseManager(const DatabaseManager& rhs) = delete;
+
 private:
-    static databasemanager *instancia;
-    QSqlDatabase db;
-
-    databasemanager();
+    std::unique_ptr<QSqlDatabase> mDatabase;
 
 public:
-    static databasemanager *obtenerinstancia();
-    bool abrirconexion(const QString &nombrebd);
-    void cerrarconexion();
-    bool ejecutaconsulta(const QString &consulta);
-    QSqlDatabase obtenerbase();
-
-    ~databasemanager();
+    const aplicaciondao aplicacionDao;
+    const licenciadao licenciaDao;
+    const usuariodao usuarioDao;
 };
 
-#endif
+#endif // DATABASEMANAGER_H
+
