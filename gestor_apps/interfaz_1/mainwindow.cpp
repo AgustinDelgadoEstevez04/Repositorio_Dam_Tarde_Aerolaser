@@ -19,6 +19,29 @@ MainWindow::~MainWindow() {
     delete modeloAplicaciones;
 }
 
+void MainWindow::insertarAplicacionesSiBDVacia() {
+    if (dbManager.aplicacionDao.obtenerTodasLasAplicaciones().isEmpty()) {
+        QList<aplicacion> aplicaciones = {
+            aplicacion(0, "Gestor de Archivos", "Organiza documentos y archivos", ":/imagenes/archivos.png", aplicacion::no_instalado),
+            aplicacion(0, "Editor de Texto", "Escribe y edita documentos de texto", ":/imagenes/editor.png", aplicacion::no_instalado),
+            aplicacion(0, "Calculadora Científica", "Realiza cálculos matemáticos avanzados", ":/imagenes/calculadora.png", aplicacion::no_instalado),
+            aplicacion(0, "Reproductor de Música", "Escucha tus canciones favoritas", ":/imagenes/musica.png", aplicacion::no_instalado),
+            aplicacion(0, "Calendario", "Administra tu agenda y eventos", ":/imagenes/calendario.png", aplicacion::no_instalado),
+            aplicacion(0, "Gestor de Tareas", "Organiza y gestiona tus actividades diarias", ":/imagenes/tareas.png", aplicacion::no_instalado),
+            aplicacion(0, "Explorador Web", "Accede a sitios web y realiza búsquedas en internet", ":/imagenes/web.png", aplicacion::no_instalado),
+            aplicacion(0, "Lector de PDFs", "Abre y visualiza archivos en formato PDF", ":/imagenes/pdf.png", aplicacion::no_instalado)
+        };
+
+        for (const aplicacion &app : aplicaciones) {
+            dbManager.aplicacionDao.guardarAplicacion(app);
+        }
+
+        qDebug() << "Aplicaciones insertadas porque la base de datos estaba vacía.";
+    } else {
+        qDebug() << "La base de datos ya tiene aplicaciones, no se insertaron nuevas.";
+    }
+}
+
 void MainWindow::cargaraplicaciones() {
     aplicaciones.clear();
     QList<aplicacion> listaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones();

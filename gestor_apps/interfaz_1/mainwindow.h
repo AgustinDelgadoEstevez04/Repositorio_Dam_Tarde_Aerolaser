@@ -24,6 +24,7 @@ private slots:
     void mostrarDetallesAplicacion();
     void cargarLicencias(int appId);
     void cargaraplicaciones();
+    void insertarAplicacionesSiBDVacia();
 
 private:
     Ui::MainWindow *ui;
