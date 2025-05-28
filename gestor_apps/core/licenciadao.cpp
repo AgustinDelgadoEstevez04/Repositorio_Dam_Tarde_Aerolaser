@@ -55,7 +55,7 @@ QList<licencia> licenciadao::obtenerTodasLasLicencias() {
     return lista;
 }
 
-QList<licencia> licenciadao::obtenerLicenciasPorEstado(licencia::Estado estado) {
+QList<licencia> licenciadao::obtenerLicenciasPorEstado(licencia::Estado estado) const{
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id, appId, userId, estado, fechaInicio, fechaFin FROM licencias WHERE estado = ?");
     query.addBindValue(static_cast<int>(estado));

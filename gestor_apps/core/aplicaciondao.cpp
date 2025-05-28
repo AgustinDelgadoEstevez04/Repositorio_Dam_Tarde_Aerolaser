@@ -39,7 +39,7 @@ aplicacion aplicaciondao::obtenerAplicacionPorId(int id) const {
     return aplicacion();
 }
 
-QList<aplicacion> aplicaciondao::obtenerTodasLasAplicaciones() {
+QList<aplicacion> aplicaciondao::obtenerTodasLasAplicaciones() const {
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id, nombre, descripcion, icono, estado FROM aplicaciones");
 
