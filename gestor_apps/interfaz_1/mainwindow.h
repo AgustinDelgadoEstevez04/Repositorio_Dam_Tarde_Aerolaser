@@ -8,6 +8,8 @@
 #include "AplicacionModel.h"
 #include "LicenciaModel.h"
 #include "aplicacion.h"
+#include <QIcon>
+#include <QPixmap>
 
 namespace Ui {
 class MainWindow;

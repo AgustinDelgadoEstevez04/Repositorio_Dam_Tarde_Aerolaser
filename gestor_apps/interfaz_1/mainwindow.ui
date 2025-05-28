@@ -222,7 +222,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="resources.qrc">:/imagenestrabajo/imagenes trabajo/usuario.png</pixmap>
+     <pixmap resource="resources.qrc">:/imagenes trabajo/usuario.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -241,7 +241,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="resources.qrc">:/imagenestrabajo/imagenes trabajo/busqueda-de-lupa.png</pixmap>
+     <pixmap resource="resources.qrc">:/imagenes trabajo/busqueda-de-lupa.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -377,7 +377,7 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/imagenestrabajo/imagenes trabajo/me-gusta.png</normaloff>:/imagenestrabajo/imagenes trabajo/me-gusta.png</iconset>
+      <normaloff>:/imagenes trabajo/me-gusta.png</normaloff>:/imagenes trabajo/me-gusta.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -400,7 +400,7 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/imagenestrabajo/imagenes trabajo/descargas.png</normaloff>:/imagenestrabajo/imagenes trabajo/descargas.png</iconset>
+      <normaloff>:/imagenes trabajo/descargas.png</normaloff>:/imagenes trabajo/descargas.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -423,7 +423,7 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/imagenestrabajo/imagenes trabajo/no.png</normaloff>:/imagenestrabajo/imagenes trabajo/no.png</iconset>
+      <normaloff>:/imagenes trabajo/no.png</normaloff>:/imagenes trabajo/no.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -445,7 +445,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="resources.qrc">:/imagenestrabajo/imagenes trabajo/filtrar.png</pixmap>
+     <pixmap resource="resources.qrc">:/imagenes trabajo/filtrar.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>

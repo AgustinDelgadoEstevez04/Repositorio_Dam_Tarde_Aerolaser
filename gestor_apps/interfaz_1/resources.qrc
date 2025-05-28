@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/imagenestrabajo">
+    <qresource prefix="/">
         <file>imagenes trabajo/busqueda-de-lupa.png</file>
         <file>imagenes trabajo/usuario.png</file>
         <file>imagenes trabajo/descargas.png</file>
