@@ -6,5 +6,13 @@
         <file>imagenes trabajo/filtrar.png</file>
         <file>imagenes trabajo/no.png</file>
         <file>imagenes trabajo/me-gusta.png</file>
+        <file>imagenes trabajo/archivo.png</file>
+        <file>imagenes trabajo/archivo-pdf.png</file>
+        <file>imagenes trabajo/portapapeles.png</file>
+        <file>imagenes trabajo/sitio-web.png</file>
+        <file>imagenes trabajo/calculadora.png</file>
+        <file>imagenes trabajo/calendario.png</file>
+        <file>imagenes trabajo/editor-de-texto.png</file>
+        <file>imagenes trabajo/musica.png</file>
     </qresource>
 </RCC>
