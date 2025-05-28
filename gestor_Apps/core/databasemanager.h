@@ -11,7 +11,6 @@
 const QString DATABASE_FILENAME = "aplicaciones.db";
 class QSqlQuery;
 class QSqlDatabase;
-
 class DatabaseManager
 {
 public:
@@ -19,8 +18,7 @@ public:
     QSqlDatabase& obtenerBaseDeDatos();
     static DatabaseManager& instance();
     ~DatabaseManager();
-    void inicializarBaseDeDatos();
-
+void inicializarBaseDeDatos();
 protected:
     DatabaseManager(const QString& path = DATABASE_FILENAME);
     DatabaseManager& operator=(const DatabaseManager& rhs) = delete;
@@ -30,9 +28,10 @@ private:
     std::unique_ptr<QSqlDatabase> mDatabase;
 
 public:
-    const aplicaciondao aplicacionDao; // Mantenido como const
-    const licenciadao licenciaDao;     // Mantenido como const
-    usuariodao usuarioDao;             // ¡Este es el que NO DEBE TENER 'const'!
+    const aplicaciondao aplicacionDao;
+    const licenciadao licenciaDao;
+     usuariodao usuarioDao;
 };
 
 #endif // DATABASEMANAGER_H
+

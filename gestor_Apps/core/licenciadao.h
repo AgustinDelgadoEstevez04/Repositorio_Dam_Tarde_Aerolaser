@@ -13,7 +13,7 @@ public:
     bool guardarLicencia(const licencia& lic);
     licencia obtenerLicenciaPorId(int id) const;
     QList<licencia> obtenerTodasLasLicencias();
-    QList<licencia> obtenerLicenciasPorEstado(licencia::Estado estado);
+    QList<licencia> obtenerLicenciasPorEstado(licencia::Estado estado)const;
     bool actualizarLicencia(const licencia& lic);
     bool eliminarLicencia(int id);
 

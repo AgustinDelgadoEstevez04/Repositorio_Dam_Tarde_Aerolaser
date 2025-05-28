@@ -7,8 +7,7 @@ usuariodao::usuariodao(QSqlDatabase& database) : mdatabase(database) {}
 
 bool usuariodao::guardarUsuario(const usuario& usr) {
     QSqlQuery query(mdatabase);
-    query.prepare("INSERT INTO usuarios (id, nombre, contrasena) VALUES (?, ?, ?)");
-    query.addBindValue(usr.getid());
+    query.prepare("INSERT INTO usuarios (nombre, contrasena) VALUES (?, ?)");
     query.addBindValue(usr.getnombre());
     query.addBindValue(usr.getcontrasena());
 

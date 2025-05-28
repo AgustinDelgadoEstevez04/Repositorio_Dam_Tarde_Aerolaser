@@ -2,4 +2,4 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     core \
-    interfaz
+    interfaz_1

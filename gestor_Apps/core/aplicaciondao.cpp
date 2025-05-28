@@ -8,7 +8,7 @@ aplicaciondao::aplicaciondao(QSqlDatabase &database):
 {}
 
 
-bool aplicaciondao::guardarAplicacion(const aplicacion& app) {
+bool aplicaciondao::guardarAplicacion(const aplicacion& app) const{
     QSqlQuery query(mdatabase);
     query.prepare("INSERT INTO aplicaciones (id, nombre, descripcion, icono, estado) VALUES (?, ?, ?, ?, ?)");
     query.addBindValue(app.id());
@@ -39,7 +39,7 @@ aplicacion aplicaciondao::obtenerAplicacionPorId(int id) const {
     return aplicacion();
 }
 
-QList<aplicacion> aplicaciondao::obtenerTodasLasAplicaciones() {
+QList<aplicacion> aplicaciondao::obtenerTodasLasAplicaciones() const {
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id, nombre, descripcion, icono, estado FROM aplicaciones");
 
