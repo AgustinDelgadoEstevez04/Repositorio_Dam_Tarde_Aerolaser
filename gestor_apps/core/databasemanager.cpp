@@ -11,6 +11,7 @@ DatabaseManager::DatabaseManager(const QString& path)
 
 
     mDatabase->setDatabaseName(path);
+
     if (!mDatabase->open()) {
         qDebug() << "Error al abrir la base de datos:" << mDatabase->lastError().text();
     } else {
