@@ -58,10 +58,7 @@ void MainWindow::mostrarDetallesAplicacion() {
     int idApp = index.data(Qt::UserRole).toInt();
     aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(idApp);
 
-    ui->label->setText("Aplicación: " + app.nombre()); // Renombrado de ui->label_4 (que no existe en tu .ui) a ui->label (el que sí existe)
-    // NOTA: Tu .ui original tiene label, label_2, label_3. No tiene label_4.
-    // Asumo que 'label' es el destino deseado para mostrar el nombre de la aplicación.
-    // Si necesitas un label_4, tendrías que añadirlo en el Qt Designer.
+    ui->label->setText("Aplicación: " + app.nombre()); //
 
     cargarLicencias(idApp);
 }

@@ -432,7 +432,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_filtro">
     <property name="geometry">
      <rect>
       <x>560</x>
@@ -454,10 +454,10 @@
    <widget class="QPushButton" name="favorito_app">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>450</y>
-      <width>31</width>
-      <height>31</height>
+      <x>380</x>
+      <y>440</y>
+      <width>41</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -465,7 +465,7 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/imagenes trabajo/me-gusta.png</normaloff>:/imagenes trabajo/me-gusta.png</iconset>
+      <normaloff>:/imagenes trabajo/mano arriba.png</normaloff>:/imagenes trabajo/mano arriba.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -477,10 +477,10 @@
    <widget class="QPushButton" name="descargar_app">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>450</y>
-      <width>31</width>
-      <height>31</height>
+      <x>430</x>
+      <y>440</y>
+      <width>41</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -488,7 +488,7 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/imagenes trabajo/descargas.png</normaloff>:/imagenes trabajo/descargas.png</iconset>
+      <normaloff>:/imagenes trabajo/instalar.png</normaloff>:/imagenes trabajo/instalar.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -500,10 +500,10 @@
    <widget class="QPushButton" name="no_descargados_2">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>450</y>
-      <width>31</width>
-      <height>31</height>
+      <x>480</x>
+      <y>440</y>
+      <width>41</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -518,6 +518,19 @@
       <width>20</width>
       <height>20</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>440</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

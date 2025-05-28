@@ -14,5 +14,7 @@
         <file>imagenes trabajo/calendario.png</file>
         <file>imagenes trabajo/editor-de-texto.png</file>
         <file>imagenes trabajo/musica.png</file>
+        <file>imagenes trabajo/mano arriba.png</file>
+        <file>imagenes trabajo/instalar.png</file>
     </qresource>
 </RCC>
