@@ -1,21 +1,130 @@
 #include "mainwindow.h"
+#include "QtSql/qsqlerror.h"
+#include "QtSql/qsqlquery.h"
 #include "ui_mainwindow.h"
-
+#include "DatabaseManager.h"
+#include <QMessageBox>
+#include <QDebug>
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+    : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()), modeloAplicaciones(new QStandardItemModel(this)) {
     ui->setupUi(this);
+    cargaraplicaciones();
+
+    ui->lista_apps->setModel(modeloAplicaciones);
+
+    connect(ui->barra_busqueda, &QLineEdit::textChanged, this, &MainWindow::filtrarAplicaciones); // Renombrado de ui->lineEdit_3 a ui->barra_busqueda
+    connect(ui->lista_apps, &QListView::clicked, this, &MainWindow::mostrarDetallesAplicacion); // Renombrado de ui->listView a ui->lista_apps
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
+    delete modeloAplicaciones;
 }
 
-void MainWindow::on_lineEdit_2_cursorPositionChanged(int arg1, int arg2)
+void MainWindow::cargaraplicaciones() {
+    aplicaciones.clear();
+    QList<aplicacion> listaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones();
+    modeloAplicaciones->clear();
+
+    for (const aplicacion &app : listaApps) {
+        AplicacionModel *modeloApp = new AplicacionModel(app, this);
+        aplicaciones.append(modeloApp);
+
+        QStandardItem *item = new QStandardItem(app.nombre());
+        item->setData(app.id(), Qt::UserRole);
+        modeloAplicaciones->appendRow(item);
+    }
+}
+
+void MainWindow::filtrarAplicaciones() {
+    QString filtro = ui->barra_busqueda->text().toLower();
+    modeloAplicaciones->clear();
+
+    for (AplicacionModel *appModel : aplicaciones) {
+        if (appModel->nombre().toLower().contains(filtro)) {
+            QStandardItem *item = new QStandardItem(appModel->nombre());
+            item->setData(appModel->id(), Qt::UserRole);
+            modeloAplicaciones->appendRow(item);
+        }
+    }
+}
+
+void MainWindow::mostrarDetallesAplicacion() {
+    QModelIndex index = ui->lista_apps->currentIndex();
+    if (!index.isValid()) return;
+
+    int idApp = index.data(Qt::UserRole).toInt();
+    aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(idApp);
+
+    ui->label->setText("Aplicación: " + app.nombre()); // Renombrado de ui->label_4 (que no existe en tu .ui) a ui->label (el que sí existe)
+    // NOTA: Tu .ui original tiene label, label_2, label_3. No tiene label_4.
+    // Asumo que 'label' es el destino deseado para mostrar el nombre de la aplicación.
+    // Si necesitas un label_4, tendrías que añadirlo en el Qt Designer.
+
+    cargarLicencias(idApp);
+}
+
+void MainWindow::cargarLicencias(int appId) {
+    licencias.clear();
+    ui->lista_filtro->clear();
+
+    QList<licencia> listaLicencias = dbManager.licenciaDao.obtenerLicenciasPorEstado(licencia::Activa);
+
+    for (const licencia &lic : listaLicencias) {
+        if (lic.appId() == appId) {
+            LicenciaModel *modeloLic = new LicenciaModel(lic, this);
+            licencias.append(modeloLic);
+
+            ui->lista_filtro->addItem(lic.estadoToString());
+        }
+    }
+}
+
+void MainWindow::on_usuario_nombre_linkActivated(const QString &link)
+{
+
+}
+
+
+void MainWindow::on_cerrar_sesion_clicked()
+{
+
+}
+
+
+void MainWindow::on_barra_busqueda_cursorPositionChanged(int arg1, int arg2)
+{
+
+}
+
+
+void MainWindow::on_favoritos_clicked()
+{
+
+}
+
+
+void MainWindow::on_descargados_clicked()
+{
+
+}
+
+
+void MainWindow::on_no_descargados_clicked()
+{
+
+}
+
+
+void MainWindow::on_lista_apps_indexesMoved(const QModelIndexList &indexes)
+{
+
+}
+
+
+void MainWindow::on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
 
 }

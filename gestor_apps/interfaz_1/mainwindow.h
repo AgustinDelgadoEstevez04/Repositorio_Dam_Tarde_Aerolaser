@@ -2,28 +2,56 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "QPixmap"
+#include <QStandardItemModel>
 #include <QListWidgetItem>
-#include <QDebug>
+#include "DatabaseManager.h"
+#include "AplicacionModel.h"
+#include "LicenciaModel.h"
+#include "aplicacion.h"
 
-QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
-QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-    void on_lineEdit_2_cursorPositionChanged(int arg1, int arg2);
+    void filtrarAplicaciones();
+    void mostrarDetallesAplicacion();
+    void cargarLicencias(int appId);
+    void cargaraplicaciones();
+
+
+    void on_usuario_nombre_linkActivated(const QString &link);
+
+    void on_cerrar_sesion_clicked();
+
+    void on_barra_busqueda_cursorPositionChanged(int arg1, int arg2);
+
+    void on_favoritos_clicked();
+
+    void on_descargados_clicked();
+
+    void on_no_descargados_clicked();
+
+    void on_lista_apps_indexesMoved(const QModelIndexList &indexes);
+
+    void on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 private:
     Ui::MainWindow *ui;
+    DatabaseManager &dbManager;
+    QStandardItemModel *modeloAplicaciones;
+    QList<AplicacionModel*> aplicaciones;
+    QList<LicenciaModel*> licencias;
 };
+
 #endif // MAINWINDOW_H
+
+

@@ -55,3 +55,4 @@ bool licencia::estaCaducada()const{
 bool licencia::estaProximaACaducar()const{
     estaCaducada() && QDate::currentDate().addDays(7)>=m_fechaFin;
 }
+

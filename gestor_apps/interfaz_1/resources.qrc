@@ -1,7 +1,10 @@
 <RCC>
     <qresource prefix="/imagenestrabajo">
         <file>imagenes trabajo/busqueda-de-lupa.png</file>
-        <file>imagenes trabajo/herramienta-de-filtro-forma-negra.png</file>
         <file>imagenes trabajo/usuario.png</file>
+        <file>imagenes trabajo/descargas.png</file>
+        <file>imagenes trabajo/filtrar.png</file>
+        <file>imagenes trabajo/no.png</file>
+        <file>imagenes trabajo/me-gusta.png</file>
     </qresource>
 </RCC>

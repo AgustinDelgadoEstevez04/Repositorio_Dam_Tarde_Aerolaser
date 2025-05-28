@@ -26,5 +26,4 @@ private:
     Estado mestado;
 };
 
-
 #endif // APLICACION_H

@@ -38,10 +38,28 @@ struct qt_meta_tag_ZN10MainWindowE_t {};
 #ifdef QT_MOC_HAS_STRINGDATA
 static constexpr auto qt_meta_stringdata_ZN10MainWindowE = QtMocHelpers::stringData(
     "MainWindow",
-    "on_lineEdit_2_cursorPositionChanged",
+    "filtrarAplicaciones",
     "",
+    "mostrarDetallesAplicacion",
+    "cargarLicencias",
+    "appId",
+    "cargaraplicaciones",
+    "on_usuario_nombre_linkActivated",
+    "link",
+    "on_cerrar_sesion_clicked",
+    "on_barra_busqueda_cursorPositionChanged",
     "arg1",
-    "arg2"
+    "arg2",
+    "on_favoritos_clicked",
+    "on_descargados_clicked",
+    "on_no_descargados_clicked",
+    "on_lista_apps_indexesMoved",
+    "QModelIndexList",
+    "indexes",
+    "on_lista_filtro_currentItemChanged",
+    "QListWidgetItem*",
+    "current",
+    "previous"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -53,7 +71,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -61,10 +79,32 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    2,   20,    2, 0x08,    1 /* Private */,
+       1,    0,   86,    2, 0x08,    1 /* Private */,
+       3,    0,   87,    2, 0x08,    2 /* Private */,
+       4,    1,   88,    2, 0x08,    3 /* Private */,
+       6,    0,   91,    2, 0x08,    5 /* Private */,
+       7,    1,   92,    2, 0x08,    6 /* Private */,
+       9,    0,   95,    2, 0x08,    8 /* Private */,
+      10,    2,   96,    2, 0x08,    9 /* Private */,
+      13,    0,  101,    2, 0x08,   12 /* Private */,
+      14,    0,  102,    2, 0x08,   13 /* Private */,
+      15,    0,  103,    2, 0x08,   14 /* Private */,
+      16,    1,  104,    2, 0x08,   15 /* Private */,
+      19,    2,  107,    2, 0x08,   17 /* Private */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    4,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   11,   12,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void, 0x80000000 | 20, 0x80000000 | 20,   21,   22,
 
        0        // eod
 };
@@ -78,10 +118,37 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_tag_ZN10MainWindowE_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>,
-        // method 'on_lineEdit_2_cursorPositionChanged'
+        // method 'filtrarAplicaciones'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'mostrarDetallesAplicacion'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'cargarLicencias'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>
+        // method 'cargaraplicaciones'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_usuario_nombre_linkActivated'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        // method 'on_cerrar_sesion_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_barra_busqueda_cursorPositionChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'on_favoritos_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_descargados_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_no_descargados_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_lista_apps_indexesMoved'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QModelIndexList &, std::false_type>,
+        // method 'on_lista_filtro_currentItemChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QListWidgetItem *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QListWidgetItem *, std::false_type>
     >,
     nullptr
 } };
@@ -91,8 +158,31 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->on_lineEdit_2_cursorPositionChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
+        case 0: _t->filtrarAplicaciones(); break;
+        case 1: _t->mostrarDetallesAplicacion(); break;
+        case 2: _t->cargarLicencias((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 3: _t->cargaraplicaciones(); break;
+        case 4: _t->on_usuario_nombre_linkActivated((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 5: _t->on_cerrar_sesion_clicked(); break;
+        case 6: _t->on_barra_busqueda_cursorPositionChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
+        case 7: _t->on_favoritos_clicked(); break;
+        case 8: _t->on_descargados_clicked(); break;
+        case 9: _t->on_no_descargados_clicked(); break;
+        case 10: _t->on_lista_apps_indexesMoved((*reinterpret_cast< std::add_pointer_t<QModelIndexList>>(_a[1]))); break;
+        case 11: _t->on_lista_filtro_currentItemChanged((*reinterpret_cast< std::add_pointer_t<QListWidgetItem*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QListWidgetItem*>>(_a[2]))); break;
         default: ;
+        }
+    }
+    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+        case 10:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QModelIndexList >(); break;
+            }
+            break;
         }
     }
 }
@@ -116,14 +206,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 12;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
-            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 1;
+        if (_id < 12)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 12;
     }
     return _id;
 }
