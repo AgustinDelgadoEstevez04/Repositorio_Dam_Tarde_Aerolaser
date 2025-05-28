@@ -28,3 +28,6 @@ DEPENDPATH += $$PWD/../core
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    imagenes/OIP (1).jpg

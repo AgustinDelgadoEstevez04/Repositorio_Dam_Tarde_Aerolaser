@@ -1,7 +1,7 @@
 <RCC>
-    <qresource prefix="/imagenestrabajo">
-        <file>imagenes trabajo/busqueda-de-lupa.png</file>
-        <file>imagenes trabajo/herramienta-de-filtro-forma-negra.png</file>
-        <file>imagenes trabajo/usuario.png</file>
+    <qresource prefix="/img">
+        <file>imagenes/OIP (1).jpg</file>
+        <file>imagenes/OIP (2).jpg</file>
+        <file>imagenes/OIP.jpg</file>
     </qresource>
 </RCC>
