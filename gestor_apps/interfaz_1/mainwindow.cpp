@@ -58,7 +58,7 @@ void MainWindow::mostrarDetallesAplicacion() {
     int idApp = index.data(Qt::UserRole).toInt();
     aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(idApp);
 
-    ui->label->setText("Aplicación: " + app.nombre()); //
+    ui->label->setText("Descripción: " + app.descripcion()); //
 
     cargarLicencias(idApp);
 }
