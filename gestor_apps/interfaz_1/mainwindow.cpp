@@ -52,14 +52,30 @@ void MainWindow::cargaraplicaciones() {
     }
 }
 
-void MainWindow::filtrarAplicaciones() {
-    QString filtro = ui->barra_busqueda->text().toLower();
-    modeloAplicaciones->clear();
 
-    for (AplicacionModel *appModel : aplicaciones) {
-        if (appModel->nombre().toLower().contains(filtro)) {
-            QStandardItem *item = new QStandardItem(appModel->nombre());
-            item->setData(appModel->id(), Qt::UserRole);
+
+void MainWindow::filtrarAplicaciones() {
+    QString textoBusqueda = ui->barra_busqueda->text().trimmed(); // Obtiene el texto del buscador
+    modeloAplicaciones->clear(); // Limpia el modelo actual
+
+    QList<aplicacion> listaCompletaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones(); // O si tienes una lista en memoria, úsala
+
+    for (const aplicacion &app : listaCompletaApps) {
+        // Filtra si el nombre de la aplicación contiene el texto de búsqueda
+        if (app.nombre().contains(textoBusqueda, Qt::CaseInsensitive)) {
+            QStandardItem *item = new QStandardItem(app.nombre());
+
+
+            QIcon icon(app.icono());
+            if (!icon.isNull()) {
+                item->setIcon(icon);
+            } else {
+                qDebug() << "Advertencia: No se pudo cargar el icono para:" << app.nombre() << "en la ruta:" << app.icono();
+
+            }
+
+
+            item->setData(app.id(), Qt::UserRole); // Almacena el ID de la aplicación
             modeloAplicaciones->appendRow(item);
         }
     }
@@ -136,6 +152,24 @@ void MainWindow::on_lista_apps_indexesMoved(const QModelIndexList &indexes)
 
 
 void MainWindow::on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+
+}
+
+
+void MainWindow::on_favorito_app_clicked()
+{
+
+}
+
+
+void MainWindow::on_descargar_app_clicked()
+{
+
+}
+
+
+void MainWindow::on_no_descargados_2_clicked()
 {
 
 }

@@ -30,6 +30,8 @@ private slots:
     void cargaraplicaciones();
 
 
+
+
     void on_usuario_nombre_linkActivated(const QString &link);
 
     void on_cerrar_sesion_clicked();
@@ -45,6 +47,12 @@ private slots:
     void on_lista_apps_indexesMoved(const QModelIndexList &indexes);
 
     void on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    void on_favorito_app_clicked();
+
+    void on_descargar_app_clicked();
+
+    void on_no_descargados_2_clicked();
 
 private:
     Ui::MainWindow *ui;
