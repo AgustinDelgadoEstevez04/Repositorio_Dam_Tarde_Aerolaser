@@ -2,9 +2,10 @@
 #include "ui_loggin.h"
 #include <QMessageBox>
 #include <QDebug>
-#include "databasemanager.h" // Asegúrate de que esto esté incluido
-#include "usuario.h"         // Asegúrate de que esto esté incluido
-#include "usuariodao.h"      // Asegúrate de que esto esté incluido, aunque DatabaseManager lo contiene, es buena práctica.
+#include "databasemanager.h"
+#include "usuario.h"
+#include "usuariodao.h"
+#include "mainwindow.h" // <-- SE HA AÑADIDO ESTA LÍNEA
 
 loggin::loggin(QWidget *parent)
     // IMPORTANTISIMO: Si quieres usar exec(), loggin DEBE HEREDAR de QDialog, no QMainWindow
@@ -14,8 +15,6 @@ loggin::loggin(QWidget *parent)
     , ui(new Ui::loggin)
 {
     ui->setupUi(this);
-
-
 }
 
 loggin::~loggin()
@@ -51,13 +50,14 @@ void loggin::on_iniciar_clicked()
     // Usar el DAO para verificar credenciales
     if (DatabaseManager::instance().usuarioDao.verificarCredenciales(nombre, contrasena)) {
         QMessageBox::information(this, "Inicio de Sesión", "¡Inicio de sesión exitoso!");
-        // Aquí podrías emitir una señal o llamar a accept() si loggin es un QDialog
-        // Si loggin es un QDialog:
-        // accept();
-        // Si loggin es un QMainWindow y quieres ocultarla y mostrar la MainWindow:
-        // this->hide();
-        // MainWindow *mainWindow = new MainWindow(); // O pasar el usuario loggeado
-        // mainWindow->show();
+
+        // --- INICIO DE LA MODIFICACIÓN ---
+        // Ocultar la ventana de login y mostrar la ventana principal
+        this->hide();
+        MainWindow *mainWindow = new MainWindow();
+        mainWindow->show();
+        // --- FIN DE LA MODIFICACIÓN ---
+
     } else {
         QMessageBox::critical(this, "Error de Inicio de Sesión", "Nombre de usuario o contraseña incorrectos.");
     }

@@ -1,4 +1,4 @@
-#ifndef LOGGIN_H
+ #ifndef LOGGIN_H
 #define LOGGIN_H
 
 #include <QMainWindow>
