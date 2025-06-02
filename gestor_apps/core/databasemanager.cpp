@@ -76,14 +76,14 @@ void DatabaseManager::inicializarBaseDeDatos() {
         qDebug() << "La base de datos está vacía, insertando aplicaciones por defecto...";
 
         query.exec("INSERT INTO aplicaciones (nombre, descripcion, icono, estado) VALUES "
-                   "('Gestor de Archivos', 'Organiza documentos y archivos', ':/imagenes trabajo/busqueda-de-lupa.png', 2),"
-                   "('Editor de Texto', 'Escribe y edita documentos de texto', ':/imagenes/editor.png', 2),"
-                   "('Calculadora Científica', 'Realiza cálculos matemáticos avanzados', ':/imagenes/calculadora.png', 2),"
-                   "('Reproductor de Música', 'Escucha tus canciones favoritas', ':/imagenes/musica.png', 2),"
-                   "('Calendario', 'Administra tu agenda y eventos', ':/imagenes/calendario.png', 2),"
-                   "('Gestor de Tareas', 'Organiza y gestiona tus actividades diarias', ':/imagenes/tareas.png', 2),"
-                   "('Explorador Web', 'Accede a sitios web y realiza búsquedas en internet', ':/imagenes/web.png', 2),"
-                   "('Lector de PDFs', 'Abre y visualiza archivos en formato PDF', ':/imagenes/pdf.png', 2)");
+                   "('Gestor de Archivos', 'Organiza documentos y archivos', ':/imagenes trabajo/archivo.png', 2),"
+                   "('Editor de Texto', 'Escribe y edita documentos de texto', ':/imagenes trabajo/editor-de-texto.png', 2),"
+                   "('Calculadora Científica', 'Realiza cálculos matemáticos avanzados', ':/imagenes trabajo/calculadora.png', 2),"
+                   "('Reproductor de Música', 'Escucha tus canciones favoritas', ':/imagenes trabajo/musica.png', 2),"
+                   "('Calendario', 'Administra tu agenda y eventos', ':/imagenes trabajo/calendario.png', 2),"
+                   "('Gestor de Tareas', 'Organiza y gestiona tus actividades diarias', ':/imagenes trabajo/portapapeles.png', 2),"
+                   "('Explorador Web', 'Accede a sitios web y realiza búsquedas en internet', ':/imagenes trabajo/sitio-web.png', 2),"
+                   "('Lector de PDFs', 'Abre y visualiza archivos en formato PDF', ':/imagenes trabajo/archivo-pdf.png', 2)");
 
         if (query.lastError().isValid()) {
             qDebug() << "Error al insertar aplicaciones por defecto:" << query.lastError().text();

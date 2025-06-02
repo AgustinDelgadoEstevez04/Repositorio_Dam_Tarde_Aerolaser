@@ -1,10 +1,10 @@
 #include "mainwindow.h"
-#include "QtSql/qsqlerror.h"
-#include "QtSql/qsqlquery.h"
 #include "ui_mainwindow.h"
 #include "DatabaseManager.h"
 #include <QMessageBox>
 #include <QDebug>
+#include <QIcon>
+#include <QPixmap>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     cargaraplicaciones();
 
     ui->lista_apps->setModel(modeloAplicaciones);
+    ui->lista_apps->setIconSize(QSize(32, 32));
 
     connect(ui->barra_busqueda, &QLineEdit::textChanged, this, &MainWindow::filtrarAplicaciones); // Renombrado de ui->lineEdit_3 a ui->barra_busqueda
     connect(ui->lista_apps, &QListView::clicked, this, &MainWindow::mostrarDetallesAplicacion); // Renombrado de ui->listView a ui->lista_apps
@@ -22,6 +23,8 @@ MainWindow::~MainWindow() {
     delete ui;
     delete modeloAplicaciones;
 }
+
+
 
 void MainWindow::cargaraplicaciones() {
     aplicaciones.clear();
@@ -33,7 +36,18 @@ void MainWindow::cargaraplicaciones() {
         aplicaciones.append(modeloApp);
 
         QStandardItem *item = new QStandardItem(app.nombre());
-        item->setData(app.id(), Qt::UserRole);
+
+        // Cargar el icono desde la ruta de la aplicación
+        QIcon icon(app.icono());
+        if (!icon.isNull()) {
+            item->setIcon(icon);
+
+        } else {
+            qDebug() << "Advertencia: No se pudo cargar el icono para:" << app.nombre() << "en la ruta:" << app.icono();
+
+        }
+
+        item->setData(app.id(), Qt::UserRole); // Almacena el ID de la aplicación
         modeloAplicaciones->appendRow(item);
     }
 }
@@ -58,7 +72,7 @@ void MainWindow::mostrarDetallesAplicacion() {
     int idApp = index.data(Qt::UserRole).toInt();
     aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(idApp);
 
-    ui->label->setText("Descripción: " + app.descripcion()); //
+    ui->label->setText("Descripción: " + app.descripcion());
 
     cargarLicencias(idApp);
 }
