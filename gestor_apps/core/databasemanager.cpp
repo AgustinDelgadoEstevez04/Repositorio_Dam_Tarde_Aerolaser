@@ -2,7 +2,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
-#include "QResource"
 
 DatabaseManager::DatabaseManager(const QString& path)
     : mDatabase(std::make_unique<QSqlDatabase>(QSqlDatabase::addDatabase("QSQLITE"))),
@@ -48,13 +47,13 @@ void DatabaseManager::inicializarBaseDeDatos() {
                "nombre TEXT UNIQUE NOT NULL, "
                "descripcion TEXT NOT NULL, "
                "icono TEXT NOT NULL, "
-               "estado INTEGER NOT NULL)");
-
+               "estado INTEGER NOT NULL, "
+               "favorito INTEGER NOT NULL)");
 
     query.exec("CREATE TABLE IF NOT EXISTS usuarios ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                "nombre TEXT UNIQUE NOT NULL, "
-               "contraseña TEXT NOT NULL)");
+               "contrasena TEXT NOT NULL)");
 
 
     query.exec("CREATE TABLE IF NOT EXISTS licencias ("
@@ -75,15 +74,15 @@ void DatabaseManager::inicializarBaseDeDatos() {
     if (numApps == 0) {  // Si no hay aplicaciones, se insertan
         qDebug() << "La base de datos está vacía, insertando aplicaciones por defecto...";
 
-        query.exec("INSERT INTO aplicaciones (nombre, descripcion, icono, estado) VALUES "
-                   "('Gestor de Archivos', 'Organiza documentos y archivos', ':/imagenes trabajo/archivo.png', 2),"
-                   "('Editor de Texto', 'Escribe y edita documentos de texto', ':/imagenes trabajo/editor-de-texto.png', 2),"
-                   "('Calculadora Científica', 'Realiza cálculos matemáticos avanzados', ':/imagenes trabajo/calculadora.png', 2),"
-                   "('Reproductor de Música', 'Escucha tus canciones favoritas', ':/imagenes trabajo/musica.png', 2),"
-                   "('Calendario', 'Administra tu agenda y eventos', ':/imagenes trabajo/calendario.png', 2),"
-                   "('Gestor de Tareas', 'Organiza y gestiona tus actividades diarias', ':/imagenes trabajo/portapapeles.png', 2),"
-                   "('Explorador Web', 'Accede a sitios web y realiza búsquedas en internet', ':/imagenes trabajo/sitio-web.png', 2),"
-                   "('Lector de PDFs', 'Abre y visualiza archivos en formato PDF', ':/imagenes trabajo/archivo-pdf.png', 2)");
+        query.exec("INSERT INTO aplicaciones (nombre, descripcion, icono, estado,favorito) VALUES "
+                   "('Gestor de Archivos', 'Organiza documentos y archivos', ':/imagenes trabajo/archivo.png', 2, 4),"
+                   "('Editor de Texto', 'Escribe y edita documentos de texto', ':/imagenes trabajo/editor-de-texto.png', 2, 4),"
+                   "('Calculadora Científica', 'Realiza cálculos matemáticos avanzados', ':/imagenes trabajo/calculadora.png', 2, 4),"
+                   "('Reproductor de Música', 'Escucha tus canciones favoritas', ':/imagenes trabajo/musica.png', 2, 4),"
+                   "('Calendario', 'Administra tu agenda y eventos', ':/imagenes trabajo/calendario.png', 2, 4),"
+                   "('Gestor de Tareas', 'Organiza y gestiona tus actividades diarias', ':/imagenes trabajo/portapapeles.png', 2, 4),"
+                   "('Explorador Web', 'Accede a sitios web y realiza búsquedas en internet', ':/imagenes trabajo/sitio-web.png', 2, 4),"
+                   "('Lector de PDFs', 'Abre y visualiza archivos en formato PDF', ':/imagenes trabajo/archivo-pdf.png', 2, 4)");
 
         if (query.lastError().isValid()) {
             qDebug() << "Error al insertar aplicaciones por defecto:" << query.lastError().text();

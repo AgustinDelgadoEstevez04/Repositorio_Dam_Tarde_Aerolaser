@@ -18,7 +18,7 @@ public:
     QSqlDatabase& obtenerBaseDeDatos();
     static DatabaseManager& instance();
     ~DatabaseManager();
-    void inicializarBaseDeDatos();
+void inicializarBaseDeDatos();
 protected:
     DatabaseManager(const QString& path = DATABASE_FILENAME);
     DatabaseManager& operator=(const DatabaseManager& rhs) = delete;
@@ -30,7 +30,7 @@ private:
 public:
     const aplicaciondao aplicacionDao;
     const licenciadao licenciaDao;
-    const usuariodao usuarioDao;
+     usuariodao usuarioDao;
 };
 
 #endif // DATABASEMANAGER_H

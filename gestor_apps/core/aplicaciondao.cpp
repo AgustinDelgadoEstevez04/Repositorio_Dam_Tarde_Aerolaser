@@ -7,15 +7,15 @@ aplicaciondao::aplicaciondao(QSqlDatabase &database):
     mdatabase(database)
 {}
 
-
-bool aplicaciondao::guardarAplicacion(const aplicacion& app) const{
+bool aplicaciondao::guardarAplicacion(const aplicacion& app) const {
     QSqlQuery query(mdatabase);
-    query.prepare("INSERT INTO aplicaciones (id, nombre, descripcion, icono, estado) VALUES (?, ?, ?, ?, ?)");
+    query.prepare("INSERT INTO aplicaciones (id, nombre, descripcion, icono, estado, favorito) VALUES (?, ?, ?, ?, ?, ?)");
     query.addBindValue(app.id());
     query.addBindValue(app.nombre());
     query.addBindValue(app.descripcion());
     query.addBindValue(app.icono());
     query.addBindValue(static_cast<int>(app.estado()));
+    query.addBindValue(static_cast<int>(app.favorito()));  // 🔹 Nuevo campo de favorito
 
     if (!query.exec()) {
         qDebug() << "Error al insertar aplicación:" << query.lastError().text();
@@ -26,7 +26,7 @@ bool aplicaciondao::guardarAplicacion(const aplicacion& app) const{
 
 aplicacion aplicaciondao::obtenerAplicacionPorId(int id) const {
     QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, nombre, descripcion, icono, estado FROM aplicaciones WHERE id = ?");
+    query.prepare("SELECT id, nombre, descripcion, icono, estado, favorito FROM aplicaciones WHERE id = ?");
     query.addBindValue(id);
 
     if (query.exec() && query.next()) {
@@ -34,14 +34,15 @@ aplicacion aplicaciondao::obtenerAplicacionPorId(int id) const {
                           query.value(1).toString(),
                           query.value(2).toString(),
                           query.value(3).toString(),
-                          static_cast<aplicacion::Estado>(query.value(4).toInt()));
+                          static_cast<aplicacion::Estado>(query.value(4).toInt()),
+                          static_cast<aplicacion::Favorito>(query.value(5).toInt()));  // 🔹 Agregado favorito
     }
     return aplicacion();
 }
 
 QList<aplicacion> aplicaciondao::obtenerTodasLasAplicaciones() const {
     QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, nombre, descripcion, icono, estado FROM aplicaciones");
+    query.prepare("SELECT id, nombre, descripcion, icono, estado, favorito FROM aplicaciones");
 
     QList<aplicacion> lista;
     if (query.exec()) {
@@ -50,7 +51,8 @@ QList<aplicacion> aplicaciondao::obtenerTodasLasAplicaciones() const {
                                     query.value(1).toString(),
                                     query.value(2).toString(),
                                     query.value(3).toString(),
-                                    static_cast<aplicacion::Estado>(query.value(4).toInt())));
+                                    static_cast<aplicacion::Estado>(query.value(4).toInt()),
+                                    static_cast<aplicacion::Favorito>(query.value(5).toInt())));  // 🔹 Agregado favorito
         }
     }
     return lista;
@@ -58,7 +60,7 @@ QList<aplicacion> aplicaciondao::obtenerTodasLasAplicaciones() const {
 
 QList<aplicacion> aplicaciondao::obtenerAplicacionesPorEstado(aplicacion::Estado estado) {
     QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, nombre, descripcion, icono, estado FROM aplicaciones WHERE estado = ?");
+    query.prepare("SELECT id, nombre, descripcion, icono, estado, favorito FROM aplicaciones WHERE estado = ?");
     query.addBindValue(static_cast<int>(estado));
 
     QList<aplicacion> lista;
@@ -68,7 +70,28 @@ QList<aplicacion> aplicaciondao::obtenerAplicacionesPorEstado(aplicacion::Estado
                                     query.value(1).toString(),
                                     query.value(2).toString(),
                                     query.value(3).toString(),
-                                    static_cast<aplicacion::Estado>(query.value(4).toInt())));
+                                    static_cast<aplicacion::Estado>(query.value(4).toInt()),
+                                    static_cast<aplicacion::Favorito>(query.value(5).toInt())));  // 🔹 Agregado favorito
+        }
+    }
+    return lista;
+}
+
+// 🔹 Nueva función para obtener aplicaciones por favorito
+QList<aplicacion> aplicaciondao::obtenerAplicacionesPorFavorito(aplicacion::Favorito favorito) {
+    QSqlQuery query(mdatabase);
+    query.prepare("SELECT id, nombre, descripcion, icono, estado, favorito FROM aplicaciones WHERE favorito = ?");
+    query.addBindValue(static_cast<int>(favorito));
+
+    QList<aplicacion> lista;
+    if (query.exec()) {
+        while (query.next()) {
+            lista.append(aplicacion(query.value(0).toInt(),
+                                    query.value(1).toString(),
+                                    query.value(2).toString(),
+                                    query.value(3).toString(),
+                                    static_cast<aplicacion::Estado>(query.value(4).toInt()),
+                                    static_cast<aplicacion::Favorito>(query.value(5).toInt())));
         }
     }
     return lista;
@@ -76,11 +99,12 @@ QList<aplicacion> aplicaciondao::obtenerAplicacionesPorEstado(aplicacion::Estado
 
 bool aplicaciondao::actualizarAplicacion(const aplicacion& app) {
     QSqlQuery query(mdatabase);
-    query.prepare("UPDATE aplicaciones SET nombre = ?, descripcion = ?, icono = ?, estado = ? WHERE id = ?");
+    query.prepare("UPDATE aplicaciones SET nombre = ?, descripcion = ?, icono = ?, estado = ?, favorito = ? WHERE id = ?");
     query.addBindValue(app.nombre());
     query.addBindValue(app.descripcion());
     query.addBindValue(app.icono());
     query.addBindValue(static_cast<int>(app.estado()));
+    query.addBindValue(static_cast<int>(app.favorito()));  // 🔹 Agregado favorito
     query.addBindValue(app.id());
 
     if (!query.exec()) {
@@ -101,5 +125,6 @@ bool aplicaciondao::eliminarAplicacion(int id) {
     }
     return true;
 }
+
 
 

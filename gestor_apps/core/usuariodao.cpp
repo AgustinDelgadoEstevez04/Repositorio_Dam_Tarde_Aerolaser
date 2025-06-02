@@ -2,12 +2,12 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
+
 usuariodao::usuariodao(QSqlDatabase& database) : mdatabase(database) {}
 
 bool usuariodao::guardarUsuario(const usuario& usr) {
     QSqlQuery query(mdatabase);
-    query.prepare("INSERT INTO usuarios (id, nombre, contrasena) VALUES (?, ?, ?)");
-    query.addBindValue(usr.getid());
+    query.prepare("INSERT INTO usuarios (nombre, contrasena) VALUES (?, ?)");
     query.addBindValue(usr.getnombre());
     query.addBindValue(usr.getcontrasena());
 
@@ -31,7 +31,7 @@ usuario usuariodao::obtenerUsuarioPorId(int id) const {
     return usuario("", "", -1);
 }
 
-usuario usuariodao::obtenerUsuarioPorNombre(const QString& nombre) {
+usuario usuariodao::obtenerUsuarioPorNombre(const QString& nombre) const { // <-- DEBE SER CONST AQUÍ TAMBIÉN
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id, nombre, contrasena FROM usuarios WHERE nombre = ?");
     query.addBindValue(nombre);
@@ -85,7 +85,7 @@ bool usuariodao::eliminarUsuario(int id) {
     return true;
 }
 
-bool usuariodao::verificarCredenciales(const QString& nombre, const QString& contrasena) {
+bool usuariodao::verificarCredenciales(const QString& nombre, const QString& contrasena) const { // <-- DEBE SER CONST AQUÍ TAMBIÉN
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id FROM usuarios WHERE nombre = ? AND contrasena = ?");
     query.addBindValue(nombre);
@@ -93,5 +93,3 @@ bool usuariodao::verificarCredenciales(const QString& nombre, const QString& con
 
     return query.exec() && query.next();
 }
-
-

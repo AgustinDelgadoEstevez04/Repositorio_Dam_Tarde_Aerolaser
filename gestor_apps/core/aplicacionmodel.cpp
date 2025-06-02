@@ -22,6 +22,10 @@ int AplicacionModel::estado() const {
     return static_cast<int>(mAplicacion.estado());
 }
 
+int AplicacionModel::favorito()const{
+    return static_cast<int>(mAplicacion.favorito());
+}
+
 void AplicacionModel::actualizarDesdeDAO() {
     aplicacion nuevaApp = DatabaseManager::instance().aplicacionDao.obtenerAplicacionPorId(mAplicacion.id());
     mAplicacion = nuevaApp;

@@ -7,13 +7,16 @@ CONFIG += c++17
 
 
 SOURCES += \
+    loggin.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    loggin.h \
     mainwindow.h
 
 FORMS += \
+    loggin.ui \
     mainwindow.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../core/release/ -lcore
@@ -25,3 +28,6 @@ DEPENDPATH += $$PWD/../core
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    imagenes/OIP (1).jpg

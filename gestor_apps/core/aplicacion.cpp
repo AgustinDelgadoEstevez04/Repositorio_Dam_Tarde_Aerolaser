@@ -1,7 +1,7 @@
 #include "aplicacion.h"
 
-aplicacion::aplicacion(int id, const QString& nombre, const QString& descripcion, const QString& icono, Estado estado)
-    : mid(id), mnombre(nombre), mdescripcion(descripcion), micono(icono), mestado(estado) {}
+aplicacion::aplicacion(int id, const QString& nombre, const QString& descripcion, const QString& icono, Estado estado, Favorito favorito)
+    : mid(id), mnombre(nombre), mdescripcion(descripcion), micono(icono), mestado(estado), mfavorito(favorito) {}
 
 int aplicacion::id()const{
     return mid;
@@ -23,6 +23,10 @@ aplicacion::Estado aplicacion::estado()const{
     return mestado;
 }
 
+aplicacion::Favorito aplicacion::favorito()const{
+    return mfavorito;
+}
+
 QString aplicacion::estadoToString() const{
     switch (mestado) {
     case Instalado:
@@ -37,6 +41,24 @@ QString aplicacion::estadoToString() const{
     }
 }
 
+QString aplicacion::favoritoToString() const{
+    switch (mfavorito) {
+    case EsFavorito:
+        return "favorito";
+        break;
+    case NoFavorito:
+        return "no favorito";
+        break;
+    default:
+        "desconocido";
+        break;
+    }
+}
+
 void aplicacion::setEstado(Estado estado){
     mestado=estado;
+}
+
+void aplicacion::setFavorito(Favorito favorito){
+    mfavorito=favorito;
 }

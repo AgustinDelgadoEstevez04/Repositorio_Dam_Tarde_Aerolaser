@@ -992,9 +992,7 @@ release/databasemanager.o: ../../../core/databasemanager.cpp ../../../core/datab
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqldatabase.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qmetaobject.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlError \
-		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlerror.h \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/QResource \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/qresource.h
+		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlerror.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\databasemanager.o ..\..\..\core\databasemanager.cpp
 
 release/licencia.o: ../../../core/licencia.cpp ../../../core/licencia.h \
