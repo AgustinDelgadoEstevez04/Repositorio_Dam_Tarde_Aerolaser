@@ -13,6 +13,7 @@ public:
     aplicacion obtenerAplicacionPorId(int id) const;
     QList<aplicacion> obtenerTodasLasAplicaciones()const;
     QList<aplicacion> obtenerAplicacionesPorEstado(aplicacion::Estado estado);
+    QList<aplicacion> obtenerAplicacionesPorFavorito(aplicacion::Favorito favorito);
     bool actualizarAplicacion(const aplicacion& app);
     bool eliminarAplicacion(int id);
 
