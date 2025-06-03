@@ -1,58 +1,97 @@
-#include "licencia.h"
+#include "AplicacionUsuarioDAO.h"
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
 
-licencia::licencia(int id, int appId, int userId, Estado estado, const QDate& fechaInicio, const QDate& fechaFin)
-    : m_id(id), m_appId(appId), m_userId(userId), m_estado(estado), m_fechaInicio(fechaInicio), m_fechaFin(fechaFin) {}
+AplicacionUsuarioDAO::AplicacionUsuarioDAO(QSqlDatabase& database)
+    : mDatabase(database) {}
 
-int licencia::id()const {
-    return m_id;
+bool AplicacionUsuarioDAO::guardarRelacion(const AplicacionUsuario& aplicacionUsuario) const {
+    QSqlQuery query(mDatabase);
+    query.prepare("INSERT INTO aplicacion_usuario (usuario_id, aplicacion_id, estado_instalacion, favorito, estado_licencia, fecha_licencia) "
+                  "VALUES (?, ?, ?, ?, ?, ?)");
+    query.addBindValue(aplicacionUsuario.getUsuarioId());
+    query.addBindValue(aplicacionUsuario.getAplicacionId());
+    query.addBindValue(aplicacionUsuario.getEstadoInstalacion());
+    query.addBindValue(aplicacionUsuario.esFavorito());
+    query.addBindValue(aplicacionUsuario.getEstadoLicencia());
+    query.addBindValue(aplicacionUsuario.getFechaLicencia().toString("yyyy-MM-dd"));
+
+    if (!query.exec()) {
+        qDebug() << "Error al insertar relación:" << query.lastError().text();
+        return false;
+    }
+    return true;
 }
 
-int licencia::appId()const{
-    return m_appId;
-}
+AplicacionUsuario AplicacionUsuarioDAO::obtenerRelacionPorIds(int usuarioId, int aplicacionId) const {
+    QSqlQuery query(mDatabase);
+    query.prepare("SELECT estado_instalacion, favorito, estado_licencia, fecha_licencia FROM aplicacion_usuario "
+                  "WHERE usuario_id = ? AND aplicacion_id = ?");
+    query.addBindValue(usuarioId);
+    query.addBindValue(aplicacionId);
 
-int licencia::userId()const{
-    return m_userId;
-}
-
-licencia::Estado licencia::estado() const{
-    return m_estado;
-}
-
-QDate licencia::fechaInicio()const{
-    return m_fechaInicio;
-}
-
-QDate licencia::fechaFin()const{
-    return m_fechaFin;
-}
-
-QString licencia::estadoToString() const{
-    switch (m_estado) {
-    case Activa:
-        return "activa";
-        break;
-    case Caducada:
-        return "caducada";
-        break;
-    case Proximaacaducar:
-        return "proxima a caducar";
-        break;
-    default:
-        return "desconocido";
-        break;
+    if (query.exec() && query.next()) {
+        return AplicacionUsuario(usuarioId, aplicacionId, query.value("estado_instalacion").toString(),
+                                 query.value("favorito").toBool(), query.value("estado_licencia").toString(),
+                                 QDate::fromString(query.value("fecha_licencia").toString(), "yyyy-MM-dd"));
+    } else {
+        qDebug() << "Error al obtener relación:" << query.lastError().text();
+        return AplicacionUsuario(0, 0, "", false, "", QDate());
     }
 }
 
-bool licencia::estaActiva()const{
-    return m_estado==Activa;
+QList<AplicacionUsuario> AplicacionUsuarioDAO::obtenerRelacionesPorUsuario(int usuarioId) const {
+    QList<AplicacionUsuario> relaciones;
+    QSqlQuery query(mDatabase);
+    query.prepare("SELECT aplicacion_id, estado_instalacion, favorito, estado_licencia, fecha_licencia FROM aplicacion_usuario WHERE usuario_id = ?");
+    query.addBindValue(usuarioId);
+
+    if (query.exec()) {
+        while (query.next()) {
+            relaciones.append(AplicacionUsuario(usuarioId, query.value("aplicacion_id").toInt(),
+                                                query.value("estado_instalacion").toString(),
+                                                query.value("favorito").toBool(),
+                                                query.value("estado_licencia").toString(),
+                                                QDate::fromString(query.value("fecha_licencia").toString(), "yyyy-MM-dd")));
+        }
+    } else {
+        qDebug() << "Error al obtener relaciones de usuario:" << query.lastError().text();
+    }
+
+    return relaciones;
 }
 
-bool licencia::estaCaducada()const{
-    return QDate::currentDate()>m_fechaFin;
+bool AplicacionUsuarioDAO::actualizarRelacion(const AplicacionUsuario& aplicacionUsuario) {
+    QSqlQuery query(mDatabase);
+    query.prepare("UPDATE aplicacion_usuario SET estado_instalacion = ?, favorito = ?, estado_licencia = ?, fecha_licencia = ? "
+                  "WHERE usuario_id = ? AND aplicacion_id = ?");
+    query.addBindValue(aplicacionUsuario.getEstadoInstalacion());
+    query.addBindValue(aplicacionUsuario.esFavorito());
+    query.addBindValue(aplicacionUsuario.getEstadoLicencia());
+    query.addBindValue(aplicacionUsuario.getFechaLicencia().toString("yyyy-MM-dd"));
+    query.addBindValue(aplicacionUsuario.getUsuarioId());
+    query.addBindValue(aplicacionUsuario.getAplicacionId());
+
+    if (!query.exec()) {
+        qDebug() << "Error al actualizar relación:" << query.lastError().text();
+        return false;
+    }
+    return true;
 }
 
-bool licencia::estaProximaACaducar()const{
-    estaCaducada() && QDate::currentDate().addDays(7)>=m_fechaFin;
+bool AplicacionUsuarioDAO::eliminarRelacion(int usuarioId, int aplicacionId) {
+    QSqlQuery query(mDatabase);
+    query.prepare("DELETE FROM aplicacion_usuario WHERE usuario_id = ? AND aplicacion_id = ?");
+    query.addBindValue(usuarioId);
+    query.addBindValue(aplicacionId);
+
+    if (!query.exec()) {
+        qDebug() << "Error al eliminar relación:" << query.lastError().text();
+        return false;
+    }
+    return true;
 }
+
+
 

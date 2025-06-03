@@ -1,5 +1,21 @@
 <RCC>
-    <qresource prefix="/img">
+    <qresource prefix="/">
+        <file>imagenes trabajo/busqueda-de-lupa.png</file>
+        <file>imagenes trabajo/usuario.png</file>
+        <file>imagenes trabajo/descargas.png</file>
+        <file>imagenes trabajo/filtrar.png</file>
+        <file>imagenes trabajo/no.png</file>
+        <file>imagenes trabajo/me-gusta.png</file>
+        <file>imagenes trabajo/archivo.png</file>
+        <file>imagenes trabajo/archivo-pdf.png</file>
+        <file>imagenes trabajo/portapapeles.png</file>
+        <file>imagenes trabajo/sitio-web.png</file>
+        <file>imagenes trabajo/calculadora.png</file>
+        <file>imagenes trabajo/calendario.png</file>
+        <file>imagenes trabajo/editor-de-texto.png</file>
+        <file>imagenes trabajo/musica.png</file>
+        <file>imagenes trabajo/mano arriba.png</file>
+        <file>imagenes trabajo/instalar.png</file>
         <file>imagenes/OIP (1).jpg</file>
         <file>imagenes/OIP (2).jpg</file>
         <file>imagenes/OIP.jpg</file>

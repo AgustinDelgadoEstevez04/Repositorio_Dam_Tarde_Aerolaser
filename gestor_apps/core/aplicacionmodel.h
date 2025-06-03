@@ -1,39 +1,39 @@
-#ifndef APLICACIONMODEL_H
-#define APLICACIONMODEL_H
+#ifndef APLICACIONUSUARIOMODEL_H
+#define APLICACIONUSUARIOMODEL_H
 
 #include <QObject>
-#include "aplicacion.h"
-class AplicacionModel : public QObject
+#include <QDate>
+#include "aplicacion_usuario.h"
+
+class AplicacionUsuarioModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int id READ id NOTIFY aplicacionActualizada)
-    Q_PROPERTY(QString nombre READ nombre NOTIFY aplicacionActualizada)
-    Q_PROPERTY(QString descripcion READ descripcion NOTIFY aplicacionActualizada)
-    Q_PROPERTY(QString icono READ icono NOTIFY aplicacionActualizada)
-    Q_PROPERTY(int estado READ estado NOTIFY aplicacionActualizada)
-    Q_PROPERTY(int favorito READ favorito NOTIFY aplicacionActualizada)
+    Q_PROPERTY(int usuarioId READ usuarioId NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(int aplicacionId READ aplicacionId NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(QString estadoInstalacion READ estadoInstalacion NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(bool favorito READ favorito NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(QString estadoLicencia READ estadoLicencia NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(QDate fechaLicencia READ fechaLicencia NOTIFY aplicacionUsuarioActualizada)
 
 public:
-    explicit AplicacionModel(const aplicacion& app, QObject* parent = nullptr);
+    explicit AplicacionUsuarioModel(const AplicacionUsuario& appUsuario, QObject* parent = nullptr);
 
-    int id() const;
-    QString nombre() const;
-    QString descripcion() const;
-    QString icono() const;
-    int estado() const;
-    int favorito()const;
+    int usuarioId() const;
+    int aplicacionId() const;
+    QString estadoInstalacion() const;
+    bool favorito() const;
+    QString estadoLicencia() const;
+    QDate fechaLicencia() const;
 
 signals:
-    void aplicacionActualizada();
+    void aplicacionUsuarioActualizada();
 
 public slots:
-    void actualizarDesdeDAO();
-
-
+    void actualizarDesdeDAO(); // Método para actualizar el modelo desde la BD
 
 private:
-    aplicacion mAplicacion;
+    AplicacionUsuario mAplicacionUsuario;
 };
 
-#endif // APLICACIONMODEL_H
+#endif // APLICACIONUSUARIOMODEL_H
 

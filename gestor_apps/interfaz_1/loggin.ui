@@ -125,7 +125,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="resources.qrc">:/img/imagenes/OIP.jpg</pixmap>
+     <pixmap resource="resources.qrc">:/imagenes/OIP.jpg</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -144,7 +144,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="resources.qrc">:/img/imagenes/OIP (2).jpg</pixmap>
+     <pixmap resource="resources.qrc">:/imagenes/OIP (2).jpg</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>

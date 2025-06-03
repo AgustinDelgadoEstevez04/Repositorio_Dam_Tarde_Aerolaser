@@ -1,37 +1,39 @@
-#ifndef LICENCIAMODEL_H
-#define LICENCIAMODEL_H
+#ifndef APLICACIONUSUARIOMODEL_H
+#define APLICACIONUSUARIOMODEL_H
 
 #include <QObject>
-#include "licencia.h"
-class LicenciaModel : public QObject
+#include <QDate>
+#include "aplicacionusuario.h"
+
+class AplicacionUsuarioModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int id READ id NOTIFY licenciaActualizada)
-    Q_PROPERTY(int appId READ appId NOTIFY licenciaActualizada)
-    Q_PROPERTY(int userId READ userId NOTIFY licenciaActualizada)
-    Q_PROPERTY(int estado READ estado NOTIFY licenciaActualizada)
-    Q_PROPERTY(QDate fechaInicio READ fechaInicio NOTIFY licenciaActualizada)
-    Q_PROPERTY(QDate fechaFin READ fechaFin NOTIFY licenciaActualizada)
+    Q_PROPERTY(int usuarioId READ usuarioId NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(int aplicacionId READ aplicacionId NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(QString estadoInstalacion READ estadoInstalacion NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(bool favorito READ favorito NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(QString estadoLicencia READ estadoLicencia NOTIFY aplicacionUsuarioActualizada)
+    Q_PROPERTY(QDate fechaLicencia READ fechaLicencia NOTIFY aplicacionUsuarioActualizada)
 
 public:
-    explicit LicenciaModel(const licencia& lic, QObject* parent = nullptr);
+    explicit AplicacionUsuarioModel(const AplicacionUsuario& appUsuario, QObject* parent = nullptr);
 
-    int id() const;
-    int appId() const;
-    int userId() const;
-    int estado() const;
-    QDate fechaInicio() const;
-    QDate fechaFin() const;
+    int usuarioId() const;
+    int aplicacionId() const;
+    QString estadoInstalacion() const;
+    bool favorito() const;
+    QString estadoLicencia() const;
+    QDate fechaLicencia() const;
 
 signals:
-    void licenciaActualizada();
+    void aplicacionUsuarioActualizada();
 
 public slots:
-    void actualizarDesdeDAO();
-;
+    void actualizarDesdeDAO(); // Método para actualizar el modelo desde la BD
 
 private:
-    licencia mLicencia;
+    AplicacionUsuario mAplicacionUsuario;
 };
 
-#endif // LICENCIAMODEL_H
+#endif // APLICACIONUSUARIOMODEL_H
+

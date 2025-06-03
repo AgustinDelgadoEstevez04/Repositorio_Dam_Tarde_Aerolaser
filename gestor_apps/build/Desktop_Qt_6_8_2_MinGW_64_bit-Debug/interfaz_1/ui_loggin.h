@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loggin.ui'
 **
-** Created by: Qt User Interface Compiler version 6.8.2
+** Created by: Qt User Interface Compiler version 6.8.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -67,12 +67,12 @@ public:
         imagen = new QLabel(centralwidget);
         imagen->setObjectName("imagen");
         imagen->setGeometry(QRect(30, 91, 51, 20));
-        imagen->setPixmap(QPixmap(QString::fromUtf8(":/img/imagenes/OIP.jpg")));
+        imagen->setPixmap(QPixmap(QString::fromUtf8(":/imagenes/OIP.jpg")));
         imagen->setScaledContents(true);
         imagen1 = new QLabel(centralwidget);
         imagen1->setObjectName("imagen1");
         imagen1->setGeometry(QRect(30, 130, 51, 21));
-        imagen1->setPixmap(QPixmap(QString::fromUtf8(":/img/imagenes/OIP (2).jpg")));
+        imagen1->setPixmap(QPixmap(QString::fromUtf8(":/imagenes/OIP (2).jpg")));
         imagen1->setScaledContents(true);
         titulo = new QLabel(centralwidget);
         titulo->setObjectName("titulo");

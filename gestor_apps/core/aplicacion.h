@@ -18,19 +18,12 @@ public:
     Estado estado() const;
     Favorito favorito() const;
 
-    QString estadoToString() const;
-    QString favoritoToString() const;
-
-    void setEstado(Estado estado);
-    void setFavorito(Favorito favorito);
 
 private:
     int mid;
     QString mnombre;
     QString mdescripcion;
     QString micono;
-    Estado mestado;
-    Favorito mfavorito;
 };
 
 #endif // APLICACION_H

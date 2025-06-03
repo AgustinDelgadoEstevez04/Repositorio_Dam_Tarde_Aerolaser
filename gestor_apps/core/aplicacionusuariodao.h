@@ -1,29 +1,23 @@
-#ifndef LICENCIADAO_H
-#define LICENCIADAO_H
+#ifndef APLICACIONUSUARIODAO_H
+#define APLICACIONUSUARIODAO_H
 
-#include "licencia.h"
+#include "aplicacionusuario.h"
 #include <QList>
-class QSqlDatabase;
+#include <QSqlDatabase>
 
-class licenciadao
-{
+class AplicacionUsuarioDAO {
 public:
-    licenciadao(QSqlDatabase& database);
+    AplicacionUsuarioDAO(QSqlDatabase& database);
 
-    bool guardarLicencia(const licencia& lic);
-    licencia obtenerLicenciaPorId(int id) const;
-    QList<licencia> obtenerTodasLasLicencias();
-    QList<licencia> obtenerLicenciasPorEstado(licencia::Estado estado)const;
-    bool actualizarLicencia(const licencia& lic);
-    bool eliminarLicencia(int id);
-
-    bool estaActiva(int id);
-    bool estaCaducada(int id);
-    bool estaProximaACaducar(int id);
+    bool guardarRelacion(const AplicacionUsuario& aplicacionUsuario) const;
+    AplicacionUsuario obtenerRelacionPorIds(int usuarioId, int aplicacionId) const;
+    QList<AplicacionUsuario> obtenerRelacionesPorUsuario(int usuarioId) const;
+    bool actualizarRelacion(const AplicacionUsuario& aplicacionUsuario);
+    bool eliminarRelacion(int usuarioId, int aplicacionId);
 
 private:
-    QSqlDatabase& mdatabase;
+    QSqlDatabase& mDatabase;
 };
 
-#endif // LICENCIADAO_H
+#endif // APLICACIONUSUARIODAO_H
 

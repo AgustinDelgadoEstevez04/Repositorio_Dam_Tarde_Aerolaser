@@ -1,35 +1,37 @@
-#include "licenciamodel.h"
-#include "databasemanager.h"
-LicenciaModel::LicenciaModel(const licencia& lic, QObject* parent) : QObject(parent), mLicencia(lic) {}
+#include "AplicacionUsuarioModel.h"
 
-int LicenciaModel::id() const {
-    return mLicencia.id();
+// Constructor
+AplicacionUsuarioModel::AplicacionUsuarioModel(const AplicacionUsuario& appUsuario, QObject* parent)
+    : QObject(parent), mAplicacionUsuario(appUsuario) {}
+
+// Getters
+int AplicacionUsuarioModel::usuarioId() const {
+    return mAplicacionUsuario.getUsuarioId();
 }
 
-int LicenciaModel::appId() const {
-    return mLicencia.appId();
+int AplicacionUsuarioModel::aplicacionId() const {
+    return mAplicacionUsuario.getAplicacionId();
 }
 
-int LicenciaModel::userId() const {
-    return mLicencia.userId();
+QString AplicacionUsuarioModel::estadoInstalacion() const {
+    return mAplicacionUsuario.getEstadoInstalacion();
 }
 
-int LicenciaModel::estado() const {
-    return static_cast<int>(mLicencia.estado());
+bool AplicacionUsuarioModel::favorito() const {
+    return mAplicacionUsuario.esFavorito();
 }
 
-QDate LicenciaModel::fechaInicio() const {
-    return mLicencia.fechaInicio();
+QString AplicacionUsuarioModel::estadoLicencia() const {
+    return mAplicacionUsuario.getEstadoLicencia();
 }
 
-QDate LicenciaModel::fechaFin() const {
-    return mLicencia.fechaFin();
+QDate AplicacionUsuarioModel::fechaLicencia() const {
+    return mAplicacionUsuario.getFechaLicencia();
 }
 
-void LicenciaModel::actualizarDesdeDAO() {
-    licencia nuevaLic = DatabaseManager::instance().licenciaDao.obtenerLicenciaPorId(mLicencia.id());
-    mLicencia = nuevaLic;
-    emit licenciaActualizada();
+void AplicacionUsuarioModel::actualizarDesdeDAO() {
+
+    emit aplicacionUsuarioActualizada();
 }
 
 

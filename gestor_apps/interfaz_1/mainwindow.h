@@ -3,9 +3,13 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
-#include "DatabaseManager.h"
-#include "AplicacionModel.h"
-#include "LicenciaModel.h"
+#include <QListWidgetItem>
+#include "databasemanager.h"
+#include "aplicacionmodel.h"
+#include "aplicacionusuariomodel.h"
+#include "aplicacion.h"
+#include <QIcon>
+#include <QPixmap>
 
 namespace Ui {
 class MainWindow;
@@ -24,14 +28,38 @@ private slots:
     void mostrarDetallesAplicacion();
     void cargarLicencias(int appId);
     void cargaraplicaciones();
-    void insertarAplicacionesSiBDVacia();
+
+
+
+
+    void on_usuario_nombre_linkActivated(const QString &link);
+
+    void on_cerrar_sesion_clicked();
+
+    void on_barra_busqueda_cursorPositionChanged(int arg1, int arg2);
+
+    void on_favoritos_clicked();
+
+    void on_descargados_clicked();
+
+    void on_no_descargados_clicked();
+
+    void on_lista_apps_indexesMoved(const QModelIndexList &indexes);
+
+    void on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    void on_favorito_app_clicked();
+
+    void on_descargar_app_clicked();
+
+    void on_no_descargados_2_clicked();
 
 private:
     Ui::MainWindow *ui;
     DatabaseManager &dbManager;
     QStandardItemModel *modeloAplicaciones;
     QList<AplicacionModel*> aplicaciones;
-    QList<LicenciaModel*> licencias;
+    QList<AplicacionUsuarioModel*> aplicacionusuario;
 };
 
 #endif // MAINWINDOW_H
