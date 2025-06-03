@@ -5,13 +5,11 @@
 #include "databasemanager.h"
 #include "usuario.h"
 #include "usuariodao.h"
-#include "mainwindow.h" // <-- SE HA AÑADIDO ESTA LÍNEA
+#include "mainwindow.h"
 
 loggin::loggin(QWidget *parent)
-    // IMPORTANTISIMO: Si quieres usar exec(), loggin DEBE HEREDAR de QDialog, no QMainWindow
-    // Si necesitas que sea una ventana principal con barra de menú, etc., entonces NO uses exec()
-    // Si ya lo cambiaste a QDialog, esta línea debería ser: : QDialog(parent)
-    : QMainWindow(parent) // <--- VERIFICA ESTO EN TU loggin.h Y CÁMBIALO A QDialog SI LO QUIERES MODAL
+
+    : QMainWindow(parent)
     , ui(new Ui::loggin)
 {
     ui->setupUi(this);
@@ -30,13 +28,13 @@ void loggin::on_iniciar_clicked()
     // Validación de campos vacíos
     if (nombre.isEmpty()) {
         QMessageBox::warning(this, "Error de Inicio de Sesión", "El nombre de usuario es obligatorio.");
-        ui->usuario->setFocus(); // Poner foco en el campo usuario
+        ui->usuario->setFocus();
         return;
     }
 
     if (contrasena.isEmpty()) {
         QMessageBox::warning(this, "Error de Inicio de Sesión", "La contraseña es obligatoria.");
-        ui->contrasena->setFocus(); // Poner foco en el campo contraseña
+        ui->contrasena->setFocus();
         return;
     }
 
@@ -47,16 +45,15 @@ void loggin::on_iniciar_clicked()
         return;
     }
 
+
     // Usar el DAO para verificar credenciales
     if (DatabaseManager::instance().usuarioDao.verificarCredenciales(nombre, contrasena)) {
         QMessageBox::information(this, "Inicio de Sesión", "¡Inicio de sesión exitoso!");
 
-        // --- INICIO DE LA MODIFICACIÓN ---
-        // Ocultar la ventana de login y mostrar la ventana principal
+
         this->hide();
-        MainWindow *mainWindow = new MainWindow();
+        MainWindow *mainWindow = new MainWindow(nullptr, nombre);
         mainWindow->show();
-        // --- FIN DE LA MODIFICACIÓN ---
 
     } else {
         QMessageBox::critical(this, "Error de Inicio de Sesión", "Nombre de usuario o contraseña incorrectos.");
@@ -144,7 +141,7 @@ void loggin::on_registrar_clicked()
         // Opcional: Limpiar los campos después de un registro exitoso
         ui->usuario->clear();
         ui->contrasena->clear();
-        ui->usuario->setFocus(); // Volver a poner foco en usuario para nuevo registro
+        ui->usuario->setFocus();
     } else {
         QMessageBox::critical(this, "Error de Registro", "No se pudo registrar el usuario. Consulte el log para más detalles.");
     }
@@ -185,7 +182,6 @@ void loggin::on_eliminar_clicked()
         if (reply == QMessageBox::Yes) {
             if (DatabaseManager::instance().usuarioDao.eliminarUsuario(userToDelete.getid())) {
                 QMessageBox::information(this, "Eliminado", "Usuario eliminado correctamente.");
-                // Opcional: Limpiar los campos después de eliminar
                 ui->usuario->clear();
                 ui->contrasena->clear();
                 ui->usuario->setFocus();

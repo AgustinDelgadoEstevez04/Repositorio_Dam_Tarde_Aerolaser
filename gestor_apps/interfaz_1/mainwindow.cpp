@@ -1,16 +1,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "DatabaseManager.h"
+#include "loggin.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QIcon>
 #include <QPixmap>
 
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent, const QString &username)
     : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()), modeloAplicaciones(new QStandardItemModel(this)) {
     ui->setupUi(this);
     cargaraplicaciones();
+
+    if (!username.isEmpty()) {
+        ui->usuario_nombre->setText(username);
+    }
 
     ui->lista_apps->setModel(modeloAplicaciones);
     ui->lista_apps->setIconSize(QSize(32, 32));
@@ -117,7 +122,10 @@ void MainWindow::on_usuario_nombre_linkActivated(const QString &link)
 
 void MainWindow::on_cerrar_sesion_clicked()
 {
+    loggin *loginWindow = new loggin();
+    loginWindow->show();
 
+    this->close();
 }
 
 

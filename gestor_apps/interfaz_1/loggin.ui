@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>309</width>
-    <height>278</height>
+    <width>301</width>
+    <height>296</height>
    </rect>
   </property>
   <property name="palette">
@@ -63,10 +63,10 @@
    <widget class="QPushButton" name="iniciar">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>170</y>
-      <width>75</width>
-      <height>24</height>
+      <x>160</x>
+      <y>160</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -76,10 +76,10 @@
    <widget class="QPushButton" name="registrar">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>170</y>
-      <width>75</width>
-      <height>24</height>
+      <x>60</x>
+      <y>160</y>
+      <width>91</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -89,20 +89,20 @@
    <widget class="QLineEdit" name="usuario">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>90</y>
+      <x>100</x>
+      <y>60</y>
       <width>141</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
    </widget>
    <widget class="QLineEdit" name="contrasena">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>130</y>
+      <x>100</x>
+      <y>120</y>
       <width>141</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -115,10 +115,10 @@
    <widget class="QLabel" name="imagen">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>91</y>
+      <x>40</x>
+      <y>60</y>
       <width>51</width>
-      <height>20</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -134,10 +134,10 @@
    <widget class="QLabel" name="imagen1">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>130</y>
+      <x>40</x>
+      <y>120</y>
       <width>51</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -153,7 +153,7 @@
    <widget class="QLabel" name="titulo">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>90</x>
       <y>0</y>
       <width>121</width>
       <height>41</height>
@@ -172,18 +172,21 @@
     <property name="text">
      <string>LOGGIN</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QPushButton" name="eliminar">
     <property name="geometry">
      <rect>
       <x>110</x>
       <y>200</y>
-      <width>75</width>
+      <width>91</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>del usuario</string>
+     <string>eliminar usuario</string>
     </property>
    </widget>
   </widget>
@@ -192,7 +195,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>309</width>
+     <width>301</width>
      <height>22</height>
     </rect>
    </property>

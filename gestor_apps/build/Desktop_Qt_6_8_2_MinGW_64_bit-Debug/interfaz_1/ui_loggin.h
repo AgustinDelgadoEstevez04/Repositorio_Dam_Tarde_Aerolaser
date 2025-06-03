@@ -40,7 +40,7 @@ public:
     {
         if (loggin->objectName().isEmpty())
             loggin->setObjectName("loggin");
-        loggin->resize(309, 278);
+        loggin->resize(301, 296);
         QPalette palette;
         QBrush brush(QColor(85, 0, 255, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -53,43 +53,44 @@ public:
         centralwidget->setObjectName("centralwidget");
         iniciar = new QPushButton(centralwidget);
         iniciar->setObjectName("iniciar");
-        iniciar->setGeometry(QRect(150, 170, 75, 24));
+        iniciar->setGeometry(QRect(160, 160, 81, 31));
         registrar = new QPushButton(centralwidget);
         registrar->setObjectName("registrar");
-        registrar->setGeometry(QRect(70, 170, 75, 24));
+        registrar->setGeometry(QRect(60, 160, 91, 31));
         usuario = new QLineEdit(centralwidget);
         usuario->setObjectName("usuario");
-        usuario->setGeometry(QRect(90, 90, 141, 21));
+        usuario->setGeometry(QRect(100, 60, 141, 31));
         contrasena = new QLineEdit(centralwidget);
         contrasena->setObjectName("contrasena");
-        contrasena->setGeometry(QRect(90, 130, 141, 21));
+        contrasena->setGeometry(QRect(100, 120, 141, 31));
         contrasena->setEchoMode(QLineEdit::EchoMode::Password);
         imagen = new QLabel(centralwidget);
         imagen->setObjectName("imagen");
-        imagen->setGeometry(QRect(30, 91, 51, 20));
+        imagen->setGeometry(QRect(40, 60, 51, 31));
         imagen->setPixmap(QPixmap(QString::fromUtf8(":/imagenes/OIP.jpg")));
         imagen->setScaledContents(true);
         imagen1 = new QLabel(centralwidget);
         imagen1->setObjectName("imagen1");
-        imagen1->setGeometry(QRect(30, 130, 51, 21));
+        imagen1->setGeometry(QRect(40, 120, 51, 31));
         imagen1->setPixmap(QPixmap(QString::fromUtf8(":/imagenes/OIP (2).jpg")));
         imagen1->setScaledContents(true);
         titulo = new QLabel(centralwidget);
         titulo->setObjectName("titulo");
-        titulo->setGeometry(QRect(100, 0, 121, 41));
+        titulo->setGeometry(QRect(90, 0, 121, 41));
         QFont font;
         font.setFamilies({QString::fromUtf8("Tahoma")});
         font.setPointSize(12);
         font.setBold(true);
         titulo->setFont(font);
         titulo->setCursor(QCursor(Qt::CursorShape::CrossCursor));
+        titulo->setAlignment(Qt::AlignmentFlag::AlignCenter);
         eliminar = new QPushButton(centralwidget);
         eliminar->setObjectName("eliminar");
-        eliminar->setGeometry(QRect(110, 200, 75, 24));
+        eliminar->setGeometry(QRect(110, 200, 91, 24));
         loggin->setCentralWidget(centralwidget);
         menubar = new QMenuBar(loggin);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 309, 22));
+        menubar->setGeometry(QRect(0, 0, 301, 22));
         loggin->setMenuBar(menubar);
         statusbar = new QStatusBar(loggin);
         statusbar->setObjectName("statusbar");
@@ -109,7 +110,7 @@ public:
         imagen->setText(QString());
         imagen1->setText(QString());
         titulo->setText(QCoreApplication::translate("loggin", "LOGGIN", nullptr));
-        eliminar->setText(QCoreApplication::translate("loggin", "del usuario", nullptr));
+        eliminar->setText(QCoreApplication::translate("loggin", "eliminar usuario", nullptr));
     } // retranslateUi
 
 };
