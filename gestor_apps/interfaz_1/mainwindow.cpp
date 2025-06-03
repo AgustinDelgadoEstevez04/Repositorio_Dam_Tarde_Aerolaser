@@ -6,11 +6,12 @@
 #include <QDebug>
 #include <QIcon>
 #include <QPixmap>
+#include <QThread>
 
 
 MainWindow::MainWindow(int usuarioId, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()),
-    modeloAplicaciones(new QStandardItemModel(this)), usuarioActualId(usuarioId) { // 🔹 Ahora usuarioActualId está correctamente inicializado
+    modeloAplicaciones(new QStandardItemModel(this)), usuarioActualId(usuarioId) {
     ui->setupUi(this);
     cargaraplicaciones();
     mostrarNombreUsuario();
@@ -18,8 +19,8 @@ MainWindow::MainWindow(int usuarioId, QWidget *parent)
     ui->lista_apps->setModel(modeloAplicaciones);
     ui->lista_apps->setIconSize(QSize(32, 32));
 
-    connect(ui->barra_busqueda, &QLineEdit::textChanged, this, &MainWindow::filtrarAplicaciones); // Renombrado de ui->lineEdit_3 a ui->barra_busqueda
-    connect(ui->lista_apps, &QListView::clicked, this, &MainWindow::mostrarDetallesAplicacion); // Renombrado de ui->listView a ui->lista_apps
+    connect(ui->barra_busqueda, &QLineEdit::textChanged, this, &MainWindow::filtrarAplicaciones);
+    connect(ui->lista_apps, &QListView::clicked, this, &MainWindow::mostrarDetallesAplicacion);
 }
 
 MainWindow::~MainWindow() {
@@ -137,9 +138,9 @@ void MainWindow::on_barra_busqueda_cursorPositionChanged(int arg1, int arg2)
 void MainWindow::on_favoritos_clicked()
 {
 
-        ui->lista_filtro->clear(); // 🔹 Limpia la lista antes de filtrar
+        ui->lista_filtro->clear();
 
-        // 🔹 Obtener todas las relaciones usuario-aplicación
+
         QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
 
         for (const AplicacionUsuario &rel : relaciones) {
@@ -268,77 +269,89 @@ void MainWindow::on_favorito_app_clicked()
 
 void MainWindow::on_descargar_app_clicked()
 {
-    QModelIndex index = ui->lista_apps->currentIndex();
-    if (!index.isValid()) {
-        QMessageBox::warning(this, "Error", "Seleccione una aplicación para descargar.");
-        return;
-    }
+        // Configurar la barra de progreso antes de la instalación
+        ui->barraProgreso->setRange(0, 100);
+        ui->barraProgreso->setValue(0);
+        ui->barraProgreso->setVisible(true);
 
-    int idApp = index.data(Qt::UserRole).toInt();
-
-    if (usuarioActualId <= 0) {
-        QMessageBox::critical(this, "Error", "No se pudo obtener el ID del usuario.");
-        return;
-    }
-
-    // Obtener la relación usuario-aplicación
-    AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
-
-    if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
-        QMessageBox::information(this, "Instalado", "La aplicación ya está instalada.");
-        return;
-    }
-
-
-    aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::Instalado);
-
-    aplicacionUsuario.setEstadoLicencia(AplicacionUsuario::Activa);
-    aplicacionUsuario.setFechaLicencia(QDate::currentDate());
-
-    if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
-        QMessageBox::information(this, "Éxito", "La aplicación ha sido instalada y su licencia activada correctamente.");
-    } else {
-        QMessageBox::critical(this, "Error", "No se pudo actualizar la instalación y la licencia.");
-    }
-}
-
-
-void MainWindow::on_no_descargados_2_clicked()
-{
         QModelIndex index = ui->lista_apps->currentIndex();
         if (!index.isValid()) {
-            QMessageBox::warning(this, "Error", "Seleccione una aplicación para desinstalar.");
+            QMessageBox::warning(this, "Error", "Seleccione una aplicación para descargar.");
+            ui->barraProgreso->setVisible(false);
             return;
         }
 
         int idApp = index.data(Qt::UserRole).toInt();
 
-        if (usuarioActualId <= 0) {
-            QMessageBox::critical(this, "Error", "No se pudo obtener el ID del usuario.");
-            return;
-        }
-
-        // Obtener la relación usuario-aplicación
         AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
 
-        if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::NoInstalado) {
-            QMessageBox::information(this, "Ya desinstalada", "La aplicación ya está desinstalada.");
+        if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
+            QMessageBox::information(this, "Instalado", "La aplicación ya está instalada.");
+            ui->barraProgreso->setVisible(false);
             return;
         }
 
-        // Cambiar el estado a NoInstalado
-        aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::NoInstalado);
-        if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
-            QMessageBox::information(this, "Éxito", "La aplicación ha sido desinstalada correctamente.");
-        } else {
-            QMessageBox::critical(this, "Error", "No se pudo actualizar la desinstalación.");
+        aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::Instalado);
+        aplicacionUsuario.setEstadoLicencia(AplicacionUsuario::Activa);
+        aplicacionUsuario.setFechaLicencia(QDate::currentDate());
+
+        for (int i = 0; i <= 100; i += 10) {
+            ui->barraProgreso->setValue(i);
+            QThread::msleep(50);
         }
+
+        if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
+            QMessageBox::information(this, "Éxito", "La aplicación ha sido instalada y su licencia activada.");
+        } else {
+            QMessageBox::critical(this, "Error", "No se pudo actualizar la instalación y la licencia.");
+        }
+
+        ui->barraProgreso->setVisible(false);
+
 }
+
+
+void MainWindow::on_no_descargados_2_clicked() {
+    ui->barraProgreso->setRange(0, 100);
+    ui->barraProgreso->setValue(0);
+    ui->barraProgreso->setVisible(true);
+
+    QModelIndex index = ui->lista_apps->currentIndex();
+    if (!index.isValid()) {
+        QMessageBox::warning(this, "Error", "Seleccione una aplicación para desinstalar.");
+        ui->barraProgreso->setVisible(false);
+        return;
+    }
+
+    int idApp = index.data(Qt::UserRole).toInt();
+    AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
+
+    if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::NoInstalado) {
+        QMessageBox::information(this, "Ya desinstalada", "La aplicación ya está desinstalada.");
+        ui->barraProgreso->setVisible(false);
+        return;
+    }
+
+    aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::NoInstalado);
+
+    for (int i = 0; i <= 100; i += 10) {
+        ui->barraProgreso->setValue(i);
+        QThread::msleep(50);
+    }
+
+    if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
+        QMessageBox::information(this, "Éxito", "La aplicación ha sido desinstalada correctamente.");
+    } else {
+        QMessageBox::critical(this, "Error", "No se pudo actualizar la desinstalación.");
+    }
+
+    ui->barraProgreso->setVisible(false);
+}
+
 void MainWindow::mostrarNombreUsuario() {
-    // 🔹 Obtener los datos del usuario desde la base de datos
+
     usuario usuario = dbManager.usuarioDao.obtenerUsuarioPorId(usuarioActualId);
 
-    // 🔹 Actualizar el QLabel con el nombre del usuario
     ui->usuario_nombre->setText(usuario.getnombre());
 }
 

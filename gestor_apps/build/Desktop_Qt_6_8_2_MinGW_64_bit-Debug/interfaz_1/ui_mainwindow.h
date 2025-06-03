@@ -18,6 +18,7 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
@@ -43,6 +44,7 @@ public:
     QPushButton *descargar_app;
     QPushButton *no_descargados_2;
     QLabel *label;
+    QProgressBar *barraProgreso;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -50,7 +52,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(818, 553);
+        MainWindow->resize(818, 578);
         QPalette palette;
         QBrush brush(QColor(255, 255, 255, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -103,7 +105,7 @@ public:
         label_3->setScaledContents(true);
         barra_busqueda = new QLineEdit(centralwidget);
         barra_busqueda->setObjectName("barra_busqueda");
-        barra_busqueda->setGeometry(QRect(80, 100, 441, 31));
+        barra_busqueda->setGeometry(QRect(80, 100, 431, 31));
         QPalette palette2;
         palette2.setBrush(QPalette::Active, QPalette::Window, brush3);
         palette2.setBrush(QPalette::Inactive, QPalette::Window, brush3);
@@ -177,6 +179,14 @@ public:
         palette3.setBrush(QPalette::Inactive, QPalette::Text, brush4);
         label->setPalette(palette3);
         label->setWordWrap(true);
+        barraProgreso = new QProgressBar(centralwidget);
+        barraProgreso->setObjectName("barraProgreso");
+        barraProgreso->setGeometry(QRect(390, 490, 118, 21));
+        QFont font1;
+        font1.setPointSize(16);
+        barraProgreso->setFont(font1);
+        barraProgreso->setValue(0);
+        barraProgreso->setTextVisible(false);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");

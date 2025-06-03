@@ -51,12 +51,11 @@ void loggin::on_iniciar_clicked()
         usuario usuarioActual = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorNombre(nombre);
         usuarioActualId = usuarioActual.getid();
 
-        // --- INICIO DE LA MODIFICACIÓN ---
+
         // Ocultar la ventana de login y mostrar la ventana principal
         this->hide();
         MainWindow *mainWindow = new MainWindow(usuarioActualId, nullptr);
         mainWindow->show();
-        // --- FIN DE LA MODIFICACIÓN ---
 
     } else {
         QMessageBox::critical(this, "Error de Inicio de Sesión", "Nombre de usuario o contraseña incorrectos.");
