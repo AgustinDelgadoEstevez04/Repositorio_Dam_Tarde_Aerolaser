@@ -22,7 +22,6 @@ public:
 private slots:
     void on_iniciar_clicked();
     void on_registrar_clicked();
-    void on_eliminar_clicked();
 
 private:
     Ui::loggin *ui;

@@ -19,5 +19,8 @@
         <file>imagenes/OIP (1).jpg</file>
         <file>imagenes/OIP (2).jpg</file>
         <file>imagenes/OIP.jpg</file>
+        <file>imagenes/password.png</file>
+        <file>imagenes/usuario.png</file>
+        <file>imagenes trabajo/cliente-correo.png</file>
     </qresource>
 </RCC>

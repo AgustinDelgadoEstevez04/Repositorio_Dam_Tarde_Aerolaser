@@ -5,13 +5,11 @@
 #include "databasemanager.h"
 #include "usuario.h"
 #include "usuariodao.h"
-#include "mainwindow.h" // <-- SE HA AÑADIDO ESTA LÍNEA
+#include "mainwindow.h"
 
 loggin::loggin(QWidget *parent)
-    // IMPORTANTISIMO: Si quieres usar exec(), loggin DEBE HEREDAR de QDialog, no QMainWindow
-    // Si necesitas que sea una ventana principal con barra de menú, etc., entonces NO uses exec()
-    // Si ya lo cambiaste a QDialog, esta línea debería ser: : QDialog(parent)
-    : QMainWindow(parent) // <--- VERIFICA ESTO EN TU loggin.h Y CÁMBIALO A QDialog SI LO QUIERES MODAL
+
+    : QMainWindow(parent)
     , ui(new Ui::loggin)
 {
     ui->setupUi(this);
@@ -152,50 +150,4 @@ void loggin::on_registrar_clicked()
     }
 }
 
-void loggin::on_eliminar_clicked()
-{
-    QString nombreAEliminar = ui->usuario->text().trimmed(); // Eliminar espacios en blanco
-    QString contrasena = ui->contrasena->text();
 
-    if (nombreAEliminar.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Ingresa un nombre de usuario para eliminar.");
-        ui->usuario->setFocus();
-        return;
-    }
-
-    // NUEVO: Hacer que la contraseña sea obligatoria también para eliminar (seguridad adicional)
-    if (contrasena.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Ingresa la contraseña del usuario para confirmar la eliminación.");
-        ui->contrasena->setFocus();
-        return;
-    }
-
-    // Primero, verificar que las credenciales sean correctas antes de eliminar
-    if (!DatabaseManager::instance().usuarioDao.verificarCredenciales(nombreAEliminar, contrasena)) {
-        QMessageBox::critical(this, "Error", "Credenciales incorrectas. No se puede eliminar el usuario.");
-        return;
-    }
-
-    // Obtener el usuario por nombre para obtener su ID
-    usuario userToDelete = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorNombre(nombreAEliminar);
-
-    if (userToDelete.getid() != -1) { // Si se encuentra el usuario
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Confirmar Eliminación",
-                                      "¿Estás seguro de que quieres eliminar a " + nombreAEliminar + "?",
-                                      QMessageBox::Yes | QMessageBox::No);
-        if (reply == QMessageBox::Yes) {
-            if (DatabaseManager::instance().usuarioDao.eliminarUsuario(userToDelete.getid())) {
-                QMessageBox::information(this, "Eliminado", "Usuario eliminado correctamente.");
-                // Opcional: Limpiar los campos después de eliminar
-                ui->usuario->clear();
-                ui->contrasena->clear();
-                ui->usuario->setFocus();
-            } else {
-                QMessageBox::critical(this, "Error al Eliminar", "No se pudo eliminar el usuario. Consulte el log para más detalles.");
-            }
-        }
-    } else {
-        QMessageBox::warning(this, "No Encontrado", "El usuario '" + nombreAEliminar + "' no está registrado.");
-    }
-}

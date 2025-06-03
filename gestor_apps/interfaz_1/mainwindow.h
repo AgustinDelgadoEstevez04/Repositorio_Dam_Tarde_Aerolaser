@@ -54,6 +54,8 @@ private slots:
 
     void on_no_descargados_2_clicked();
 
+    void mostrarNombreUsuario();
+
 private:
     Ui::MainWindow *ui;
     DatabaseManager &dbManager;

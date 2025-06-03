@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>309</width>
-    <height>278</height>
+    <width>315</width>
+    <height>284</height>
    </rect>
   </property>
   <property name="palette">
@@ -16,8 +16,17 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
+        <red>235</red>
+        <green>252</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
         <blue>255</blue>
        </color>
       </brush>
@@ -27,8 +36,17 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
+        <red>235</red>
+        <green>252</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
         <blue>255</blue>
        </color>
       </brush>
@@ -38,8 +56,8 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
+        <red>235</red>
+        <green>252</green>
         <blue>255</blue>
        </color>
       </brush>
@@ -47,8 +65,17 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
+        <red>235</red>
+        <green>252</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
         <blue>255</blue>
        </color>
       </brush>
@@ -56,28 +83,34 @@
     </disabled>
    </palette>
   </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
    <string>loggin</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="QIcon::ThemeIcon::UserAvailable"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="iniciar">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>170</y>
+      <x>160</x>
+      <y>190</y>
       <width>75</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>iniciar sesion</string>
+     <string>iniciar sesión</string>
     </property>
    </widget>
    <widget class="QPushButton" name="registrar">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>170</y>
+      <x>80</x>
+      <y>190</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -90,9 +123,9 @@
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>90</y>
+      <y>80</y>
       <width>141</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
    </widget>
@@ -100,9 +133,9 @@
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>130</y>
+      <y>140</y>
       <width>141</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -115,17 +148,17 @@
    <widget class="QLabel" name="imagen">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>91</y>
-      <width>51</width>
-      <height>20</height>
+      <x>40</x>
+      <y>80</y>
+      <width>41</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="resources.qrc">:/imagenes/OIP.jpg</pixmap>
+     <pixmap resource="resources.qrc">:/imagenes/usuario.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -134,36 +167,53 @@
    <widget class="QLabel" name="imagen1">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>130</y>
-      <width>51</width>
-      <height>21</height>
+      <x>40</x>
+      <y>140</y>
+      <width>41</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <underline>false</underline>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="resources.qrc">:/imagenes/OIP (2).jpg</pixmap>
+     <pixmap resource="resources.qrc">:/imagenes/password.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="titulo">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>0</y>
+      <x>90</x>
+      <y>10</y>
       <width>121</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Tahoma</family>
-      <pointsize>12</pointsize>
+      <family>Segoe UI</family>
+      <pointsize>16</pointsize>
+      <italic>true</italic>
       <bold>true</bold>
+      <underline>false</underline>
      </font>
     </property>
     <property name="cursor">
@@ -172,18 +222,34 @@
     <property name="text">
      <string>LOGGIN</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QPushButton" name="eliminar">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>200</y>
-      <width>75</width>
-      <height>24</height>
+      <x>90</x>
+      <y>60</y>
+      <width>49</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>del usuario</string>
+     <string>User</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>120</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Password</string>
     </property>
    </widget>
   </widget>
@@ -192,7 +258,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>309</width>
+     <width>315</width>
      <height>22</height>
     </rect>
    </property>

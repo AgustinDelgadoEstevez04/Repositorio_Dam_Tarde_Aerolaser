@@ -81,8 +81,8 @@ void DatabaseManager::inicializarBaseDeDatos() {
                    "('Calendario', 'Administra tu agenda y eventos', ':/imagenes trabajo/calendario.png'),"
                    "('Gestor de Tareas', 'Organiza y gestiona tus actividades diarias', ':/imagenes trabajo/portapapeles.png'),"
                    "('Explorador Web', 'Accede a sitios web y realiza búsquedas en internet', ':/imagenes trabajo/sitio-web.png'),"
-                   "('Lector de PDFs', 'Abre y visualiza archivos en formato PDF', ':/imagenes trabajo/archivo-pdf.png')");
-
+                   "('Lector de PDFs', 'Abre y visualiza archivos en formato PDF', ':/imagenes trabajo/archivo-pdf.png'),"
+                   "('Cliente de Correo', 'Envía y recibe correos electrónicos fácilmente', ':/imagenes trabajo/cliente-correo.png')");
         if (query.lastError().isValid()) {
             qDebug() << "Error al insertar aplicaciones por defecto:" << query.lastError().text();
         } else {
