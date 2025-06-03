@@ -29,7 +29,7 @@ private:
 
 public:
     const aplicaciondao aplicacionDao;
-    const AplicacionUsuarioDAO aplicacionusuarioDao;
+    AplicacionUsuarioDAO aplicacionusuarioDao;
      usuariodao usuarioDao;
 };
 

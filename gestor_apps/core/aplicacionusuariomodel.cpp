@@ -14,15 +14,16 @@ int AplicacionUsuarioModel::aplicacionId() const {
 }
 
 QString AplicacionUsuarioModel::estadoInstalacion() const {
-    return mAplicacionUsuario.getEstadoInstalacion();
-}
-
-bool AplicacionUsuarioModel::favorito() const {
-    return mAplicacionUsuario.esFavorito();
+    return AplicacionUsuario::toString(mAplicacionUsuario.getEstadoInstalacion()); // ✅ Conversión correcta
 }
 
 QString AplicacionUsuarioModel::estadoLicencia() const {
-    return mAplicacionUsuario.getEstadoLicencia();
+    return AplicacionUsuario::toString(mAplicacionUsuario.getEstadoLicencia()); // ✅ Conversión correcta
+}
+
+
+bool AplicacionUsuarioModel::favorito() const {
+    return mAplicacionUsuario.esFavorito();
 }
 
 QDate AplicacionUsuarioModel::fechaLicencia() const {

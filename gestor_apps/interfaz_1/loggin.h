@@ -26,6 +26,7 @@ private slots:
 
 private:
     Ui::loggin *ui;
+     int usuarioActualId;
     // Se elimina QSet<QString> usuariosRegistrados; ya que la gestión de usuarios ahora es con la base de datos
 };
 

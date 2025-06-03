@@ -9,9 +9,9 @@ class AplicacionUsuarioDAO {
 public:
     AplicacionUsuarioDAO(QSqlDatabase& database);
 
-    bool guardarRelacion(const AplicacionUsuario& aplicacionUsuario) const;
-    AplicacionUsuario obtenerRelacionPorIds(int usuarioId, int aplicacionId) const;
-    QList<AplicacionUsuario> obtenerRelacionesPorUsuario(int usuarioId) const;
+    bool guardarRelacion(const AplicacionUsuario& aplicacionUsuario);
+    AplicacionUsuario obtenerRelacionPorIds(int usuarioId, int aplicacionId);
+    QList<AplicacionUsuario> obtenerRelacionesPorUsuario(int usuarioId);
     bool actualizarRelacion(const AplicacionUsuario& aplicacionUsuario);
     bool eliminarRelacion(int usuarioId, int aplicacionId);
 

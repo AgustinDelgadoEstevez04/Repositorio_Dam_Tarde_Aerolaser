@@ -7,8 +7,9 @@
 #include <QPixmap>
 
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()), modeloAplicaciones(new QStandardItemModel(this)) {
+MainWindow::MainWindow(int usuarioId, QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()),
+    modeloAplicaciones(new QStandardItemModel(this)), usuarioActualId(usuarioId) { // 🔹 Ahora usuarioActualId está correctamente inicializado
     ui->setupUi(this);
     cargaraplicaciones();
 
@@ -94,19 +95,7 @@ void MainWindow::mostrarDetallesAplicacion() {
 }
 
 void MainWindow::cargarLicencias(int appId) {
-    licencias.clear();
-    ui->lista_filtro->clear();
 
-    QList<licencia> listaLicencias = dbManager.licenciaDao.obtenerLicenciasPorEstado(licencia::Activa);
-
-    for (const licencia &lic : listaLicencias) {
-        if (lic.appId() == appId) {
-            LicenciaModel *modeloLic = new LicenciaModel(lic, this);
-            licencias.append(modeloLic);
-
-            ui->lista_filtro->addItem(lic.estadoToString());
-        }
-    }
 }
 
 void MainWindow::on_usuario_nombre_linkActivated(const QString &link)
@@ -135,8 +124,37 @@ void MainWindow::on_favoritos_clicked()
 
 void MainWindow::on_descargados_clicked()
 {
+        QModelIndex index = ui->lista_apps->currentIndex();
+        if (!index.isValid()) {
+            QMessageBox::warning(this, "Error", "Seleccione una aplicación para descargar.");
+            return;
+        }
 
-}
+        int idApp = index.data(Qt::UserRole).toInt();
+
+        if (usuarioActualId <= 0) {
+            QMessageBox::critical(this, "Error", "No se pudo obtener el ID del usuario.");
+            return;
+        }
+
+        // Obtener la relación usuario-aplicación
+        AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
+
+        if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
+            QMessageBox::information(this, "Instalado", "La aplicación ya está instalada.");
+            return;
+        }
+
+
+        // Actualizar el estado de instalación
+        aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::Instalado);
+        if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
+            QMessageBox::information(this, "Éxito", "La aplicación ha sido instalada correctamente.");
+        } else {
+            QMessageBox::critical(this, "Error", "No se pudo actualizar la instalación.");
+        }
+    }
+
 
 
 void MainWindow::on_no_descargados_clicked()

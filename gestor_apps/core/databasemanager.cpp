@@ -61,7 +61,7 @@ void DatabaseManager::inicializarBaseDeDatos() {
                "estado_instalacion TEXT NOT NULL, "
                "favorito BOOLEAN NOT NULL, "
                "estado_licencia TEXT NOT NULL, "
-               "fecha_licencia DATE NOT NULL, "
+               "fecha_licencia DATE, "
                "FOREIGN KEY(usuario_id) REFERENCES usuarios(id), "
                "FOREIGN KEY(aplicacion_id) REFERENCES aplicaciones(id))");
 
@@ -73,7 +73,7 @@ void DatabaseManager::inicializarBaseDeDatos() {
     if (numApps == 0) {  // Si no hay aplicaciones, se insertan
         qDebug() << "La base de datos está vacía, insertando aplicaciones por defecto...";
 
-        query.exec("INSERT INTO aplicaciones (nombre, descripcion, icono, estado,favorito) VALUES "
+        query.exec("INSERT INTO aplicaciones (nombre, descripcion, icono) VALUES "
                    "('Gestor de Archivos', 'Organiza documentos y archivos', ':/imagenes trabajo/archivo.png'),"
                    "('Editor de Texto', 'Escribe y edita documentos de texto', ':/imagenes trabajo/editor-de-texto.png'),"
                    "('Calculadora Científica', 'Realiza cálculos matemáticos avanzados', ':/imagenes trabajo/calculadora.png'),"

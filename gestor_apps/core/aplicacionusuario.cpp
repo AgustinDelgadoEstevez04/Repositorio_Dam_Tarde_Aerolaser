@@ -1,97 +1,43 @@
-#include "AplicacionUsuarioDAO.h"
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
+#include "aplicacionusuario.h"
 
-AplicacionUsuarioDAO::AplicacionUsuarioDAO(QSqlDatabase& database)
-    : mDatabase(database) {}
+// Constructor
+AplicacionUsuario::AplicacionUsuario(int usuarioId, int aplicacionId, EstadoInstalacion estadoInstalacion,
+                                     bool favorito, EstadoLicencia estadoLicencia, const QDate& fechaLicencia)
+    : usuarioId(usuarioId), aplicacionId(aplicacionId), estadoInstalacion(estadoInstalacion),
+    favorito(favorito), estadoLicencia(estadoLicencia), fechaLicencia(fechaLicencia) {}
 
-bool AplicacionUsuarioDAO::guardarRelacion(const AplicacionUsuario& aplicacionUsuario) const {
-    QSqlQuery query(mDatabase);
-    query.prepare("INSERT INTO aplicacion_usuario (usuario_id, aplicacion_id, estado_instalacion, favorito, estado_licencia, fecha_licencia) "
-                  "VALUES (?, ?, ?, ?, ?, ?)");
-    query.addBindValue(aplicacionUsuario.getUsuarioId());
-    query.addBindValue(aplicacionUsuario.getAplicacionId());
-    query.addBindValue(aplicacionUsuario.getEstadoInstalacion());
-    query.addBindValue(aplicacionUsuario.esFavorito());
-    query.addBindValue(aplicacionUsuario.getEstadoLicencia());
-    query.addBindValue(aplicacionUsuario.getFechaLicencia().toString("yyyy-MM-dd"));
+// Getters
+int AplicacionUsuario::getUsuarioId() const { return usuarioId; }
+int AplicacionUsuario::getAplicacionId() const { return aplicacionId; }
+AplicacionUsuario::EstadoInstalacion AplicacionUsuario::getEstadoInstalacion() const { return estadoInstalacion; }
+bool AplicacionUsuario::esFavorito() const { return favorito; }
+AplicacionUsuario::EstadoLicencia AplicacionUsuario::getEstadoLicencia() const { return estadoLicencia; }
+QDate AplicacionUsuario::getFechaLicencia() const { return fechaLicencia; }
 
-    if (!query.exec()) {
-        qDebug() << "Error al insertar relación:" << query.lastError().text();
-        return false;
-    }
-    return true;
-}
+// Setters
+void AplicacionUsuario::setEstadoInstalacion(EstadoInstalacion estado) { estadoInstalacion = estado; }
+void AplicacionUsuario::setFavorito(bool fav) { favorito = fav; }
+void AplicacionUsuario::setEstadoLicencia(EstadoLicencia estado) { estadoLicencia = estado; }
+void AplicacionUsuario::setFechaLicencia(const QDate& fecha) { fechaLicencia = fecha; }
 
-AplicacionUsuario AplicacionUsuarioDAO::obtenerRelacionPorIds(int usuarioId, int aplicacionId) const {
-    QSqlQuery query(mDatabase);
-    query.prepare("SELECT estado_instalacion, favorito, estado_licencia, fecha_licencia FROM aplicacion_usuario "
-                  "WHERE usuario_id = ? AND aplicacion_id = ?");
-    query.addBindValue(usuarioId);
-    query.addBindValue(aplicacionId);
-
-    if (query.exec() && query.next()) {
-        return AplicacionUsuario(usuarioId, aplicacionId, query.value("estado_instalacion").toString(),
-                                 query.value("favorito").toBool(), query.value("estado_licencia").toString(),
-                                 QDate::fromString(query.value("fecha_licencia").toString(), "yyyy-MM-dd"));
-    } else {
-        qDebug() << "Error al obtener relación:" << query.lastError().text();
-        return AplicacionUsuario(0, 0, "", false, "", QDate());
+QString AplicacionUsuario::toString(EstadoInstalacion estado) {
+    switch (estado) {
+    case NoInstalado: return "No Instalado";
+    case Instalado: return "Instalado";
+    default: return "Desconocido";
     }
 }
 
-QList<AplicacionUsuario> AplicacionUsuarioDAO::obtenerRelacionesPorUsuario(int usuarioId) const {
-    QList<AplicacionUsuario> relaciones;
-    QSqlQuery query(mDatabase);
-    query.prepare("SELECT aplicacion_id, estado_instalacion, favorito, estado_licencia, fecha_licencia FROM aplicacion_usuario WHERE usuario_id = ?");
-    query.addBindValue(usuarioId);
-
-    if (query.exec()) {
-        while (query.next()) {
-            relaciones.append(AplicacionUsuario(usuarioId, query.value("aplicacion_id").toInt(),
-                                                query.value("estado_instalacion").toString(),
-                                                query.value("favorito").toBool(),
-                                                query.value("estado_licencia").toString(),
-                                                QDate::fromString(query.value("fecha_licencia").toString(), "yyyy-MM-dd")));
-        }
-    } else {
-        qDebug() << "Error al obtener relaciones de usuario:" << query.lastError().text();
+QString AplicacionUsuario::toString(EstadoLicencia estado) {
+    switch (estado) {
+    case SinLicencia: return "Sin Licencia";
+    case Activa: return "Activa";
+    case Expirada: return "Expirada";
+    default: return "Desconocido";
     }
-
-    return relaciones;
 }
 
-bool AplicacionUsuarioDAO::actualizarRelacion(const AplicacionUsuario& aplicacionUsuario) {
-    QSqlQuery query(mDatabase);
-    query.prepare("UPDATE aplicacion_usuario SET estado_instalacion = ?, favorito = ?, estado_licencia = ?, fecha_licencia = ? "
-                  "WHERE usuario_id = ? AND aplicacion_id = ?");
-    query.addBindValue(aplicacionUsuario.getEstadoInstalacion());
-    query.addBindValue(aplicacionUsuario.esFavorito());
-    query.addBindValue(aplicacionUsuario.getEstadoLicencia());
-    query.addBindValue(aplicacionUsuario.getFechaLicencia().toString("yyyy-MM-dd"));
-    query.addBindValue(aplicacionUsuario.getUsuarioId());
-    query.addBindValue(aplicacionUsuario.getAplicacionId());
 
-    if (!query.exec()) {
-        qDebug() << "Error al actualizar relación:" << query.lastError().text();
-        return false;
-    }
-    return true;
-}
-
-bool AplicacionUsuarioDAO::eliminarRelacion(int usuarioId, int aplicacionId) {
-    QSqlQuery query(mDatabase);
-    query.prepare("DELETE FROM aplicacion_usuario WHERE usuario_id = ? AND aplicacion_id = ?");
-    query.addBindValue(usuarioId);
-    query.addBindValue(aplicacionId);
-
-    if (!query.exec()) {
-        qDebug() << "Error al eliminar relación:" << query.lastError().text();
-        return false;
-    }
-    return true;
-}
 
 
 

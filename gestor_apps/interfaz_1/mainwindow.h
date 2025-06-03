@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(int usuarioid, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -60,6 +60,7 @@ private:
     QStandardItemModel *modeloAplicaciones;
     QList<AplicacionModel*> aplicaciones;
     QList<AplicacionUsuarioModel*> aplicacionusuario;
+     int usuarioActualId;
 };
 
 #endif // MAINWINDOW_H

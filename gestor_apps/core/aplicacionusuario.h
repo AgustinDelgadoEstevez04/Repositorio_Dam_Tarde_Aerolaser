@@ -6,30 +6,41 @@
 
 class AplicacionUsuario {
 public:
-    AplicacionUsuario(int usuarioId, int aplicacionId, const QString& estadoInstalacion,
-                      bool favorito, const QString& estadoLicencia, const QDate& fechaLicencia);
+    enum EstadoInstalacion {
+        NoInstalado = 0,
+        Instalado = 1
+    };
 
-    // Getters
+    enum EstadoLicencia {
+        SinLicencia = 0,
+        Activa = 1,
+        Expirada = 2
+    };
+
+    AplicacionUsuario(int usuarioId, int aplicacionId, EstadoInstalacion estadoInstalacion,
+                      bool favorito, EstadoLicencia estadoLicencia, const QDate& fechaLicencia);
+
     int getUsuarioId() const;
     int getAplicacionId() const;
-    QString getEstadoInstalacion() const;
+    EstadoInstalacion getEstadoInstalacion() const;
     bool esFavorito() const;
-    QString getEstadoLicencia() const;
+    EstadoLicencia getEstadoLicencia() const;
     QDate getFechaLicencia() const;
 
-    // Setters
-    void setEstadoInstalacion(const QString& estado);
-    void setFavorito(bool favorito);
-    void setEstadoLicencia(const QString& estado);
+    void setEstadoInstalacion(EstadoInstalacion estado);
+    void setFavorito(bool fav);
+    void setEstadoLicencia(EstadoLicencia estado);
     void setFechaLicencia(const QDate& fecha);
+    static QString toString(EstadoInstalacion estado); // 🔹 Nueva función
+    static QString toString(EstadoLicencia estado); // 🔹 Nueva función
 
 private:
     int usuarioId;
     int aplicacionId;
-    QString estadoInstalacion; // 'instalado' | 'no_instalado'
+    EstadoInstalacion estadoInstalacion;
     bool favorito;
-    QString estadoLicencia; // 'vigente' | 'caducada' | 'proxima_a_caducar'
-    QDate fechaLicencia; // Fecha de la licencia
+    EstadoLicencia estadoLicencia;
+    QDate fechaLicencia;
 };
 
 #endif // APLICACIONUSUARIO_H

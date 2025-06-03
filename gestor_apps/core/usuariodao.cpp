@@ -1,4 +1,5 @@
 #include "usuariodao.h"
+#include "aplicacionusuario.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
@@ -15,6 +16,21 @@ bool usuariodao::guardarUsuario(const usuario& usr) {
         qDebug() << "Error al insertar usuario:" << query.lastError().text();
         return false;
     }
+    int nuevoUsuarioId = query.lastInsertId().toInt(); // 🔹 Obtener el ID generado automáticamente
+
+    // 🔹 Insertar registros en aplicacion_usuario para el nuevo usuario
+    QSqlQuery appQuery(mdatabase);
+    appQuery.prepare("INSERT INTO aplicacion_usuario (usuario_id, aplicacion_id, estado_instalacion, favorito, estado_licencia, fecha_licencia) "
+                     "SELECT ?, id, ?, 0, ?, NULL FROM aplicaciones"); // 🔹 Se cambia la fecha a NULL
+    appQuery.addBindValue(nuevoUsuarioId);
+    appQuery.addBindValue(static_cast<int>(AplicacionUsuario::NoInstalado)); // 🔹 Se usa el valor numérico del enum
+    appQuery.addBindValue(static_cast<int>(AplicacionUsuario::Expirada)); // 🔹 Se usa el valor numérico del enum
+
+    if (!appQuery.exec()) {
+        qDebug() << "Error al insertar relaciones de aplicaciones para el usuario:" << appQuery.lastError().text();
+        return false;
+    }
+
     return true;
 }
 

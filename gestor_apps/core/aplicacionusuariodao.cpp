@@ -1,138 +1,100 @@
-#include "aplicacionusuariodao.h"
+#include "AplicacionUsuarioDAO.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
-licenciadao::licenciadao(QSqlDatabase& database) : mdatabase(database) {}
 
-bool licenciadao::guardarLicencia(const licencia& lic) {
-    QSqlQuery query(mdatabase);
-    query.prepare("INSERT INTO licencias (id, appId, userId, estado, fechaInicio, fechaFin) VALUES (?, ?, ?, ?, ?, ?)");
-    query.addBindValue(lic.id());
-    query.addBindValue(lic.appId());
-    query.addBindValue(lic.userId());
-    query.addBindValue(static_cast<int>(lic.estado()));
-    query.addBindValue(lic.fechaInicio());
-    query.addBindValue(lic.fechaFin());
+AplicacionUsuarioDAO::AplicacionUsuarioDAO(QSqlDatabase& database)
+    : mDatabase(database) {}
+
+bool AplicacionUsuarioDAO::guardarRelacion(const AplicacionUsuario& aplicacionUsuario) {
+    QSqlQuery query(mDatabase);
+    query.prepare("INSERT INTO aplicacion_usuario (usuario_id, aplicacion_id, estado_instalacion, favorito, estado_licencia, fecha_licencia) "
+                  "VALUES (?, ?, ?, ?, ?, ?)");
+    query.addBindValue(aplicacionUsuario.getUsuarioId());
+    query.addBindValue(aplicacionUsuario.getAplicacionId());
+    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoInstalacion())); // 🔹 Convertir enum a int
+    query.addBindValue(aplicacionUsuario.esFavorito());
+    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoLicencia())); // 🔹 Convertir enum a int
+    query.addBindValue(aplicacionUsuario.getFechaLicencia().toString("yyyy-MM-dd"));
 
     if (!query.exec()) {
-        qDebug() << "Error al insertar licencia:" << query.lastError().text();
+        qDebug() << "Error al insertar relación:" << query.lastError().text();
         return false;
     }
     return true;
 }
 
-licencia licenciadao::obtenerLicenciaPorId(int id) const {
-    QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, appId, userId, estado, fechaInicio, fechaFin FROM licencias WHERE id = ?");
-    query.addBindValue(id);
+AplicacionUsuario AplicacionUsuarioDAO::obtenerRelacionPorIds(int usuarioId, int aplicacionId) {
+    QSqlQuery query(mDatabase);
+    query.prepare("SELECT estado_instalacion, favorito, estado_licencia, fecha_licencia FROM aplicacion_usuario "
+                  "WHERE usuario_id = ? AND aplicacion_id = ?");
+    query.addBindValue(usuarioId);
+    query.addBindValue(aplicacionId);
 
     if (query.exec() && query.next()) {
-        return licencia(query.value(0).toInt(),
-                        query.value(1).toInt(),
-                        query.value(2).toInt(),
-                        static_cast<licencia::Estado>(query.value(3).toInt()),
-                        query.value(4).toDate(),
-                        query.value(5).toDate());
+        return AplicacionUsuario(usuarioId, aplicacionId,
+                                 static_cast<AplicacionUsuario::EstadoInstalacion>(query.value(0).toInt()), // 🔹 Convertir int a enum
+                                 query.value(1).toBool(),
+                                 static_cast<AplicacionUsuario::EstadoLicencia>(query.value(2).toInt()), // 🔹 Convertir int a enum
+                                 QDate::fromString(query.value(3).toString(), "yyyy-MM-dd"));
+    } else {
+        qDebug() << "No se encontró relación para usuarioId:" << usuarioId << " aplicacionId:" << aplicacionId;
     }
-    return licencia();
+
+    return AplicacionUsuario(0, 0, AplicacionUsuario::NoInstalado, false, AplicacionUsuario::SinLicencia, QDate());
 }
 
-QList<licencia> licenciadao::obtenerTodasLasLicencias() {
-    QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, appId, userId, estado, fechaInicio, fechaFin FROM licencias");
+QList<AplicacionUsuario> AplicacionUsuarioDAO::obtenerRelacionesPorUsuario(int usuarioId) {
+    QList<AplicacionUsuario> relaciones;
+    QSqlQuery query(mDatabase);
+    query.prepare("SELECT aplicacion_id, estado_instalacion, favorito, estado_licencia, fecha_licencia FROM aplicacion_usuario WHERE usuario_id = ?");
+    query.addBindValue(usuarioId);
 
-    QList<licencia> lista;
     if (query.exec()) {
         while (query.next()) {
-            lista.append(licencia(query.value(0).toInt(),
-                                  query.value(1).toInt(),
-                                  query.value(2).toInt(),
-                                  static_cast<licencia::Estado>(query.value(3).toInt()),
-                                  query.value(4).toDate(),
-                                  query.value(5).toDate()));
+            relaciones.append(AplicacionUsuario(usuarioId, query.value("aplicacion_id").toInt(),
+                                                static_cast<AplicacionUsuario::EstadoInstalacion>(query.value("estado_instalacion").toInt()), // 🔹 Convertir int a enum
+                                                query.value("favorito").toBool(),
+                                                static_cast<AplicacionUsuario::EstadoLicencia>(query.value("estado_licencia").toInt()), // 🔹 Convertir int a enum
+                                                QDate::fromString(query.value("fecha_licencia").toString(), "yyyy-MM-dd")));
         }
+    } else {
+        qDebug() << "Error al obtener relaciones de usuario:" << query.lastError().text();
     }
-    return lista;
+
+    return relaciones;
 }
 
-QList<licencia> licenciadao::obtenerLicenciasPorEstado(licencia::Estado estado) const{
-    QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, appId, userId, estado, fechaInicio, fechaFin FROM licencias WHERE estado = ?");
-    query.addBindValue(static_cast<int>(estado));
-
-    QList<licencia> lista;
-    if (query.exec()) {
-        while (query.next()) {
-            lista.append(licencia(query.value(0).toInt(),
-                                  query.value(1).toInt(),
-                                  query.value(2).toInt(),
-                                  static_cast<licencia::Estado>(query.value(3).toInt()),
-                                  query.value(4).toDate(),
-                                  query.value(5).toDate()));
-        }
-    }
-    return lista;
-}
-
-bool licenciadao::actualizarLicencia(const licencia& lic) {
-    QSqlQuery query(mdatabase);
-    query.prepare("UPDATE licencias SET appId = ?, userId = ?, estado = ?, fechaInicio = ?, fechaFin = ? WHERE id = ?");
-    query.addBindValue(lic.appId());
-    query.addBindValue(lic.userId());
-    query.addBindValue(static_cast<int>(lic.estado()));
-    query.addBindValue(lic.fechaInicio());
-    query.addBindValue(lic.fechaFin());
-    query.addBindValue(lic.id());
+bool AplicacionUsuarioDAO::actualizarRelacion(const AplicacionUsuario& aplicacionUsuario) {
+    QSqlQuery query(mDatabase);
+    query.prepare("UPDATE aplicacion_usuario SET estado_instalacion = ?, favorito = ?, estado_licencia = ?, fecha_licencia = ? "
+                  "WHERE usuario_id = ? AND aplicacion_id = ?");
+    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoInstalacion())); // 🔹 Convertir enum a int
+    query.addBindValue(aplicacionUsuario.esFavorito());
+    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoLicencia())); // 🔹 Convertir enum a int
+    query.addBindValue(aplicacionUsuario.getFechaLicencia().toString("yyyy-MM-dd"));
+    query.addBindValue(aplicacionUsuario.getUsuarioId());
+    query.addBindValue(aplicacionUsuario.getAplicacionId());
 
     if (!query.exec()) {
-        qDebug() << "Error al actualizar licencia:" << query.lastError().text();
+        qDebug() << "Error al actualizar relación:" << query.lastError().text();
         return false;
     }
     return true;
 }
 
-bool licenciadao::eliminarLicencia(int id) {
-    QSqlQuery query(mdatabase);
-    query.prepare("DELETE FROM licencias WHERE id = ?");
-    query.addBindValue(id);
+bool AplicacionUsuarioDAO::eliminarRelacion(int usuarioId, int aplicacionId) {
+    QSqlQuery query(mDatabase);
+    query.prepare("DELETE FROM aplicacion_usuario WHERE usuario_id = ? AND aplicacion_id = ?");
+    query.addBindValue(usuarioId);
+    query.addBindValue(aplicacionId);
 
     if (!query.exec()) {
-        qDebug() << "Error al eliminar licencia:" << query.lastError().text();
+        qDebug() << "Error al eliminar relación:" << query.lastError().text();
         return false;
     }
     return true;
 }
 
-bool licenciadao::estaActiva(int id) {
-    QSqlQuery query(mdatabase);
-    query.prepare("SELECT estado FROM licencias WHERE id = ?");
-    query.addBindValue(id);
 
-    if (query.exec() && query.next()) {
-        return query.value(0).toInt() == static_cast<int>(licencia::Activa);
-    }
-    return false;
-}
-
-bool licenciadao::estaCaducada(int id) {
-    QSqlQuery query(mdatabase);
-    query.prepare("SELECT estado FROM licencias WHERE id = ?");
-    query.addBindValue(id);
-
-    if (query.exec() && query.next()) {
-        return query.value(0).toInt() == static_cast<int>(licencia::Caducada);
-    }
-    return false;
-}
-
-bool licenciadao::estaProximaACaducar(int id) {
-    QSqlQuery query(mdatabase);
-    query.prepare("SELECT estado FROM licencias WHERE id = ?");
-    query.addBindValue(id);
-
-    if (query.exec() && query.next()) {
-        return query.value(0).toInt() == static_cast<int>(licencia::Proximaacaducar);
-    }
-    return false;
-}
 

@@ -50,11 +50,13 @@ void loggin::on_iniciar_clicked()
     // Usar el DAO para verificar credenciales
     if (DatabaseManager::instance().usuarioDao.verificarCredenciales(nombre, contrasena)) {
         QMessageBox::information(this, "Inicio de Sesión", "¡Inicio de sesión exitoso!");
+        usuario usuarioActual = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorNombre(nombre);
+        usuarioActualId = usuarioActual.getid();
 
         // --- INICIO DE LA MODIFICACIÓN ---
         // Ocultar la ventana de login y mostrar la ventana principal
         this->hide();
-        MainWindow *mainWindow = new MainWindow();
+        MainWindow *mainWindow = new MainWindow(usuarioActualId, nullptr);
         mainWindow->show();
         // --- FIN DE LA MODIFICACIÓN ---
 
