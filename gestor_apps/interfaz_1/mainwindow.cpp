@@ -124,36 +124,8 @@ void MainWindow::on_favoritos_clicked()
 
 void MainWindow::on_descargados_clicked()
 {
-        QModelIndex index = ui->lista_apps->currentIndex();
-        if (!index.isValid()) {
-            QMessageBox::warning(this, "Error", "Seleccione una aplicación para descargar.");
-            return;
-        }
 
-        int idApp = index.data(Qt::UserRole).toInt();
-
-        if (usuarioActualId <= 0) {
-            QMessageBox::critical(this, "Error", "No se pudo obtener el ID del usuario.");
-            return;
-        }
-
-        // Obtener la relación usuario-aplicación
-        AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
-
-        if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
-            QMessageBox::information(this, "Instalado", "La aplicación ya está instalada.");
-            return;
-        }
-
-
-        // Actualizar el estado de instalación
-        aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::Instalado);
-        if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
-            QMessageBox::information(this, "Éxito", "La aplicación ha sido instalada correctamente.");
-        } else {
-            QMessageBox::critical(this, "Error", "No se pudo actualizar la instalación.");
-        }
-    }
+  }
 
 
 
@@ -177,18 +149,97 @@ void MainWindow::on_lista_filtro_currentItemChanged(QListWidgetItem *current, QL
 
 void MainWindow::on_favorito_app_clicked()
 {
+    QModelIndex index = ui->lista_apps->currentIndex();
+    if (!index.isValid()) {
+        QMessageBox::warning(this, "Error", "Seleccione una aplicación para marcar como favorita.");
+        return;
+    }
 
+    int idApp = index.data(Qt::UserRole).toInt();
+
+    if (usuarioActualId <= 0) {
+        QMessageBox::critical(this, "Error", "No se pudo obtener el ID del usuario.");
+        return;
+    }
+
+    // Obtener la relación usuario-aplicación
+    AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
+
+    //  Cambiar favorito de true a false, o de false a true
+    aplicacionUsuario.setFavorito(!aplicacionUsuario.esFavorito());
+
+    if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
+        QMessageBox::information(this, "Favorito", QString("La aplicación ahora está %1.")
+                                                       .arg(aplicacionUsuario.esFavorito() ? "marcada como favorita" : "desmarcada como favorita"));
+    } else {
+        QMessageBox::critical(this, "Error", "No se pudo actualizar el estado de favorito.");
+    }
 }
 
 
 void MainWindow::on_descargar_app_clicked()
 {
+    QModelIndex index = ui->lista_apps->currentIndex();
+    if (!index.isValid()) {
+        QMessageBox::warning(this, "Error", "Seleccione una aplicación para descargar.");
+        return;
+    }
 
+    int idApp = index.data(Qt::UserRole).toInt();
+
+    if (usuarioActualId <= 0) {
+        QMessageBox::critical(this, "Error", "No se pudo obtener el ID del usuario.");
+        return;
+    }
+
+    // Obtener la relación usuario-aplicación
+    AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
+
+    if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
+        QMessageBox::information(this, "Instalado", "La aplicación ya está instalada.");
+        return;
+    }
+
+
+    // Actualizar el estado de instalación
+    aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::Instalado);
+    if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
+        QMessageBox::information(this, "Éxito", "La aplicación ha sido instalada correctamente.");
+    } else {
+        QMessageBox::critical(this, "Error", "No se pudo actualizar la instalación.");
+    }
 }
 
 
 void MainWindow::on_no_descargados_2_clicked()
 {
+        QModelIndex index = ui->lista_apps->currentIndex();
+        if (!index.isValid()) {
+            QMessageBox::warning(this, "Error", "Seleccione una aplicación para desinstalar.");
+            return;
+        }
 
+        int idApp = index.data(Qt::UserRole).toInt();
+
+        if (usuarioActualId <= 0) {
+            QMessageBox::critical(this, "Error", "No se pudo obtener el ID del usuario.");
+            return;
+        }
+
+        // Obtener la relación usuario-aplicación
+        AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
+
+        if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::NoInstalado) {
+            QMessageBox::information(this, "Ya desinstalada", "La aplicación ya está desinstalada.");
+            return;
+        }
+
+        // Cambiar el estado a NoInstalado
+        aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::NoInstalado);
+        if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
+            QMessageBox::information(this, "Éxito", "La aplicación ha sido desinstalada correctamente.");
+        } else {
+            QMessageBox::critical(this, "Error", "No se pudo actualizar la desinstalación.");
+        }
 }
 
