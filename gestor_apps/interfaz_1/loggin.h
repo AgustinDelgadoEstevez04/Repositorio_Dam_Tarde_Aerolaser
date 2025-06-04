@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include "databasemanager.h"
 #include "usuario.h"
-
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class loggin;
@@ -22,11 +21,10 @@ public:
 private slots:
     void on_iniciar_clicked();
     void on_registrar_clicked();
-    void on_eliminar_clicked();
 
 private:
     Ui::loggin *ui;
-
+     int usuarioActualId;
 };
 
 #endif // LOGGIN_H

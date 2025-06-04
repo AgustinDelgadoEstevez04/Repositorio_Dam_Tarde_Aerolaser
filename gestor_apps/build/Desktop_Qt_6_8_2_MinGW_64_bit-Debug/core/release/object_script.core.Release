@@ -1,13 +1,13 @@
 release/aplicacion.o
 release/aplicaciondao.o
 release/aplicacionmodel.o
+release/aplicacionusuario.o
+release/aplicacionusuariodao.o
+release/aplicacionusuariomodel.o
 release/databasemanager.o
-release/licencia.o
-release/licenciadao.o
-release/licenciamodel.o
 release/usuario.o
 release/usuariodao.o
 release/usuariomodel.o
 release/moc_aplicacionmodel.o
-release/moc_licenciamodel.o
+release/moc_aplicacionusuariomodel.o
 release/moc_usuariomodel.o

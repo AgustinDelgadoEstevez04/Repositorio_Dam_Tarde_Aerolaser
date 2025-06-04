@@ -1,13 +1,13 @@
 debug/aplicacion.o
 debug/aplicaciondao.o
 debug/aplicacionmodel.o
+debug/aplicacionusuario.o
+debug/aplicacionusuariodao.o
+debug/aplicacionusuariomodel.o
 debug/databasemanager.o
-debug/licencia.o
-debug/licenciadao.o
-debug/licenciamodel.o
 debug/usuario.o
 debug/usuariodao.o
 debug/usuariomodel.o
 debug/moc_aplicacionmodel.o
-debug/moc_licenciamodel.o
+debug/moc_aplicacionusuariomodel.o
 debug/moc_usuariomodel.o

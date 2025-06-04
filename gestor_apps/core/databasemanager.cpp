@@ -6,7 +6,7 @@
 DatabaseManager::DatabaseManager(const QString& path)
     : mDatabase(std::make_unique<QSqlDatabase>(QSqlDatabase::addDatabase("QSQLITE"))),
     aplicacionDao(*mDatabase),
-    licenciaDao(*mDatabase),
+    aplicacionusuarioDao(*mDatabase),
     usuarioDao(*mDatabase) {
 
 
@@ -46,9 +46,7 @@ void DatabaseManager::inicializarBaseDeDatos() {
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                "nombre TEXT UNIQUE NOT NULL, "
                "descripcion TEXT NOT NULL, "
-               "icono TEXT NOT NULL, "
-               "estado INTEGER NOT NULL, "
-               "favorito INTEGER NOT NULL)");
+               "icono TEXT NOT NULL)");
 
     query.exec("CREATE TABLE IF NOT EXISTS usuarios ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -56,15 +54,16 @@ void DatabaseManager::inicializarBaseDeDatos() {
                "contrasena TEXT NOT NULL)");
 
 
-    query.exec("CREATE TABLE IF NOT EXISTS licencias ("
+    query.exec("CREATE TABLE IF NOT EXISTS aplicacion_usuario ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-               "appId INTEGER NOT NULL, "
-               "userId INTEGER NOT NULL, "
-               "estado INTEGER NOT NULL, "
-               "fechaInicio DATE NOT NULL, "
-               "fechaFin DATE NOT NULL, "
-               "FOREIGN KEY(appId) REFERENCES aplicaciones(id), "
-               "FOREIGN KEY(userId) REFERENCES usuarios(id))");
+               "usuario_id INTEGER NOT NULL, "
+               "aplicacion_id INTEGER NOT NULL, "
+               "estado_instalacion TEXT NOT NULL, "
+               "favorito BOOLEAN NOT NULL, "
+               "estado_licencia TEXT NOT NULL, "
+               "fecha_licencia DATE, "
+               "FOREIGN KEY(usuario_id) REFERENCES usuarios(id), "
+               "FOREIGN KEY(aplicacion_id) REFERENCES aplicaciones(id))");
 
 
     query.exec("SELECT COUNT(*) FROM aplicaciones");
@@ -74,16 +73,16 @@ void DatabaseManager::inicializarBaseDeDatos() {
     if (numApps == 0) {  // Si no hay aplicaciones, se insertan
         qDebug() << "La base de datos está vacía, insertando aplicaciones por defecto...";
 
-        query.exec("INSERT INTO aplicaciones (nombre, descripcion, icono, estado,favorito) VALUES "
-                   "('Gestor de Archivos', 'Organiza documentos y archivos', ':/imagenes trabajo/archivo.png', 2, 4),"
-                   "('Editor de Texto', 'Escribe y edita documentos de texto', ':/imagenes trabajo/editor-de-texto.png', 2, 4),"
-                   "('Calculadora Científica', 'Realiza cálculos matemáticos avanzados', ':/imagenes trabajo/calculadora.png', 2, 4),"
-                   "('Reproductor de Música', 'Escucha tus canciones favoritas', ':/imagenes trabajo/musica.png', 2, 4),"
-                   "('Calendario', 'Administra tu agenda y eventos', ':/imagenes trabajo/calendario.png', 2, 4),"
-                   "('Gestor de Tareas', 'Organiza y gestiona tus actividades diarias', ':/imagenes trabajo/portapapeles.png', 2, 4),"
-                   "('Explorador Web', 'Accede a sitios web y realiza búsquedas en internet', ':/imagenes trabajo/sitio-web.png', 2, 4),"
-                   "('Lector de PDFs', 'Abre y visualiza archivos en formato PDF', ':/imagenes trabajo/archivo-pdf.png', 2, 4)");
-
+        query.exec("INSERT INTO aplicaciones (nombre, descripcion, icono) VALUES "
+                   "('Gestor de Archivos', 'Organiza documentos y archivos', ':/imagenes trabajo/archivo.png'),"
+                   "('Editor de Texto', 'Escribe y edita documentos de texto', ':/imagenes trabajo/editor-de-texto.png'),"
+                   "('Calculadora Científica', 'Realiza cálculos matemáticos avanzados', ':/imagenes trabajo/calculadora.png'),"
+                   "('Reproductor de Música', 'Escucha tus canciones favoritas', ':/imagenes trabajo/musica.png'),"
+                   "('Calendario', 'Administra tu agenda y eventos', ':/imagenes trabajo/calendario.png'),"
+                   "('Gestor de Tareas', 'Organiza y gestiona tus actividades diarias', ':/imagenes trabajo/portapapeles.png'),"
+                   "('Explorador Web', 'Accede a sitios web y realiza búsquedas en internet', ':/imagenes trabajo/sitio-web.png'),"
+                   "('Lector de PDFs', 'Abre y visualiza archivos en formato PDF', ':/imagenes trabajo/archivo-pdf.png'),"
+                   "('Cliente de Correo', 'Envía y recibe correos electrónicos fácilmente', ':/imagenes trabajo/cliente-correo.png')");
         if (query.lastError().isValid()) {
             qDebug() << "Error al insertar aplicaciones por defecto:" << query.lastError().text();
         } else {

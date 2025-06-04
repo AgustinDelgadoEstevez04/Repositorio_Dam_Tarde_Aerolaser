@@ -18,6 +18,7 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
@@ -43,6 +44,7 @@ public:
     QPushButton *descargar_app;
     QPushButton *no_descargados_2;
     QLabel *label;
+    QProgressBar *barraProgreso;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -50,7 +52,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(818, 553);
+        MainWindow->resize(818, 578);
         QPalette palette;
         QBrush brush(QColor(255, 255, 255, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -76,6 +78,8 @@ public:
         palette.setBrush(QPalette::Disabled, QPalette::Base, brush3);
         palette.setBrush(QPalette::Disabled, QPalette::Window, brush3);
         MainWindow->setPalette(palette);
+        QIcon icon(QIcon::fromTheme(QIcon::ThemeIcon::GoHome));
+        MainWindow->setWindowIcon(icon);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         lista_apps = new QListView(centralwidget);
@@ -90,7 +94,7 @@ public:
         lista_filtro->setGeometry(QRect(560, 140, 221, 291));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(330, 20, 51, 51));
+        label_2->setGeometry(QRect(10, 20, 51, 51));
         label_2->setLayoutDirection(Qt::LayoutDirection::LeftToRight);
         label_2->setPixmap(QPixmap(QString::fromUtf8(":/imagenes trabajo/usuario.png")));
         label_2->setScaledContents(true);
@@ -101,7 +105,7 @@ public:
         label_3->setScaledContents(true);
         barra_busqueda = new QLineEdit(centralwidget);
         barra_busqueda->setObjectName("barra_busqueda");
-        barra_busqueda->setGeometry(QRect(80, 100, 441, 31));
+        barra_busqueda->setGeometry(QRect(80, 100, 431, 31));
         QPalette palette2;
         palette2.setBrush(QPalette::Active, QPalette::Window, brush3);
         palette2.setBrush(QPalette::Inactive, QPalette::Window, brush3);
@@ -110,34 +114,34 @@ public:
         barra_busqueda->setPalette(palette2);
         usuario_nombre = new QLabel(centralwidget);
         usuario_nombre->setObjectName("usuario_nombre");
-        usuario_nombre->setGeometry(QRect(390, 30, 111, 31));
+        usuario_nombre->setGeometry(QRect(70, 30, 601, 31));
         QFont font;
         font.setPointSize(14);
         usuario_nombre->setFont(font);
-        usuario_nombre->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        usuario_nombre->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter);
         cerrar_sesion = new QPushButton(centralwidget);
         cerrar_sesion->setObjectName("cerrar_sesion");
         cerrar_sesion->setGeometry(QRect(690, 30, 91, 31));
         favoritos = new QPushButton(centralwidget);
         favoritos->setObjectName("favoritos");
         favoritos->setGeometry(QRect(610, 100, 31, 31));
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/imagenes trabajo/me-gusta.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        favoritos->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/imagenes trabajo/me-gusta.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        favoritos->setIcon(icon1);
         favoritos->setIconSize(QSize(20, 20));
         descargados = new QPushButton(centralwidget);
         descargados->setObjectName("descargados");
         descargados->setGeometry(QRect(670, 100, 31, 31));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/imagenes trabajo/descargas.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        descargados->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/imagenes trabajo/descargas.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        descargados->setIcon(icon2);
         descargados->setIconSize(QSize(20, 20));
         no_descargados = new QPushButton(centralwidget);
         no_descargados->setObjectName("no_descargados");
         no_descargados->setGeometry(QRect(730, 100, 31, 31));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/imagenes trabajo/no.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        no_descargados->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/imagenes trabajo/no.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        no_descargados->setIcon(icon3);
         no_descargados->setIconSize(QSize(20, 20));
         label_filtro = new QLabel(centralwidget);
         label_filtro->setObjectName("label_filtro");
@@ -147,25 +151,42 @@ public:
         favorito_app = new QPushButton(centralwidget);
         favorito_app->setObjectName("favorito_app");
         favorito_app->setGeometry(QRect(380, 440, 41, 41));
-        QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/imagenes trabajo/mano arriba.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        favorito_app->setIcon(icon3);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/imagenes trabajo/mano arriba.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        favorito_app->setIcon(icon4);
         favorito_app->setIconSize(QSize(20, 20));
         descargar_app = new QPushButton(centralwidget);
         descargar_app->setObjectName("descargar_app");
         descargar_app->setGeometry(QRect(430, 440, 41, 41));
-        QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/imagenes trabajo/instalar.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
-        descargar_app->setIcon(icon4);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/imagenes trabajo/instalar.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        descargar_app->setIcon(icon5);
         descargar_app->setIconSize(QSize(20, 20));
         no_descargados_2 = new QPushButton(centralwidget);
         no_descargados_2->setObjectName("no_descargados_2");
         no_descargados_2->setGeometry(QRect(480, 440, 41, 41));
-        no_descargados_2->setIcon(icon2);
+        no_descargados_2->setIcon(icon3);
         no_descargados_2->setIconSize(QSize(20, 20));
         label = new QLabel(centralwidget);
         label->setObjectName("label");
-        label->setGeometry(QRect(40, 440, 331, 41));
+        label->setGeometry(QRect(40, 440, 301, 61));
+        QPalette palette3;
+        palette3.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        QBrush brush4(QColor(0, 0, 0, 255));
+        brush4.setStyle(Qt::SolidPattern);
+        palette3.setBrush(QPalette::Active, QPalette::Text, brush4);
+        palette3.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        palette3.setBrush(QPalette::Inactive, QPalette::Text, brush4);
+        label->setPalette(palette3);
+        label->setWordWrap(true);
+        barraProgreso = new QProgressBar(centralwidget);
+        barraProgreso->setObjectName("barraProgreso");
+        barraProgreso->setGeometry(QRect(390, 490, 118, 21));
+        QFont font1;
+        font1.setPointSize(16);
+        barraProgreso->setFont(font1);
+        barraProgreso->setValue(0);
+        barraProgreso->setTextVisible(false);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");

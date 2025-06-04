@@ -4,9 +4,9 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QListWidgetItem>
-#include "DatabaseManager.h"
-#include "AplicacionModel.h"
-#include "LicenciaModel.h"
+#include "databasemanager.h"
+#include "aplicacionmodel.h"
+#include "aplicacionusuariomodel.h"
 #include "aplicacion.h"
 #include <QIcon>
 #include <QPixmap>
@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr, const QString &username = QString());
+    explicit MainWindow(int usuarioid, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -54,12 +54,17 @@ private slots:
 
     void on_no_descargados_2_clicked();
 
+    void mostrarNombreUsuario();
+
+    void on_barraProgreso_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     DatabaseManager &dbManager;
     QStandardItemModel *modeloAplicaciones;
     QList<AplicacionModel*> aplicaciones;
-    QList<LicenciaModel*> licencias;
+    QList<AplicacionUsuarioModel*> aplicacionusuario;
+     int usuarioActualId;
 };
 
 #endif // MAINWINDOW_H

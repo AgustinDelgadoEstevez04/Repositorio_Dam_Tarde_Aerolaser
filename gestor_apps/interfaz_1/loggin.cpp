@@ -28,13 +28,13 @@ void loggin::on_iniciar_clicked()
     // Validación de campos vacíos
     if (nombre.isEmpty()) {
         QMessageBox::warning(this, "Error de Inicio de Sesión", "El nombre de usuario es obligatorio.");
-        ui->usuario->setFocus();
+        ui->usuario->setFocus(); // Poner foco en el campo usuario
         return;
     }
 
     if (contrasena.isEmpty()) {
         QMessageBox::warning(this, "Error de Inicio de Sesión", "La contraseña es obligatoria.");
-        ui->contrasena->setFocus();
+        ui->contrasena->setFocus(); // Poner foco en el campo contraseña
         return;
     }
 
@@ -45,14 +45,16 @@ void loggin::on_iniciar_clicked()
         return;
     }
 
-
     // Usar el DAO para verificar credenciales
     if (DatabaseManager::instance().usuarioDao.verificarCredenciales(nombre, contrasena)) {
         QMessageBox::information(this, "Inicio de Sesión", "¡Inicio de sesión exitoso!");
+        usuario usuarioActual = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorNombre(nombre);
+        usuarioActualId = usuarioActual.getid();
 
 
+        // Ocultar la ventana de login y mostrar la ventana principal
         this->hide();
-        MainWindow *mainWindow = new MainWindow(nullptr, nombre);
+        MainWindow *mainWindow = new MainWindow(usuarioActualId, nullptr);
         mainWindow->show();
 
     } else {
@@ -113,7 +115,7 @@ void loggin::on_registrar_clicked()
         return;
     }
 
-    usuario nuevoUsuario(nombre, contrasena, 0); // ID 0 para nuevo usuario (se generará en la DB)
+    usuario nuevoUsuario(nombre, contrasena, 0); // ID 0 para nuevo usuario
 
     if (!nuevoUsuario.setnombre(nombre)) {
         QMessageBox::warning(this, "Error de Registro", "El nombre de usuario no cumple con los requisitos de longitud (6-30 caracteres).");
@@ -126,7 +128,7 @@ void loggin::on_registrar_clicked()
         return;
     }
 
-    // **Paso 2: Verificar si el nombre de usuario ya existe en la base de datos**
+    // Paso 2: Verificar si el nombre de usuario ya existe en la base de datos**
     usuario usuarioExistente = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorNombre(nombre);
 
     if (usuarioExistente.getid() != -1) {
@@ -135,10 +137,10 @@ void loggin::on_registrar_clicked()
         return; // Detener el proceso de registro
     }
 
-    // **Paso 3: Si el nombre de usuario no existe, proceder con el registro**
+    // Paso 3: Si el nombre de usuario no existe, proceder con el registro**
     if (DatabaseManager::instance().usuarioDao.guardarUsuario(nuevoUsuario)) {
         QMessageBox::information(this, "Registro Exitoso", "Usuario '" + nombre + "' registrado correctamente.");
-        // Opcional: Limpiar los campos después de un registro exitoso
+
         ui->usuario->clear();
         ui->contrasena->clear();
         ui->usuario->setFocus();
@@ -147,49 +149,4 @@ void loggin::on_registrar_clicked()
     }
 }
 
-void loggin::on_eliminar_clicked()
-{
-    QString nombreAEliminar = ui->usuario->text().trimmed(); // Eliminar espacios en blanco
-    QString contrasena = ui->contrasena->text();
 
-    if (nombreAEliminar.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Ingresa un nombre de usuario para eliminar.");
-        ui->usuario->setFocus();
-        return;
-    }
-
-    // NUEVO: Hacer que la contraseña sea obligatoria también para eliminar (seguridad adicional)
-    if (contrasena.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Ingresa la contraseña del usuario para confirmar la eliminación.");
-        ui->contrasena->setFocus();
-        return;
-    }
-
-    // Primero, verificar que las credenciales sean correctas antes de eliminar
-    if (!DatabaseManager::instance().usuarioDao.verificarCredenciales(nombreAEliminar, contrasena)) {
-        QMessageBox::critical(this, "Error", "Credenciales incorrectas. No se puede eliminar el usuario.");
-        return;
-    }
-
-    // Obtener el usuario por nombre para obtener su ID
-    usuario userToDelete = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorNombre(nombreAEliminar);
-
-    if (userToDelete.getid() != -1) { // Si se encuentra el usuario
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Confirmar Eliminación",
-                                      "¿Estás seguro de que quieres eliminar a " + nombreAEliminar + "?",
-                                      QMessageBox::Yes | QMessageBox::No);
-        if (reply == QMessageBox::Yes) {
-            if (DatabaseManager::instance().usuarioDao.eliminarUsuario(userToDelete.getid())) {
-                QMessageBox::information(this, "Eliminado", "Usuario eliminado correctamente.");
-                ui->usuario->clear();
-                ui->contrasena->clear();
-                ui->usuario->setFocus();
-            } else {
-                QMessageBox::critical(this, "Error al Eliminar", "No se pudo eliminar el usuario. Consulte el log para más detalles.");
-            }
-        }
-    } else {
-        QMessageBox::warning(this, "No Encontrado", "El usuario '" + nombreAEliminar + "' no está registrado.");
-    }
-}
