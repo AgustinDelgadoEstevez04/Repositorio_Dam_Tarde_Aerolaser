@@ -396,7 +396,7 @@ void MainWindow::mostrarNombreUsuario() {
 }
 
 void MainWindow::actualizarListaFiltro(int tipoFiltro) {
-    ui->lista_filtro->clear(); // 🔹 Limpia la lista antes de actualizar
+    ui->lista_filtro->clear();
 
     QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
 
