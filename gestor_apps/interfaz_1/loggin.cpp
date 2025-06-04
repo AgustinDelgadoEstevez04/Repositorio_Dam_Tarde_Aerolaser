@@ -115,7 +115,7 @@ void loggin::on_registrar_clicked()
         return;
     }
 
-    usuario nuevoUsuario(nombre, contrasena, 0); // ID 0 para nuevo usuario (se generará en la DB)
+    usuario nuevoUsuario(nombre, contrasena, 0); // ID 0 para nuevo usuario
 
     if (!nuevoUsuario.setnombre(nombre)) {
         QMessageBox::warning(this, "Error de Registro", "El nombre de usuario no cumple con los requisitos de longitud (6-30 caracteres).");
@@ -128,7 +128,7 @@ void loggin::on_registrar_clicked()
         return;
     }
 
-    // **Paso 2: Verificar si el nombre de usuario ya existe en la base de datos**
+    // Paso 2: Verificar si el nombre de usuario ya existe en la base de datos**
     usuario usuarioExistente = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorNombre(nombre);
 
     if (usuarioExistente.getid() != -1) {
@@ -137,13 +137,13 @@ void loggin::on_registrar_clicked()
         return; // Detener el proceso de registro
     }
 
-    // **Paso 3: Si el nombre de usuario no existe, proceder con el registro**
+    // Paso 3: Si el nombre de usuario no existe, proceder con el registro**
     if (DatabaseManager::instance().usuarioDao.guardarUsuario(nuevoUsuario)) {
         QMessageBox::information(this, "Registro Exitoso", "Usuario '" + nombre + "' registrado correctamente.");
-        // Opcional: Limpiar los campos después de un registro exitoso
+
         ui->usuario->clear();
         ui->contrasena->clear();
-        ui->usuario->setFocus(); // Volver a poner foco en usuario para nuevo registro
+        ui->usuario->setFocus();
     } else {
         QMessageBox::critical(this, "Error de Registro", "No se pudo registrar el usuario. Consulte el log para más detalles.");
     }

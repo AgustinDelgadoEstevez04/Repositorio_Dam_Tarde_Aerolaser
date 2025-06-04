@@ -29,7 +29,7 @@ signals:
     void aplicacionUsuarioActualizada();
 
 public slots:
-    void actualizarDesdeDAO(); // Método para actualizar el modelo desde la BD
+    void actualizarDesdeDAO();
 
 private:
     AplicacionUsuario mAplicacionUsuario;

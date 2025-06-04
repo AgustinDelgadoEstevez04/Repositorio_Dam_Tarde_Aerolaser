@@ -11,7 +11,7 @@
 
 MainWindow::MainWindow(int usuarioId, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()),
-    modeloAplicaciones(new QStandardItemModel(this)), usuarioActualId(usuarioId) {
+    modeloAplicaciones(new QStandardItemModel(this)), usuarioActualId(usuarioId),ultimaSeleccionEnListaApps(true),filtroActivo(2) {
     ui->setupUi(this);
     cargaraplicaciones();
     mostrarNombreUsuario();
@@ -21,6 +21,7 @@ MainWindow::MainWindow(int usuarioId, QWidget *parent)
 
     connect(ui->barra_busqueda, &QLineEdit::textChanged, this, &MainWindow::filtrarAplicaciones);
     connect(ui->lista_apps, &QListView::clicked, this, &MainWindow::mostrarDetallesAplicacion);
+    connect(ui->lista_filtro, &QListWidget::currentItemChanged, this, &MainWindow::on_lista_filtro_currentItemChanged);
 }
 
 MainWindow::~MainWindow() {
@@ -62,7 +63,7 @@ void MainWindow::filtrarAplicaciones() {
     QString textoBusqueda = ui->barra_busqueda->text().trimmed(); // Obtiene el texto del buscador
     modeloAplicaciones->clear(); // Limpia el modelo actual
 
-    QList<aplicacion> listaCompletaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones(); // O si tienes una lista en memoria, úsala
+    QList<aplicacion> listaCompletaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones(); // O si tienes una lista en memoria
 
     for (const aplicacion &app : listaCompletaApps) {
         // Filtra si el nombre de la aplicación contiene el texto de búsqueda
@@ -88,6 +89,9 @@ void MainWindow::filtrarAplicaciones() {
 void MainWindow::mostrarDetallesAplicacion() {
     QModelIndex index = ui->lista_apps->currentIndex();
     if (!index.isValid()) return;
+
+     ui->lista_filtro->clearSelection();
+    ultimaSeleccionEnListaApps = true;
 
     int idApp = index.data(Qt::UserRole).toInt();
     aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(idApp);
@@ -123,7 +127,6 @@ void MainWindow::on_cerrar_sesion_clicked()
 
     this->close(); // Cierra la ventana actual
 
-    // Por ejemplo, si tienes una clase llamada LoginWindow:
     loggin *login = new loggin();
     login->show();
 }
@@ -137,6 +140,8 @@ void MainWindow::on_barra_busqueda_cursorPositionChanged(int arg1, int arg2)
 
 void MainWindow::on_favoritos_clicked()
 {
+        filtroActivo = 3; // 🔹 Guardamos que el filtro es de favoritos
+        actualizarListaFiltro(filtroActivo); // 🔹 Recarga solo favoritas
 
         ui->lista_filtro->clear();
 
@@ -161,13 +166,13 @@ void MainWindow::on_favoritos_clicked()
             }
         }
 
-        QMessageBox::information(this, "Favoritos", "Se han filtrado las aplicaciones favoritas en la lista de filtros.");
-
 }
 
 
 void MainWindow::on_descargados_clicked()
 {
+    filtroActivo = 1;
+    actualizarListaFiltro(filtroActivo);
         ui->lista_filtro->clear();
 
 
@@ -191,13 +196,15 @@ void MainWindow::on_descargados_clicked()
             }
         }
 
-        QMessageBox::information(this, "Aplicaciones Instaladas", "Se han filtrado las aplicaciones instaladas en la lista.");
   }
 
 
 
 void MainWindow::on_no_descargados_clicked()
-{
+{ 
+        filtroActivo = 2; // 🔹 Guardamos que el filtro es de no instaladas
+        actualizarListaFiltro(filtroActivo); // 🔹 Recarga solo no instaladas
+
         ui->lista_filtro->clear();
 
 
@@ -221,7 +228,6 @@ void MainWindow::on_no_descargados_clicked()
             }
         }
 
-        QMessageBox::information(this, "Aplicaciones No Instaladas", "Se han filtrado las aplicaciones no instaladas en la lista.");
 
 }
 
@@ -232,83 +238,101 @@ void MainWindow::on_lista_apps_indexesMoved(const QModelIndexList &indexes)
 }
 
 
-void MainWindow::on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
-{
+void MainWindow::on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
+    if (current) {
+        ui->lista_apps->clearSelection();
+        ultimaSeleccionEnListaApps = false;
+    }
 }
 
 
-void MainWindow::on_favorito_app_clicked()
-{
-    QModelIndex index = ui->lista_apps->currentIndex();
-    if (!index.isValid()) {
+
+void MainWindow::on_favorito_app_clicked() {
+    int idApp = -1;
+
+    if (ultimaSeleccionEnListaApps) {
+        QModelIndex indexApps = ui->lista_apps->currentIndex();
+        if (indexApps.isValid()) {
+            idApp = indexApps.data(Qt::UserRole).toInt();
+        }
+    } else {
+        QListWidgetItem *itemFiltro = ui->lista_filtro->currentItem();
+        if (itemFiltro) {
+            idApp = itemFiltro->data(Qt::UserRole).toInt();
+        }
+    }
+
+    if (idApp == -1) {
         QMessageBox::warning(this, "Error", "Seleccione una aplicación para marcar como favorita.");
         return;
     }
 
-    int idApp = index.data(Qt::UserRole).toInt();
-
-    if (usuarioActualId <= 0) {
-        QMessageBox::critical(this, "Error", "No se pudo obtener el ID del usuario.");
-        return;
-    }
-
-    // Obtener la relación usuario-aplicación
     AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
-
-    //  Cambiar favorito de true a false, o de false a true
     aplicacionUsuario.setFavorito(!aplicacionUsuario.esFavorito());
 
     if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
-        QMessageBox::information(this, "Favorito", QString("La aplicación ahora está %1.")
-                                                       .arg(aplicacionUsuario.esFavorito() ? "marcada como favorita" : "desmarcada como favorita"));
+        QMessageBox::information(this, "Favoritos", QString("La aplicación ahora está %1.").arg(aplicacionUsuario.esFavorito() ? "marcada como favorita" : "desmarcada como favorita"));
+         actualizarListaFiltro(filtroActivo);
     } else {
         QMessageBox::critical(this, "Error", "No se pudo actualizar el estado de favorito.");
     }
 }
 
 
-void MainWindow::on_descargar_app_clicked()
-{
-        // Configurar la barra de progreso antes de la instalación
-        ui->barraProgreso->setRange(0, 100);
-        ui->barraProgreso->setValue(0);
-        ui->barraProgreso->setVisible(true);
+void MainWindow::on_descargar_app_clicked() {
+    ui->barraProgreso->setRange(0, 100);
+    ui->barraProgreso->setValue(0);
+    ui->barraProgreso->setVisible(true);
 
-        QModelIndex index = ui->lista_apps->currentIndex();
-        if (!index.isValid()) {
-            QMessageBox::warning(this, "Error", "Seleccione una aplicación para descargar.");
-            ui->barraProgreso->setVisible(false);
-            return;
+    int idApp = -1;
+
+    if (ultimaSeleccionEnListaApps) {
+        QModelIndex indexApps = ui->lista_apps->currentIndex();
+        if (indexApps.isValid()) {
+            idApp = indexApps.data(Qt::UserRole).toInt();
         }
-
-        int idApp = index.data(Qt::UserRole).toInt();
-
-        AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
-
-        if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
-            QMessageBox::information(this, "Instalado", "La aplicación ya está instalada.");
-            ui->barraProgreso->setVisible(false);
-            return;
+    } else {
+        QListWidgetItem *itemFiltro = ui->lista_filtro->currentItem();
+        if (itemFiltro) {
+            idApp = itemFiltro->data(Qt::UserRole).toInt();
         }
+    }
 
-        aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::Instalado);
-        aplicacionUsuario.setEstadoLicencia(AplicacionUsuario::Activa);
-        aplicacionUsuario.setFechaLicencia(QDate::currentDate());
-
-        for (int i = 0; i <= 100; i += 10) {
-            ui->barraProgreso->setValue(i);
-            QThread::msleep(50);
-        }
-
-        if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
-            QMessageBox::information(this, "Éxito", "La aplicación ha sido instalada y su licencia activada.");
-        } else {
-            QMessageBox::critical(this, "Error", "No se pudo actualizar la instalación y la licencia.");
-        }
-
+    if (idApp == -1) {
+        QMessageBox::warning(this, "Error", "Seleccione una aplicación para instalar.");
         ui->barraProgreso->setVisible(false);
+        return;
+    }
 
+    AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
+
+    if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
+        QMessageBox::information(this, "Instalado", "La aplicación ya está instalada.");
+        ui->barraProgreso->setVisible(false);
+        return;
+    }
+
+    aplicacionUsuario.setEstadoInstalacion(AplicacionUsuario::Instalado);
+    aplicacionUsuario.setEstadoLicencia(AplicacionUsuario::Activa);
+    aplicacionUsuario.setFechaLicencia(QDate::currentDate());
+
+    for (int i = 0; i <= 100; i += 10) {
+        ui->barraProgreso->setValue(i);
+        QThread::msleep(50);
+    }
+
+    if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
+        QMessageBox::information(this, "Éxito", "La aplicación ha sido instalada y su licencia activada.");
+         actualizarListaFiltro(filtroActivo);
+    } else {
+        QMessageBox::critical(this, "Error", "No se pudo actualizar la instalación y la licencia.");
+    }
+
+    ui->barraProgreso->setVisible(false);
 }
+
+
+
 
 
 void MainWindow::on_no_descargados_2_clicked() {
@@ -316,14 +340,26 @@ void MainWindow::on_no_descargados_2_clicked() {
     ui->barraProgreso->setValue(0);
     ui->barraProgreso->setVisible(true);
 
-    QModelIndex index = ui->lista_apps->currentIndex();
-    if (!index.isValid()) {
+    int idApp = -1;
+
+    if (ultimaSeleccionEnListaApps) {
+        QModelIndex indexApps = ui->lista_apps->currentIndex();
+        if (indexApps.isValid()) {
+            idApp = indexApps.data(Qt::UserRole).toInt();
+        }
+    } else {
+        QListWidgetItem *itemFiltro = ui->lista_filtro->currentItem();
+        if (itemFiltro) {
+            idApp = itemFiltro->data(Qt::UserRole).toInt();
+        }
+    }
+
+    if (idApp == -1) {
         QMessageBox::warning(this, "Error", "Seleccione una aplicación para desinstalar.");
         ui->barraProgreso->setVisible(false);
         return;
     }
 
-    int idApp = index.data(Qt::UserRole).toInt();
     AplicacionUsuario aplicacionUsuario = dbManager.aplicacionusuarioDao.obtenerRelacionPorIds(usuarioActualId, idApp);
 
     if (aplicacionUsuario.getEstadoInstalacion() == AplicacionUsuario::NoInstalado) {
@@ -341,12 +377,16 @@ void MainWindow::on_no_descargados_2_clicked() {
 
     if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
         QMessageBox::information(this, "Éxito", "La aplicación ha sido desinstalada correctamente.");
+         actualizarListaFiltro(filtroActivo);
     } else {
         QMessageBox::critical(this, "Error", "No se pudo actualizar la desinstalación.");
     }
 
     ui->barraProgreso->setVisible(false);
 }
+
+
+
 
 void MainWindow::mostrarNombreUsuario() {
 
@@ -355,4 +395,40 @@ void MainWindow::mostrarNombreUsuario() {
     ui->usuario_nombre->setText(usuario.getnombre());
 }
 
+void MainWindow::actualizarListaFiltro(int tipoFiltro) {
+    ui->lista_filtro->clear(); // 🔹 Limpia la lista antes de actualizar
+
+    QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
+
+    for (const AplicacionUsuario &rel : relaciones) {
+        bool agregar = false;
+
+        if (tipoFiltro == 1 && rel.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
+            agregar = true;
+        }
+        else if (tipoFiltro == 2 && rel.getEstadoInstalacion() == AplicacionUsuario::NoInstalado) {
+            agregar = true;
+        }
+        else if (tipoFiltro == 3 && rel.esFavorito()) {
+            agregar = true;
+        }
+
+        if (agregar) {
+            aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(rel.getAplicacionId());
+
+            QListWidgetItem *item = new QListWidgetItem(app.nombre());
+            item->setIcon(QIcon(app.icono()));
+            item->setData(Qt::UserRole, app.id());
+
+            ui->lista_filtro->addItem(item);
+        }
+    }
+}
+
+
+
+void MainWindow::on_barraProgreso_valueChanged(int value)
+{
+
+}
 

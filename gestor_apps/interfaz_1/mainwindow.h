@@ -56,6 +56,10 @@ private slots:
 
     void mostrarNombreUsuario();
 
+    void on_barraProgreso_valueChanged(int value);
+
+    void actualizarListaFiltro(int tipofiltro);
+
 private:
     Ui::MainWindow *ui;
     DatabaseManager &dbManager;
@@ -63,6 +67,8 @@ private:
     QList<AplicacionModel*> aplicaciones;
     QList<AplicacionUsuarioModel*> aplicacionusuario;
      int usuarioActualId;
+    bool ultimaSeleccionEnListaApps;
+    int filtroActivo;
 };
 
 #endif // MAINWINDOW_H

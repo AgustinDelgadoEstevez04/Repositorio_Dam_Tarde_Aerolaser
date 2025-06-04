@@ -12,9 +12,9 @@ bool AplicacionUsuarioDAO::guardarRelacion(const AplicacionUsuario& aplicacionUs
                   "VALUES (?, ?, ?, ?, ?, ?)");
     query.addBindValue(aplicacionUsuario.getUsuarioId());
     query.addBindValue(aplicacionUsuario.getAplicacionId());
-    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoInstalacion())); // 🔹 Convertir enum a int
+    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoInstalacion())); // Convertir enum a int
     query.addBindValue(aplicacionUsuario.esFavorito());
-    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoLicencia())); // 🔹 Convertir enum a int
+    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoLicencia()));
     query.addBindValue(aplicacionUsuario.getFechaLicencia().toString("yyyy-MM-dd"));
 
     if (!query.exec()) {
@@ -33,9 +33,9 @@ AplicacionUsuario AplicacionUsuarioDAO::obtenerRelacionPorIds(int usuarioId, int
 
     if (query.exec() && query.next()) {
         return AplicacionUsuario(usuarioId, aplicacionId,
-                                 static_cast<AplicacionUsuario::EstadoInstalacion>(query.value(0).toInt()), // 🔹 Convertir int a enum
+                                 static_cast<AplicacionUsuario::EstadoInstalacion>(query.value(0).toInt()),
                                  query.value(1).toBool(),
-                                 static_cast<AplicacionUsuario::EstadoLicencia>(query.value(2).toInt()), // 🔹 Convertir int a enum
+                                 static_cast<AplicacionUsuario::EstadoLicencia>(query.value(2).toInt()),
                                  QDate::fromString(query.value(3).toString(), "yyyy-MM-dd"));
     } else {
         qDebug() << "No se encontró relación para usuarioId:" << usuarioId << " aplicacionId:" << aplicacionId;
@@ -53,9 +53,9 @@ QList<AplicacionUsuario> AplicacionUsuarioDAO::obtenerRelacionesPorUsuario(int u
     if (query.exec()) {
         while (query.next()) {
             relaciones.append(AplicacionUsuario(usuarioId, query.value("aplicacion_id").toInt(),
-                                                static_cast<AplicacionUsuario::EstadoInstalacion>(query.value("estado_instalacion").toInt()), // 🔹 Convertir int a enum
+                                                static_cast<AplicacionUsuario::EstadoInstalacion>(query.value("estado_instalacion").toInt()),
                                                 query.value("favorito").toBool(),
-                                                static_cast<AplicacionUsuario::EstadoLicencia>(query.value("estado_licencia").toInt()), // 🔹 Convertir int a enum
+                                                static_cast<AplicacionUsuario::EstadoLicencia>(query.value("estado_licencia").toInt()),
                                                 QDate::fromString(query.value("fecha_licencia").toString(), "yyyy-MM-dd")));
         }
     } else {
@@ -69,9 +69,9 @@ bool AplicacionUsuarioDAO::actualizarRelacion(const AplicacionUsuario& aplicacio
     QSqlQuery query(mDatabase);
     query.prepare("UPDATE aplicacion_usuario SET estado_instalacion = ?, favorito = ?, estado_licencia = ?, fecha_licencia = ? "
                   "WHERE usuario_id = ? AND aplicacion_id = ?");
-    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoInstalacion())); // 🔹 Convertir enum a int
+    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoInstalacion()));
     query.addBindValue(aplicacionUsuario.esFavorito());
-    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoLicencia())); // 🔹 Convertir enum a int
+    query.addBindValue(static_cast<int>(aplicacionUsuario.getEstadoLicencia()));
     query.addBindValue(aplicacionUsuario.getFechaLicencia().toString("yyyy-MM-dd"));
     query.addBindValue(aplicacionUsuario.getUsuarioId());
     query.addBindValue(aplicacionUsuario.getAplicacionId());

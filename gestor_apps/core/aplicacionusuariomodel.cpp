@@ -14,11 +14,11 @@ int AplicacionUsuarioModel::aplicacionId() const {
 }
 
 QString AplicacionUsuarioModel::estadoInstalacion() const {
-    return AplicacionUsuario::toString(mAplicacionUsuario.getEstadoInstalacion()); // ✅ Conversión correcta
+    return AplicacionUsuario::toString(mAplicacionUsuario.getEstadoInstalacion());
 }
 
 QString AplicacionUsuarioModel::estadoLicencia() const {
-    return AplicacionUsuario::toString(mAplicacionUsuario.getEstadoLicencia()); // ✅ Conversión correcta
+    return AplicacionUsuario::toString(mAplicacionUsuario.getEstadoLicencia());
 }
 
 

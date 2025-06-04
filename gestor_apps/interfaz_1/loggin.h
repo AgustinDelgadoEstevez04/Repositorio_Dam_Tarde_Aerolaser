@@ -2,9 +2,8 @@
 #define LOGGIN_H
 
 #include <QMainWindow>
-#include "databasemanager.h" // Se incluye porque DatabaseManager es usado en loggin.cpp
-#include "usuario.h"         // Se incluye porque la clase usuario es usada en loggin.cpp
-
+#include "databasemanager.h"
+#include "usuario.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class loggin;
@@ -26,7 +25,6 @@ private slots:
 private:
     Ui::loggin *ui;
      int usuarioActualId;
-    // Se elimina QSet<QString> usuariosRegistrados; ya que la gestión de usuarios ahora es con la base de datos
 };
 
 #endif // LOGGIN_H

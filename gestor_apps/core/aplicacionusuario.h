@@ -31,8 +31,8 @@ public:
     void setFavorito(bool fav);
     void setEstadoLicencia(EstadoLicencia estado);
     void setFechaLicencia(const QDate& fecha);
-    static QString toString(EstadoInstalacion estado); // 🔹 Nueva función
-    static QString toString(EstadoLicencia estado); // 🔹 Nueva función
+    static QString toString(EstadoInstalacion estado);
+    static QString toString(EstadoLicencia estado);
 
 private:
     int usuarioId;
