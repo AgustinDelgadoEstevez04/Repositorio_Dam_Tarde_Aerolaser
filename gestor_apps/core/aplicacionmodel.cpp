@@ -18,10 +18,6 @@ QString AplicacionModel::icono() const {
     return mAplicacion.icono();
 }
 
-int AplicacionModel::estado() const {
-    return static_cast<int>(mAplicacion.estado());
-}
-
 void AplicacionModel::actualizarDesdeDAO() {
     aplicacion nuevaApp = DatabaseManager::instance().aplicacionDao.obtenerAplicacionPorId(mAplicacion.id());
     mAplicacion = nuevaApp;

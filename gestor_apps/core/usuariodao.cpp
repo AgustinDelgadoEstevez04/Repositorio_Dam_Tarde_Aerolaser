@@ -1,13 +1,14 @@
 #include "usuariodao.h"
+#include "aplicacionusuario.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
+
 usuariodao::usuariodao(QSqlDatabase& database) : mdatabase(database) {}
 
 bool usuariodao::guardarUsuario(const usuario& usr) {
     QSqlQuery query(mdatabase);
-    query.prepare("INSERT INTO usuarios (id, nombre, contrasena) VALUES (?, ?, ?)");
-    query.addBindValue(usr.getid());
+    query.prepare("INSERT INTO usuarios (nombre, contrasena) VALUES (?, ?)");
     query.addBindValue(usr.getnombre());
     query.addBindValue(usr.getcontrasena());
 
@@ -15,6 +16,21 @@ bool usuariodao::guardarUsuario(const usuario& usr) {
         qDebug() << "Error al insertar usuario:" << query.lastError().text();
         return false;
     }
+    int nuevoUsuarioId = query.lastInsertId().toInt(); //Obtener el ID generado automáticamente
+
+    // 🔹 Insertar registros en aplicacion_usuario para el nuevo usuario
+    QSqlQuery appQuery(mdatabase);
+    appQuery.prepare("INSERT INTO aplicacion_usuario (usuario_id, aplicacion_id, estado_instalacion, favorito, estado_licencia, fecha_licencia) "
+                     "SELECT ?, id, ?, 0, ?, NULL FROM aplicaciones");
+    appQuery.addBindValue(nuevoUsuarioId);
+    appQuery.addBindValue(static_cast<int>(AplicacionUsuario::NoInstalado)); //Se usa el valor numérico del enum
+    appQuery.addBindValue(static_cast<int>(AplicacionUsuario::Expirada));
+
+    if (!appQuery.exec()) {
+        qDebug() << "Error al insertar relaciones de aplicaciones para el usuario:" << appQuery.lastError().text();
+        return false;
+    }
+
     return true;
 }
 
@@ -31,7 +47,7 @@ usuario usuariodao::obtenerUsuarioPorId(int id) const {
     return usuario("", "", -1);
 }
 
-usuario usuariodao::obtenerUsuarioPorNombre(const QString& nombre) {
+usuario usuariodao::obtenerUsuarioPorNombre(const QString& nombre) const {
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id, nombre, contrasena FROM usuarios WHERE nombre = ?");
     query.addBindValue(nombre);
@@ -85,7 +101,7 @@ bool usuariodao::eliminarUsuario(int id) {
     return true;
 }
 
-bool usuariodao::verificarCredenciales(const QString& nombre, const QString& contrasena) {
+bool usuariodao::verificarCredenciales(const QString& nombre, const QString& contrasena) const {
     QSqlQuery query(mdatabase);
     query.prepare("SELECT id FROM usuarios WHERE nombre = ? AND contrasena = ?");
     query.addBindValue(nombre);
@@ -93,5 +109,3 @@ bool usuariodao::verificarCredenciales(const QString& nombre, const QString& con
 
     return query.exec() && query.next();
 }
-
-

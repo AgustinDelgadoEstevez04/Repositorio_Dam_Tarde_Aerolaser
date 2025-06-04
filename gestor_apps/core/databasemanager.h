@@ -5,7 +5,7 @@
 #include <QString>
 
 #include "aplicaciondao.h"
-#include "licenciadao.h"
+#include "aplicacionusuariodao.h"
 #include "usuariodao.h"
 
 const QString DATABASE_FILENAME = "aplicaciones.db";
@@ -29,8 +29,8 @@ private:
 
 public:
     const aplicaciondao aplicacionDao;
-    const licenciadao licenciaDao;
-    const usuariodao usuarioDao;
+    AplicacionUsuarioDAO aplicacionusuarioDao;
+     usuariodao usuarioDao;
 };
 
 #endif // DATABASEMANAGER_H

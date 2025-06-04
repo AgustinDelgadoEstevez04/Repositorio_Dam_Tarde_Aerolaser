@@ -140,8 +140,8 @@ void MainWindow::on_barra_busqueda_cursorPositionChanged(int arg1, int arg2)
 
 void MainWindow::on_favoritos_clicked()
 {
-        filtroActivo = 3; // 🔹 Guardamos que el filtro es de favoritos
-        actualizarListaFiltro(filtroActivo); // 🔹 Recarga solo favoritas
+        filtroActivo = 3;
+        actualizarListaFiltro(filtroActivo);
 
         ui->lista_filtro->clear();
 
@@ -201,9 +201,9 @@ void MainWindow::on_descargados_clicked()
 
 
 void MainWindow::on_no_descargados_clicked()
-{ 
-        filtroActivo = 2; // 🔹 Guardamos que el filtro es de no instaladas
-        actualizarListaFiltro(filtroActivo); // 🔹 Recarga solo no instaladas
+{
+        filtroActivo = 2;
+        actualizarListaFiltro(filtroActivo);
 
         ui->lista_filtro->clear();
 

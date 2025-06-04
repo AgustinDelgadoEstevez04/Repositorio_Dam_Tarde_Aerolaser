@@ -10,7 +10,6 @@ class AplicacionModel : public QObject
     Q_PROPERTY(QString nombre READ nombre NOTIFY aplicacionActualizada)
     Q_PROPERTY(QString descripcion READ descripcion NOTIFY aplicacionActualizada)
     Q_PROPERTY(QString icono READ icono NOTIFY aplicacionActualizada)
-    Q_PROPERTY(int estado READ estado NOTIFY aplicacionActualizada)
 
 public:
     explicit AplicacionModel(const aplicacion& app, QObject* parent = nullptr);
@@ -19,7 +18,6 @@ public:
     QString nombre() const;
     QString descripcion() const;
     QString icono() const;
-    int estado() const;
 
 signals:
     void aplicacionActualizada();
