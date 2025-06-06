@@ -247,13 +247,15 @@ void MainWindow::on_lista_apps_indexesMoved(const QModelIndexList &indexes)
 
 void MainWindow::on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
     if (current) {
-        ui->lista_apps->clearSelection(); // Limpia la selección en la lista general
+        ui->lista_apps->clearSelection();
         ultimaSeleccionEnListaApps = false;
+
 
         int idApp = current->data(Qt::UserRole).toInt();
         aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(idApp);
 
-        ui->label->setText("Descripción: " + app.descripcion()); // 🔹 Muestra la descripción
+
+        ui->label->setText("Descripción: " + app.descripcion());
     }
 }
 
@@ -469,7 +471,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
         if (widget && widget != ui->lista_apps && widget != ui->lista_filtro) {
             ui->lista_apps->clearSelection();
             ui->lista_filtro->clearSelection();
-            ui->label->clear(); // Borra la descripción
+            ui->label->clear();
         }
     }
     return QMainWindow::eventFilter(obj, event);
