@@ -7,7 +7,7 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QThread>
-
+#include <QTimer>
 
 MainWindow::MainWindow(int usuarioId, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()),
@@ -15,6 +15,12 @@ MainWindow::MainWindow(int usuarioId, QWidget *parent)
     ui->setupUi(this);
     cargaraplicaciones();
     mostrarNombreUsuario();
+    actualizarEstadoLicencias();
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::actualizarEstadoLicencias);
+    timer->start(86400000); // Cada 24 horas
+
 
     ui->lista_apps->setModel(modeloAplicaciones);
     ui->lista_apps->setIconSize(QSize(32, 32));
@@ -63,7 +69,7 @@ void MainWindow::filtrarAplicaciones() {
     QString textoBusqueda = ui->barra_busqueda->text().trimmed(); // Obtiene el texto del buscador
     modeloAplicaciones->clear(); // Limpia el modelo actual
 
-    QList<aplicacion> listaCompletaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones(); // O si tienes una lista en memoria
+    QList<aplicacion> listaCompletaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones();
 
     for (const aplicacion &app : listaCompletaApps) {
         // Filtra si el nombre de la aplicación contiene el texto de búsqueda
@@ -140,8 +146,8 @@ void MainWindow::on_barra_busqueda_cursorPositionChanged(int arg1, int arg2)
 
 void MainWindow::on_favoritos_clicked()
 {
-        filtroActivo = 3; // 🔹 Guardamos que el filtro es de favoritos
-        actualizarListaFiltro(filtroActivo); // 🔹 Recarga solo favoritas
+        filtroActivo = 3;
+        actualizarListaFiltro(filtroActivo);
 
         ui->lista_filtro->clear();
 
@@ -431,4 +437,23 @@ void MainWindow::on_barraProgreso_valueChanged(int value)
 {
 
 }
+
+void MainWindow::actualizarEstadoLicencias() {
+    QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
+
+    for (AplicacionUsuario &rel : relaciones) {
+        if (rel.getEstadoLicencia() == AplicacionUsuario::Activa) {
+            int diasTranscurridos = rel.getFechaLicencia().daysTo(QDate::currentDate());
+
+            if (diasTranscurridos >= 30) {
+                rel.setEstadoLicencia(AplicacionUsuario::Expirada);
+            } else if (diasTranscurridos >= 20) {
+                rel.setEstadoLicencia(AplicacionUsuario::proximacaducar);
+            }
+
+            dbManager.aplicacionusuarioDao.actualizarRelacion(rel);
+        }
+    }
+}
+
 

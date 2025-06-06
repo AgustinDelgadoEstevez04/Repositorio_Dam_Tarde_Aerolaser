@@ -32,6 +32,7 @@ QString AplicacionUsuario::toString(EstadoLicencia estado) {
     switch (estado) {
     case SinLicencia: return "Sin Licencia";
     case Activa: return "Activa";
+    case proximacaducar: return "proxima a caducar";
     case Expirada: return "Expirada";
     default: return "Desconocido";
     }

@@ -60,6 +60,8 @@ private slots:
 
     void actualizarListaFiltro(int tipofiltro);
 
+    void actualizarEstadoLicencias();
+
 private:
     Ui::MainWindow *ui;
     DatabaseManager &dbManager;
