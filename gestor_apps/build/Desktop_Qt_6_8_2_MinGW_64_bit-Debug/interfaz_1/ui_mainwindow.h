@@ -125,6 +125,8 @@ public:
         horizontalLayout_5->setObjectName("horizontalLayout_5");
         label = new QLabel(centralwidget);
         label->setObjectName("label");
+        label->setMinimumSize(QSize(300, 40));
+        label->setMaximumSize(QSize(350, 40));
         QPalette palette1;
         palette1.setBrush(QPalette::Active, QPalette::WindowText, brush4);
         palette1.setBrush(QPalette::Active, QPalette::Text, brush4);

@@ -80,7 +80,26 @@ void loggin::on_registrar_clicked()
         return;
     }
 
-    // Validaciones adicionales de seguridad para contraseña
+    // Validaciones adicionales de seguridad para contraseña y nombre
+
+    if (nombre.length() > 30) {
+        QMessageBox::warning(this, "Error de Registro", "El nombre de usuario no puede tener más de 30 caracteres.");
+        ui->usuario->setFocus();
+        return;
+    }
+
+    // Validación adicional: el nombre de usuario no puede ser solo espacios
+    if (nombre.trimmed().isEmpty()) {
+        QMessageBox::warning(this, "Error de Registro", "El nombre de usuario no puede contener solo espacios en blanco.");
+        ui->usuario->setFocus();
+        return;
+    }
+
+    if (nombre.length() < 6) {
+        QMessageBox::warning(this, "Error de Registro", "La contraseña debe tener al menos 6 caracteres.");
+        ui->contrasena->setFocus();
+        return;
+    }
     if (contrasena.length() < 6) {
         QMessageBox::warning(this, "Error de Registro", "La contraseña debe tener al menos 6 caracteres.");
         ui->contrasena->setFocus();
