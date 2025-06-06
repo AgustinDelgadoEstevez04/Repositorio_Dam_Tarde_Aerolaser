@@ -689,6 +689,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
             <disabled/>
            </palette>
           </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+          </property>
          </widget>
         </item>
        </layout>

@@ -16,6 +16,7 @@ MainWindow::MainWindow(int usuarioId, QWidget *parent)
     cargaraplicaciones();
     mostrarNombreUsuario();
     actualizarEstadoLicencias();
+    this->installEventFilter(this);
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::actualizarEstadoLicencias);
@@ -246,10 +247,16 @@ void MainWindow::on_lista_apps_indexesMoved(const QModelIndexList &indexes)
 
 void MainWindow::on_lista_filtro_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
     if (current) {
-        ui->lista_apps->clearSelection();
+        ui->lista_apps->clearSelection(); // Limpia la selección en la lista general
         ultimaSeleccionEnListaApps = false;
+
+        int idApp = current->data(Qt::UserRole).toInt();
+        aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(idApp);
+
+        ui->label->setText("Descripción: " + app.descripcion()); // 🔹 Muestra la descripción
     }
 }
+
 
 
 
@@ -455,5 +462,18 @@ void MainWindow::actualizarEstadoLicencias() {
         }
     }
 }
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::MouseButtonPress) {
+        QWidget *widget = qobject_cast<QWidget*>(obj);
+        if (widget && widget != ui->lista_apps && widget != ui->lista_filtro) {
+            ui->lista_apps->clearSelection();
+            ui->lista_filtro->clearSelection();
+            ui->label->clear(); // Borra la descripción
+        }
+    }
+    return QMainWindow::eventFilter(obj, event);
+}
+
 
 

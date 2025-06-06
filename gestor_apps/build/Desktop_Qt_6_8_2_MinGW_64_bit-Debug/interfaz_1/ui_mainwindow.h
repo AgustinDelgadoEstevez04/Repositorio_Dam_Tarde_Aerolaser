@@ -295,6 +295,7 @@ public:
         palette3.setBrush(QPalette::Active, QPalette::Base, brush2);
         palette3.setBrush(QPalette::Inactive, QPalette::Base, brush2);
         lista_apps->setPalette(palette3);
+        lista_apps->setEditTriggers(QAbstractItemView::EditTrigger::NoEditTriggers);
 
         verticalLayout->addWidget(lista_apps);
 
