@@ -60,6 +60,11 @@ private slots:
 
     void actualizarListaFiltro(int tipofiltro);
 
+    void actualizarEstadoLicencias();
+
+    bool eventFilter(QObject *obj, QEvent *event);
+
+
 private:
     Ui::MainWindow *ui;
     DatabaseManager &dbManager;

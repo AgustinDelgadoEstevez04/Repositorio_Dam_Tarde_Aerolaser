@@ -14,7 +14,8 @@ public:
     enum EstadoLicencia {
         SinLicencia = 0,
         Activa = 1,
-        Expirada = 2
+        Expirada = 2,
+        proximacaducar=3
     };
 
     AplicacionUsuario(int usuarioId, int aplicacionId, EstadoInstalacion estadoInstalacion,

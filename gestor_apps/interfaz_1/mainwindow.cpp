@@ -7,7 +7,7 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QThread>
-
+#include <QTimer>
 
 MainWindow::MainWindow(int usuarioId, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()),
@@ -15,6 +15,13 @@ MainWindow::MainWindow(int usuarioId, QWidget *parent)
     ui->setupUi(this);
     cargaraplicaciones();
     mostrarNombreUsuario();
+    actualizarEstadoLicencias();
+    this->installEventFilter(this);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::actualizarEstadoLicencias);
+    timer->start(86400000); // Cada 24 horas
+
 
     ui->lista_apps->setModel(modeloAplicaciones);
     ui->lista_apps->setIconSize(QSize(32, 32));
@@ -63,7 +70,7 @@ void MainWindow::filtrarAplicaciones() {
     QString textoBusqueda = ui->barra_busqueda->text().trimmed(); // Obtiene el texto del buscador
     modeloAplicaciones->clear(); // Limpia el modelo actual
 
-    QList<aplicacion> listaCompletaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones(); // O si tienes una lista en memoria
+    QList<aplicacion> listaCompletaApps = dbManager.aplicacionDao.obtenerTodasLasAplicaciones();
 
     for (const aplicacion &app : listaCompletaApps) {
         // Filtra si el nombre de la aplicación contiene el texto de búsqueda
@@ -201,7 +208,7 @@ void MainWindow::on_descargados_clicked()
 
 
 void MainWindow::on_no_descargados_clicked()
-{
+{ 
         filtroActivo = 2;
         actualizarListaFiltro(filtroActivo);
 
@@ -242,8 +249,16 @@ void MainWindow::on_lista_filtro_currentItemChanged(QListWidgetItem *current, QL
     if (current) {
         ui->lista_apps->clearSelection();
         ultimaSeleccionEnListaApps = false;
+
+
+        int idApp = current->data(Qt::UserRole).toInt();
+        aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(idApp);
+
+
+        ui->label->setText("Descripción: " + app.descripcion());
     }
 }
+
 
 
 
@@ -431,4 +446,36 @@ void MainWindow::on_barraProgreso_valueChanged(int value)
 {
 
 }
+
+void MainWindow::actualizarEstadoLicencias() {
+    QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
+
+    for (AplicacionUsuario &rel : relaciones) {
+        if (rel.getEstadoLicencia() == AplicacionUsuario::Activa) {
+            int diasTranscurridos = rel.getFechaLicencia().daysTo(QDate::currentDate());
+
+            if (diasTranscurridos >= 30) {
+                rel.setEstadoLicencia(AplicacionUsuario::Expirada);
+            } else if (diasTranscurridos >= 20) {
+                rel.setEstadoLicencia(AplicacionUsuario::proximacaducar);
+            }
+
+            dbManager.aplicacionusuarioDao.actualizarRelacion(rel);
+        }
+    }
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::MouseButtonPress) {
+        QWidget *widget = qobject_cast<QWidget*>(obj);
+        if (widget && widget != ui->lista_apps && widget != ui->lista_filtro) {
+            ui->lista_apps->clearSelection();
+            ui->lista_filtro->clearSelection();
+            ui->label->clear();
+        }
+    }
+    return QMainWindow::eventFilter(obj, event);
+}
+
+
 

@@ -125,6 +125,8 @@ public:
         horizontalLayout_5->setObjectName("horizontalLayout_5");
         label = new QLabel(centralwidget);
         label->setObjectName("label");
+        label->setMinimumSize(QSize(300, 40));
+        label->setMaximumSize(QSize(350, 40));
         QPalette palette1;
         palette1.setBrush(QPalette::Active, QPalette::WindowText, brush4);
         palette1.setBrush(QPalette::Active, QPalette::Text, brush4);
@@ -295,6 +297,7 @@ public:
         palette3.setBrush(QPalette::Active, QPalette::Base, brush2);
         palette3.setBrush(QPalette::Inactive, QPalette::Base, brush2);
         lista_apps->setPalette(palette3);
+        lista_apps->setEditTriggers(QAbstractItemView::EditTrigger::NoEditTriggers);
 
         verticalLayout->addWidget(lista_apps);
 
