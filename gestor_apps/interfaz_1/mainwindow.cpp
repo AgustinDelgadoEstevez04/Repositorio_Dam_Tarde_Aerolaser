@@ -8,10 +8,11 @@
 #include <QPixmap>
 #include <QThread>
 #include <QTimer>
-
+#include <QFileDialog>
+#include <QMouseEvent>
 MainWindow::MainWindow(int usuarioId, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), dbManager(DatabaseManager::instance()),
-    modeloAplicaciones(new QStandardItemModel(this)), usuarioActualId(usuarioId),ultimaSeleccionEnListaApps(true),filtroActivo(2) {
+    modeloAplicaciones(new QStandardItemModel(this)), usuarioActualId(usuarioId), usuarioActual(dbManager.usuarioDao.obtenerUsuarioPorId(usuarioId)),ultimaSeleccionEnListaApps(true),filtroActivo(2) {
     ui->setupUi(this);
     cargaraplicaciones();
     mostrarNombreUsuario();
@@ -97,7 +98,7 @@ void MainWindow::mostrarDetallesAplicacion() {
     QModelIndex index = ui->lista_apps->currentIndex();
     if (!index.isValid()) return;
 
-     ui->lista_filtro->clearSelection();
+    ui->lista_filtro->clearSelection();
     ultimaSeleccionEnListaApps = true;
 
     int idApp = index.data(Qt::UserRole).toInt();
@@ -147,31 +148,31 @@ void MainWindow::on_barra_busqueda_cursorPositionChanged(int arg1, int arg2)
 
 void MainWindow::on_favoritos_clicked()
 {
-        filtroActivo = 3;
-        actualizarListaFiltro(filtroActivo);
+    filtroActivo = 3;
+    actualizarListaFiltro(filtroActivo);
 
-        ui->lista_filtro->clear();
+    ui->lista_filtro->clear();
 
 
-        QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
+    QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
 
-        for (const AplicacionUsuario &rel : relaciones) {
-            if (rel.esFavorito()) {
-                aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(rel.getAplicacionId());
+    for (const AplicacionUsuario &rel : relaciones) {
+        if (rel.esFavorito()) {
+            aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(rel.getAplicacionId());
 
-                QListWidgetItem *item = new QListWidgetItem(app.nombre());
-                QIcon icon(app.icono());
+            QListWidgetItem *item = new QListWidgetItem(app.nombre());
+            QIcon icon(app.icono());
 
-                if (!icon.isNull()) {
-                    item->setIcon(icon);
-                } else {
-                    qDebug() << "Advertencia: No se pudo cargar el icono para:" << app.nombre() << "en la ruta:" << app.icono();
-                }
-
-                item->setData(Qt::UserRole, app.id()); // Almacena el ID de la aplicación
-                ui->lista_filtro->addItem(item);
+            if (!icon.isNull()) {
+                item->setIcon(icon);
+            } else {
+                qDebug() << "Advertencia: No se pudo cargar el icono para:" << app.nombre() << "en la ruta:" << app.icono();
             }
+
+            item->setData(Qt::UserRole, app.id()); // Almacena el ID de la aplicación
+            ui->lista_filtro->addItem(item);
         }
+    }
 
 }
 
@@ -180,60 +181,60 @@ void MainWindow::on_descargados_clicked()
 {
     filtroActivo = 1;
     actualizarListaFiltro(filtroActivo);
-        ui->lista_filtro->clear();
+    ui->lista_filtro->clear();
 
 
-        QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
+    QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
 
-        for (const AplicacionUsuario &rel : relaciones) {
-            if (rel.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
-                aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(rel.getAplicacionId());
+    for (const AplicacionUsuario &rel : relaciones) {
+        if (rel.getEstadoInstalacion() == AplicacionUsuario::Instalado) {
+            aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(rel.getAplicacionId());
 
-                QListWidgetItem *item = new QListWidgetItem(app.nombre());
-                QIcon icon(app.icono());
+            QListWidgetItem *item = new QListWidgetItem(app.nombre());
+            QIcon icon(app.icono());
 
-                if (!icon.isNull()) {
-                    item->setIcon(icon);
-                } else {
-                    qDebug() << "Advertencia: No se pudo cargar el icono para:" << app.nombre() << " en la ruta:" << app.icono();
-                }
-
-                item->setData(Qt::UserRole, app.id()); // Almacena el ID de la aplicación
-                ui->lista_filtro->addItem(item);
+            if (!icon.isNull()) {
+                item->setIcon(icon);
+            } else {
+                qDebug() << "Advertencia: No se pudo cargar el icono para:" << app.nombre() << " en la ruta:" << app.icono();
             }
-        }
 
-  }
+            item->setData(Qt::UserRole, app.id()); // Almacena el ID de la aplicación
+            ui->lista_filtro->addItem(item);
+        }
+    }
+
+}
 
 
 
 void MainWindow::on_no_descargados_clicked()
-{ 
-        filtroActivo = 2;
-        actualizarListaFiltro(filtroActivo);
+{
+    filtroActivo = 2;
+    actualizarListaFiltro(filtroActivo);
 
-        ui->lista_filtro->clear();
+    ui->lista_filtro->clear();
 
 
-        QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
+    QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
 
-        for (const AplicacionUsuario &rel : relaciones) {
-            if (rel.getEstadoInstalacion() == AplicacionUsuario::NoInstalado) {
-                aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(rel.getAplicacionId());
+    for (const AplicacionUsuario &rel : relaciones) {
+        if (rel.getEstadoInstalacion() == AplicacionUsuario::NoInstalado) {
+            aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(rel.getAplicacionId());
 
-                QListWidgetItem *item = new QListWidgetItem(app.nombre());
-                QIcon icon(app.icono());
+            QListWidgetItem *item = new QListWidgetItem(app.nombre());
+            QIcon icon(app.icono());
 
-                if (!icon.isNull()) {
-                    item->setIcon(icon);
-                } else {
-                    qDebug() << "Advertencia: No se pudo cargar el icono para:" << app.nombre() << " en la ruta:" << app.icono();
-                }
-
-                item->setData(Qt::UserRole, app.id()); // Almacena el ID de la aplicación
-                ui->lista_filtro->addItem(item);
+            if (!icon.isNull()) {
+                item->setIcon(icon);
+            } else {
+                qDebug() << "Advertencia: No se pudo cargar el icono para:" << app.nombre() << " en la ruta:" << app.icono();
             }
+
+            item->setData(Qt::UserRole, app.id()); // Almacena el ID de la aplicación
+            ui->lista_filtro->addItem(item);
         }
+    }
 
 
 }
@@ -287,7 +288,7 @@ void MainWindow::on_favorito_app_clicked() {
 
     if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
         QMessageBox::information(this, "Favoritos", QString("La aplicación ahora está %1.").arg(aplicacionUsuario.esFavorito() ? "marcada como favorita" : "desmarcada como favorita"));
-         actualizarListaFiltro(filtroActivo);
+        actualizarListaFiltro(filtroActivo);
     } else {
         QMessageBox::critical(this, "Error", "No se pudo actualizar el estado de favorito.");
     }
@@ -338,7 +339,7 @@ void MainWindow::on_descargar_app_clicked() {
 
     if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
         QMessageBox::information(this, "Éxito", "La aplicación ha sido instalada y su licencia activada.");
-         actualizarListaFiltro(filtroActivo);
+        actualizarListaFiltro(filtroActivo);
     } else {
         QMessageBox::critical(this, "Error", "No se pudo actualizar la instalación y la licencia.");
     }
@@ -392,7 +393,7 @@ void MainWindow::on_no_descargados_2_clicked() {
 
     if (dbManager.aplicacionusuarioDao.actualizarRelacion(aplicacionUsuario)) {
         QMessageBox::information(this, "Éxito", "La aplicación ha sido desinstalada correctamente.");
-         actualizarListaFiltro(filtroActivo);
+        actualizarListaFiltro(filtroActivo);
     } else {
         QMessageBox::critical(this, "Error", "No se pudo actualizar la desinstalación.");
     }
@@ -404,16 +405,21 @@ void MainWindow::on_no_descargados_2_clicked() {
 
 
 void MainWindow::mostrarNombreUsuario() {
+    usuarioActual = dbManager.usuarioDao.obtenerUsuarioPorId(usuarioActualId); // Obtener datos actualizados
+    ui->usuario_nombre->setText(usuarioActual.getnombre()); // Mantener el nombre visible
 
-    usuario usuario = dbManager.usuarioDao.obtenerUsuarioPorId(usuarioActualId);
-
-    ui->usuario_nombre->setText(usuario.getnombre());
+    if (!usuarioActual.getAvatar().isEmpty()) {
+        ui->label_2->setPixmap(QPixmap(usuarioActual.getAvatar()).scaled(100, 100, Qt::KeepAspectRatio));
+    }
 }
+
+
 
 void MainWindow::actualizarListaFiltro(int tipoFiltro) {
     ui->lista_filtro->clear();
-
     QList<AplicacionUsuario> relaciones = dbManager.aplicacionusuarioDao.obtenerRelacionesPorUsuario(usuarioActualId);
+
+    qDebug() << "Total de aplicaciones en relaciones:" << relaciones.size(); // 🔹 Verificar cantidad de relaciones
 
     for (const AplicacionUsuario &rel : relaciones) {
         bool agregar = false;
@@ -430,7 +436,6 @@ void MainWindow::actualizarListaFiltro(int tipoFiltro) {
 
         if (agregar) {
             aplicacion app = dbManager.aplicacionDao.obtenerAplicacionPorId(rel.getAplicacionId());
-
             QListWidgetItem *item = new QListWidgetItem(app.nombre());
             item->setIcon(QIcon(app.icono()));
             item->setData(Qt::UserRole, app.id());
@@ -439,6 +444,7 @@ void MainWindow::actualizarListaFiltro(int tipoFiltro) {
         }
     }
 }
+
 
 
 
@@ -476,6 +482,21 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
     }
     return QMainWindow::eventFilter(obj, event);
 }
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton && ui->label_2->underMouse()) {
+        QString archivoImagen = QFileDialog::getOpenFileName(this, "Seleccionar Avatar", QDir::homePath(), "Imágenes (*.png *.jpg *.jpeg)");
+
+        if (!archivoImagen.isEmpty()) {
+            usuarioActual.setAvatar(archivoImagen); // Guarda la imagen en el objeto usuario
+            dbManager.usuarioDao.actualizarAvatar(usuarioActual.getid(), archivoImagen); // Guarda en BD
+            ui->label_2->setPixmap(QPixmap(archivoImagen).scaled(100, 100, Qt::KeepAspectRatio)); // Actualiza la imagen
+            ui->usuario_nombre->setText(usuarioActual.getnombre()); // Vuelve a mostrar el nombre
+        }
+    }
+}
+
+
+
 
 
 

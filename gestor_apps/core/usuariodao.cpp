@@ -36,40 +36,46 @@ bool usuariodao::guardarUsuario(const usuario& usr) {
 
 usuario usuariodao::obtenerUsuarioPorId(int id) const {
     QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, nombre, contrasena FROM usuarios WHERE id = ?");
+    query.prepare("SELECT id, nombre, contrasena, avatar FROM usuarios WHERE id = ?");
     query.addBindValue(id);
 
     if (query.exec() && query.next()) {
         return usuario(query.value(1).toString(),
                        query.value(2).toString(),
-                       query.value(0).toInt());
+                       query.value(0).toInt(),
+                       query.value(3).toString());
     }
-    return usuario("", "", -1);
+    return usuario("", "", -1, "");
 }
 
 usuario usuariodao::obtenerUsuarioPorNombre(const QString& nombre) const {
     QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, nombre, contrasena FROM usuarios WHERE nombre = ?");
+    query.prepare("SELECT id, nombre, contrasena, avatar FROM usuarios WHERE nombre = ?");
     query.addBindValue(nombre);
 
     if (query.exec() && query.next()) {
         return usuario(query.value(1).toString(),
                        query.value(2).toString(),
-                       query.value(0).toInt());
+                       query.value(0).toInt(),
+                       query.value(3).toString());
     }
-    return usuario("", "", -1);
+
+    qDebug() << "Error: Usuario no encontrado en la base de datos."; // ✅ Verifica si la consulta falla
+    return usuario("", "", -1, ""); // Devuelve un usuario vacío si no existe
 }
+
 
 QList<usuario> usuariodao::obtenerTodosLosUsuarios() {
     QSqlQuery query(mdatabase);
-    query.prepare("SELECT id, nombre, contrasena FROM usuarios");
+    query.prepare("SELECT id, nombre, contrasena, avatar FROM usuarios");
 
     QList<usuario> lista;
     if (query.exec()) {
         while (query.next()) {
             lista.append(usuario(query.value(1).toString(),
                                  query.value(2).toString(),
-                                 query.value(0).toInt()));
+                                 query.value(0).toInt(),
+                                 query.value(3).toString()));
         }
     }
     return lista;
@@ -109,3 +115,17 @@ bool usuariodao::verificarCredenciales(const QString& nombre, const QString& con
 
     return query.exec() && query.next();
 }
+
+bool usuariodao::actualizarAvatar(int id, const QString& rutaAvatar) {
+    QSqlQuery query(mdatabase);
+    query.prepare("UPDATE usuarios SET avatar = ? WHERE id = ?");
+    query.addBindValue(rutaAvatar);
+    query.addBindValue(id);
+
+    if (!query.exec()) {
+        qDebug() << "Error al actualizar avatar:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+

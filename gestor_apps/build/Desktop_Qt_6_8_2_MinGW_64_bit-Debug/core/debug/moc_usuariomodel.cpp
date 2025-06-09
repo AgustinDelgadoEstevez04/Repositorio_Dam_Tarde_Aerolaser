@@ -43,7 +43,8 @@ static constexpr auto qt_meta_stringdata_ZN12UsuarioModelE = QtMocHelpers::strin
     "actualizarDesdeDAO",
     "id",
     "nombre",
-    "contrasena"
+    "contrasena",
+    "avatar"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -56,17 +57,17 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12UsuarioModelE[] = {
        0,       // classname
        0,    0, // classinfo
        2,   14, // methods
-       3,   28, // properties
+       4,   28, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   26,    2, 0x06,    4 /* Public */,
+       1,    0,   26,    2, 0x06,    5 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    0,   27,    2, 0x0a,    5 /* Public */,
+       3,    0,   27,    2, 0x0a,    6 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -78,6 +79,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12UsuarioModelE[] = {
        4, QMetaType::Int, 0x00015001, uint(0), 0,
        5, QMetaType::QString, 0x00015001, uint(0), 0,
        6, QMetaType::QString, 0x00015001, uint(0), 0,
+       7, QMetaType::QString, 0x00015001, uint(0), 0,
 
        0        // eod
 };
@@ -94,6 +96,8 @@ Q_CONSTINIT const QMetaObject UsuarioModel::staticMetaObject = { {
         // property 'nombre'
         QtPrivate::TypeAndForceComplete<QString, std::true_type>,
         // property 'contrasena'
+        QtPrivate::TypeAndForceComplete<QString, std::true_type>,
+        // property 'avatar'
         QtPrivate::TypeAndForceComplete<QString, std::true_type>,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<UsuarioModel, std::true_type>,
@@ -131,6 +135,7 @@ void UsuarioModel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: *reinterpret_cast< int*>(_v) = _t->id(); break;
         case 1: *reinterpret_cast< QString*>(_v) = _t->nombre(); break;
         case 2: *reinterpret_cast< QString*>(_v) = _t->contrasena(); break;
+        case 3: *reinterpret_cast< QString*>(_v) = _t->avatar(); break;
         default: break;
         }
     }
@@ -168,7 +173,7 @@ int UsuarioModel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::BindableProperty
             || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

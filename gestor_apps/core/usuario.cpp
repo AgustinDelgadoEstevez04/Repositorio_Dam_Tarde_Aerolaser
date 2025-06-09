@@ -1,7 +1,7 @@
 #include "usuario.h"
 
-usuario::usuario(const QString &nombre, const QString &contrasena, int id):
-    m_id(id) {
+usuario::usuario(const QString &nombre, const QString &contrasena, int id, const QString &avatar):
+    m_id(id), m_avatar(avatar) {
     setnombre(nombre);
     setcontrasena(contrasena);
 }
@@ -33,4 +33,10 @@ bool usuario::setcontrasena(const QString &nuevacontrasena) {
 
 int usuario::getid() const {
     return m_id;
+}
+QString usuario::getAvatar() const {
+    return m_avatar;
+}
+void usuario::setAvatar(const QString& rutaAvatar) {
+    m_avatar = rutaAvatar;
 }

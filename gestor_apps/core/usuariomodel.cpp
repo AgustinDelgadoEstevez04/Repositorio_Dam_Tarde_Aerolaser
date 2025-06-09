@@ -20,5 +20,8 @@ void UsuarioModel::actualizarDesdeDAO() {
     emit usuarioActualizado();
 }
 
+QString UsuarioModel::avatar() const {
+    return mUsuario.getAvatar();
+}
 
 

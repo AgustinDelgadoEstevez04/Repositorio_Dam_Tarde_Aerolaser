@@ -18,6 +18,9 @@ public:
     bool eliminarUsuario(int id);
 
     bool verificarCredenciales(const QString& nombre, const QString& contrasena) const;
+
+    bool actualizarAvatar(int id, const QString& rutaAvatar);
+
 private:
     QSqlDatabase& mdatabase;
 };

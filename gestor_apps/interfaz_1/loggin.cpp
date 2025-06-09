@@ -50,6 +50,7 @@ void loggin::on_iniciar_clicked()
         QMessageBox::information(this, "Inicio de Sesión", "¡Inicio de sesión exitoso!");
         usuario usuarioActual = DatabaseManager::instance().usuarioDao.obtenerUsuarioPorNombre(nombre);
         usuarioActualId = usuarioActual.getid();
+        qDebug() << "ID de usuario después del login:" << usuarioActualId;
 
 
         // Ocultar la ventana de login y mostrar la ventana principal
@@ -96,7 +97,7 @@ void loggin::on_registrar_clicked()
     }
 
     if (nombre.length() < 6) {
-        QMessageBox::warning(this, "Error de Registro", "La contraseña debe tener al menos 6 caracteres.");
+        QMessageBox::warning(this, "Error de Registro", "El nombre debe tener al menos 6 caracteres.");
         ui->contrasena->setFocus();
         return;
     }
@@ -134,7 +135,7 @@ void loggin::on_registrar_clicked()
         return;
     }
 
-    usuario nuevoUsuario(nombre, contrasena, 0); // ID 0 para nuevo usuario
+    usuario nuevoUsuario(nombre, contrasena, 0,""); // ID 0 para nuevo usuario
 
     if (!nuevoUsuario.setnombre(nombre)) {
         QMessageBox::warning(this, "Error de Registro", "El nombre de usuario no cumple con los requisitos de longitud (6-30 caracteres).");

@@ -64,6 +64,7 @@ private slots:
 
     bool eventFilter(QObject *obj, QEvent *event);
 
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
     Ui::MainWindow *ui;
@@ -74,6 +75,7 @@ private:
      int usuarioActualId;
     bool ultimaSeleccionEnListaApps;
     int filtroActivo;
+        usuario usuarioActual; // Agregar usuarioActual como atributo
 };
 
 #endif // MAINWINDOW_H
