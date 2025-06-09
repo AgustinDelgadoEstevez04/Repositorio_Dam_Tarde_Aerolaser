@@ -33,5 +33,5 @@ public:
      usuariodao usuarioDao;
 };
 
-#endif // DATABASEMANAGER_H
+#endif
 

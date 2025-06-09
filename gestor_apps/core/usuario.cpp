@@ -1,7 +1,7 @@
 #include "usuario.h"
 
-usuario::usuario(const QString &nombre, const QString &contrasena, int id):
-    m_id(id) {
+usuario::usuario(const QString &nombre, const QString &contrasena, int id, const QString &iconoNombre) :
+    m_id(id), m_iconoNombre(iconoNombre) { // <-- INICIALIZAR NUEVO MIEMBRO
     setnombre(nombre);
     setcontrasena(contrasena);
 }
@@ -15,8 +15,8 @@ QString usuario::getcontrasena() const {
 
 
 bool usuario::setnombre(const QString &nuevonombre) {
-        m_nombre = nuevonombre;
-        return true;
+    m_nombre = nuevonombre;
+    return true;
 
 }
 
@@ -24,13 +24,28 @@ bool usuario::verificarcredenciales(const QString &nombreIngresado, const QStrin
     return (nombreIngresado == m_nombre && contrasenaIngresada == m_contrasena);
 }
 
+// verificarcontrasena ya existe, no la modifico.
+bool usuario::verificarcontrasena(const QString &contrasena) const { //
+    return (contrasena == m_contrasena); //
+} //
+
+
 bool usuario::setcontrasena(const QString &nuevacontrasena) {
 
-        m_contrasena = nuevacontrasena;
-        return true;
+    m_contrasena = nuevacontrasena;
+    return true;
 
 }
 
 int usuario::getid() const {
     return m_id;
+}
+
+
+QString usuario::getIconoNombre() const {
+    return m_iconoNombre;
+}
+
+void usuario::setIconoNombre(const QString &nuevoIconoNombre) {
+    m_iconoNombre = nuevoIconoNombre;
 }

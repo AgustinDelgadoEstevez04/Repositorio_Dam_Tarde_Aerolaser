@@ -51,7 +51,8 @@ void DatabaseManager::inicializarBaseDeDatos() {
     query.exec("CREATE TABLE IF NOT EXISTS usuarios ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                "nombre TEXT UNIQUE NOT NULL, "
-               "contrasena TEXT NOT NULL)");
+               "contrasena TEXT NOT NULL, "
+               "icono_nombre TEXT NOT NULL DEFAULT ':/imagenes trabajo/usuario.png')");
 
 
     query.exec("CREATE TABLE IF NOT EXISTS aplicacion_usuario ("

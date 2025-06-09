@@ -72,7 +72,11 @@ static constexpr auto qt_meta_stringdata_ZN10MainWindowE = QtMocHelpers::stringD
     "eventFilter",
     "obj",
     "QEvent*",
-    "event"
+    "event",
+    "cargarIconoUsuario",
+    "on_btnCambiarIcono_clicked",
+    "onIconoSeleccionado",
+    "iconoNombre"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -84,7 +88,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -92,26 +96,29 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  134,    2, 0x08,    1 /* Private */,
-       3,    0,  135,    2, 0x08,    2 /* Private */,
-       4,    1,  136,    2, 0x08,    3 /* Private */,
-       6,    0,  139,    2, 0x08,    5 /* Private */,
-       7,    1,  140,    2, 0x08,    6 /* Private */,
-       9,    0,  143,    2, 0x08,    8 /* Private */,
-      10,    2,  144,    2, 0x08,    9 /* Private */,
-      13,    0,  149,    2, 0x08,   12 /* Private */,
-      14,    0,  150,    2, 0x08,   13 /* Private */,
-      15,    0,  151,    2, 0x08,   14 /* Private */,
-      16,    1,  152,    2, 0x08,   15 /* Private */,
-      19,    2,  155,    2, 0x08,   17 /* Private */,
-      23,    0,  160,    2, 0x08,   20 /* Private */,
-      24,    0,  161,    2, 0x08,   21 /* Private */,
-      25,    0,  162,    2, 0x08,   22 /* Private */,
-      26,    0,  163,    2, 0x08,   23 /* Private */,
-      27,    1,  164,    2, 0x08,   24 /* Private */,
-      29,    1,  167,    2, 0x08,   26 /* Private */,
-      31,    0,  170,    2, 0x08,   28 /* Private */,
-      32,    2,  171,    2, 0x08,   29 /* Private */,
+       1,    0,  152,    2, 0x08,    1 /* Private */,
+       3,    0,  153,    2, 0x08,    2 /* Private */,
+       4,    1,  154,    2, 0x08,    3 /* Private */,
+       6,    0,  157,    2, 0x08,    5 /* Private */,
+       7,    1,  158,    2, 0x08,    6 /* Private */,
+       9,    0,  161,    2, 0x08,    8 /* Private */,
+      10,    2,  162,    2, 0x08,    9 /* Private */,
+      13,    0,  167,    2, 0x08,   12 /* Private */,
+      14,    0,  168,    2, 0x08,   13 /* Private */,
+      15,    0,  169,    2, 0x08,   14 /* Private */,
+      16,    1,  170,    2, 0x08,   15 /* Private */,
+      19,    2,  173,    2, 0x08,   17 /* Private */,
+      23,    0,  178,    2, 0x08,   20 /* Private */,
+      24,    0,  179,    2, 0x08,   21 /* Private */,
+      25,    0,  180,    2, 0x08,   22 /* Private */,
+      26,    0,  181,    2, 0x08,   23 /* Private */,
+      27,    1,  182,    2, 0x08,   24 /* Private */,
+      29,    1,  185,    2, 0x08,   26 /* Private */,
+      31,    0,  188,    2, 0x08,   28 /* Private */,
+      32,    2,  189,    2, 0x08,   29 /* Private */,
+      36,    0,  194,    2, 0x08,   32 /* Private */,
+      37,    0,  195,    2, 0x08,   33 /* Private */,
+      38,    1,  196,    2, 0x08,   34 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -134,6 +141,9 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
     QMetaType::Void, QMetaType::Int,   30,
     QMetaType::Void,
     QMetaType::Bool, QMetaType::QObjectStar, 0x80000000 | 34,   33,   35,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   39,
 
        0        // eod
 };
@@ -197,7 +207,14 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'eventFilter'
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
         QtPrivate::TypeAndForceComplete<QObject *, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QEvent *, std::false_type>
+        QtPrivate::TypeAndForceComplete<QEvent *, std::false_type>,
+        // method 'cargarIconoUsuario'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnCambiarIcono_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onIconoSeleccionado'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>
     >,
     nullptr
 } };
@@ -228,6 +245,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 18: _t->actualizarEstadoLicencias(); break;
         case 19: { bool _r = _t->eventFilter((*reinterpret_cast< std::add_pointer_t<QObject*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QEvent*>>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+        case 20: _t->cargarIconoUsuario(); break;
+        case 21: _t->on_btnCambiarIcono_clicked(); break;
+        case 22: _t->onIconoSeleccionado((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     }
@@ -264,14 +284,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 23;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 23;
     }
     return _id;
 }

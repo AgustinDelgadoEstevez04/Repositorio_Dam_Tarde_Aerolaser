@@ -252,7 +252,7 @@ debug/moc_aplicacionmodel.cpp: ../../../core/aplicacionmodel.h \
 		C:/Qt/6.8.2/mingw_64/include/QtCore/QString \
 		debug/moc_predefs.h \
 		C:/Qt/6.8.2/mingw_64/bin/moc.exe
-	C:\Qt\6.8.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/AEPRACINFO2/Documents/github/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/core/debug/moc_predefs.h -IC:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -IC:/Users/AEPRACINFO2/Documents/github/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/core -IC:/Qt/6.8.2/mingw_64/include -IC:/Qt/6.8.2/mingw_64/include/QtSql -IC:/Qt/6.8.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\..\core\aplicacionmodel.h -o debug\moc_aplicacionmodel.cpp
+	C:\Qt\6.8.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/AEPRACINFO1/Documents/Repositorio_Git/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/core/debug/moc_predefs.h -IC:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -IC:/Users/AEPRACINFO1/Documents/Repositorio_Git/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/core -IC:/Qt/6.8.2/mingw_64/include -IC:/Qt/6.8.2/mingw_64/include/QtSql -IC:/Qt/6.8.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\..\core\aplicacionmodel.h -o debug\moc_aplicacionmodel.cpp
 
 debug/moc_aplicacionusuariomodel.cpp: ../../../core/aplicacionusuariomodel.h \
 		C:/Qt/6.8.2/mingw_64/include/QtCore/QObject \
@@ -377,7 +377,7 @@ debug/moc_aplicacionusuariomodel.cpp: ../../../core/aplicacionusuariomodel.h \
 		C:/Qt/6.8.2/mingw_64/include/QtCore/QString \
 		debug/moc_predefs.h \
 		C:/Qt/6.8.2/mingw_64/bin/moc.exe
-	C:\Qt\6.8.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/AEPRACINFO2/Documents/github/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/core/debug/moc_predefs.h -IC:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -IC:/Users/AEPRACINFO2/Documents/github/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/core -IC:/Qt/6.8.2/mingw_64/include -IC:/Qt/6.8.2/mingw_64/include/QtSql -IC:/Qt/6.8.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\..\core\aplicacionusuariomodel.h -o debug\moc_aplicacionusuariomodel.cpp
+	C:\Qt\6.8.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/AEPRACINFO1/Documents/Repositorio_Git/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/core/debug/moc_predefs.h -IC:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -IC:/Users/AEPRACINFO1/Documents/Repositorio_Git/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/core -IC:/Qt/6.8.2/mingw_64/include -IC:/Qt/6.8.2/mingw_64/include/QtSql -IC:/Qt/6.8.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\..\core\aplicacionusuariomodel.h -o debug\moc_aplicacionusuariomodel.cpp
 
 debug/moc_usuariomodel.cpp: ../../../core/usuariomodel.h \
 		C:/Qt/6.8.2/mingw_64/include/QtCore/QObject \
@@ -497,7 +497,7 @@ debug/moc_usuariomodel.cpp: ../../../core/usuariomodel.h \
 		C:/Qt/6.8.2/mingw_64/include/QtCore/qvarlengtharray.h \
 		debug/moc_predefs.h \
 		C:/Qt/6.8.2/mingw_64/bin/moc.exe
-	C:\Qt\6.8.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/AEPRACINFO2/Documents/github/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/core/debug/moc_predefs.h -IC:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -IC:/Users/AEPRACINFO2/Documents/github/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/core -IC:/Qt/6.8.2/mingw_64/include -IC:/Qt/6.8.2/mingw_64/include/QtSql -IC:/Qt/6.8.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\..\core\usuariomodel.h -o debug\moc_usuariomodel.cpp
+	C:\Qt\6.8.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/AEPRACINFO1/Documents/Repositorio_Git/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/core/debug/moc_predefs.h -IC:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -IC:/Users/AEPRACINFO1/Documents/Repositorio_Git/Repositorio_Dam_Tarde_Aerolaser/gestor_apps/core -IC:/Qt/6.8.2/mingw_64/include -IC:/Qt/6.8.2/mingw_64/include/QtSql -IC:/Qt/6.8.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\..\core\usuariomodel.h -o debug\moc_usuariomodel.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1620,7 +1620,8 @@ debug/usuariodao.o: ../../../core/usuariodao.cpp ../../../core/usuariodao.h \
 		C:/Qt/6.8.2/mingw_64/include/QtSql/qsqldatabase.h \
 		C:/Qt/6.8.2/mingw_64/include/QtCore/qmetaobject.h \
 		C:/Qt/6.8.2/mingw_64/include/QtSql/QSqlError \
-		C:/Qt/6.8.2/mingw_64/include/QtSql/qsqlerror.h
+		C:/Qt/6.8.2/mingw_64/include/QtSql/qsqlerror.h \
+		C:/Qt/6.8.2/mingw_64/include/QtCore/QVariant
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\usuariodao.o ..\..\..\core\usuariodao.cpp
 
 debug/usuariomodel.o: ../../../core/usuariomodel.cpp ../../../core/usuariomodel.h \

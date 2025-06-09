@@ -41,54 +41,54 @@ SUBTARGETS    =  \
 
 sub-core-qmake_all:  FORCE
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd core\ && $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 	cd core\ && $(MAKE) -f Makefile qmake_all
 sub-core: FORCE
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-core-make_first: FORCE
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-core-all: FORCE
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-core-clean: FORCE
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-core-distclean: FORCE
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-core-install_subtargets: FORCE
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-core-uninstall_subtargets: FORCE
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-interfaz_1-qmake_all:  FORCE
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd interfaz_1\ && $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 	cd interfaz_1\ && $(MAKE) -f Makefile qmake_all
 sub-interfaz_1: FORCE
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-interfaz_1-make_first: FORCE
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-interfaz_1-all: FORCE
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-interfaz_1-clean: FORCE
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-interfaz_1-distclean: FORCE
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-interfaz_1-install_subtargets: FORCE
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-interfaz_1-uninstall_subtargets: FORCE
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 
 Makefile: ../../gestor_apps.pro C:/Qt/6.8.2/mingw_64/mkspecs/win32-g++/qmake.conf C:/Qt/6.8.2/mingw_64/mkspecs/features/spec_pre.prf \
 		C:/Qt/6.8.2/mingw_64/mkspecs/features/device_config.prf \
@@ -791,34 +791,34 @@ uninstall_subtargets: sub-core-uninstall_subtargets sub-interfaz_1-uninstall_sub
 
 sub-core-debug:
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-interfaz_1-debug:
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 debug: sub-core-debug sub-interfaz_1-debug
 
 sub-core-release:
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-interfaz_1-release:
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 release: sub-core-release sub-interfaz_1-release
 
 sub-core-check:
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-interfaz_1-check:
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 check: sub-core-check sub-interfaz_1-check
 
 sub-core-benchmark:
 	@if not exist core\ mkdir core\ & if not exist core\ exit 1
-	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd core\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\core\core.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-interfaz_1-benchmark:
 	@if not exist interfaz_1\ mkdir interfaz_1\ & if not exist interfaz_1\ exit 1
-	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO2\Documents\github\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd interfaz_1\ && ( if not exist Makefile $(QMAKE) -o Makefile C:\Users\AEPRACINFO1\Documents\Repositorio_Git\Repositorio_Dam_Tarde_Aerolaser\gestor_apps\interfaz_1\interfaz_1.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 benchmark: sub-core-benchmark sub-interfaz_1-benchmark
 install:install_subtargets  FORCE
 

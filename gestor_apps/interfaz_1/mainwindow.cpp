@@ -208,7 +208,7 @@ void MainWindow::on_descargados_clicked()
 
 
 void MainWindow::on_no_descargados_clicked()
-{ 
+{
         filtroActivo = 2;
         actualizarListaFiltro(filtroActivo);
 
